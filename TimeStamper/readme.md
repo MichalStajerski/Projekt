@@ -1,1 +1,1 @@
-Timestamper - Creates time stamps for loaded audio and savex to file upon clicking save button
+Timestamper - Tworzy time stampy dla zaladowanego pliku mp3 i zapisuje je do pliku .txt po nacisnieciu przycisku zapisz
