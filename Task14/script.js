@@ -9,10 +9,19 @@ var words = ['cat','dog','ape','egg']
 const answers =[[3,4,5],[28,29,30],[30,37,44],[15,22,29]]
 var chars = []
 const checked = []
+
+var array = [1,2,3,4]
+var item = 4
+
+var index = array.indexOf(item);
+array.splice(index, 1);
+
+
 // var t = []
+var xd = 'hello'
 window.onload = function () {
   createTiles()
-  drawLettersForsquares()
+  // drawLettersForsquares()
 }
 
 function clickedTile (id) {
@@ -34,8 +43,8 @@ function clickedTile (id) {
       // unclicks to usual color
       object.style.backgroundColor = backgroundColorForTiles
       // removes answerd by value
-      indId = id
-      checked.remove(Number(id))
+      let index = checked.indexOf(Number(id));
+      checked.splice(index, 1);
       checked.sort(function (a, b) {
         return a - b
       })
@@ -82,7 +91,9 @@ function checkAnswer (checked) {
         for (let e = 0; e < answers.length; e++) {
           if (i !== e) {
             if(answers[i].includes(checked[j])&& answers[e].includes(checked[j])){
-              answers[e].remove(checked[j])
+              let index = checked.indexOf(checked[j]);
+              answers[e].splice(index, 1);
+              // answers[e].remove(checked[j])
             }
           }
         }
@@ -95,16 +106,16 @@ function checkAnswer (checked) {
 
 
 // remove from array by value
-Array.prototype.remove = function () {
-  let what; const a = arguments; let L = a.length; let ax
-  while (L && this.length) {
-    what = a[--L]
-    while ((ax = this.indexOf(what)) !== -1) {
-      this.splice(ax, 1)
-    }
-  }
-  return this
-}
+// Array.prototype.remove = function () {
+//   let what; const a = arguments; let L = a.length; let ax
+//   while (L && this.length) {
+//     what = a[--L]
+//     while ((ax = this.indexOf(what)) !== -1) {
+//       this.splice(ax, 1)
+//     }
+//   }
+//   return this
+// }
 //random char to fill squares outside of answers
 function randomCharacter(){
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
@@ -120,7 +131,6 @@ function randomCharacter(){
 //     console.log(t)
 // }
 //TODO
-
 
 //DONE
 //settattribute to null,zmienic nazyw funkcji na bardziej intuicyjne, wyciagnac zmienne np. kolor do gory
