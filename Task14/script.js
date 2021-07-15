@@ -2,30 +2,54 @@
 // need to fill remaining boxes with random letters from alphabet
 // for now only logic behind checking asnwers is implemented and creating board
 const answers = [{ answer: '3,4' }, { answer: '28,29,30' }, { answer: '30,37,44' }, { answer: '15,22,29' }]
+
+const colors = {
+  selected: 'blue',
+  normal: '#ddd'
+}
+
 console.log(answers[0].answer)
 
 const checked = []
-window.onload = function () {
-  size()
+
+function onTileClicked (tile, id) {
+  const idx = checked.indexOf(id)
+  
+  if (idx < 0) {
+    object.style.backgroundColor = colors.selected
+    checked.push(id)
+  } else {
+    object.style.backgroundColor = colors.normal
+    checked.splice(idx, 1)
+  }
+  
+  checked.sort((a, b) => a - b)
+  console.log('array checked after click: ', checked)
+  checkAnswer(checked)
 }
+
 // creates out front
-function size () {
+function createTiles () {
   const container = document.getElementById('container')
   container.innerHTML = ''// don't want any extra boxes when you call this function again
-  const NumberOfSquares = 49
-  for (let i = 0; i < NumberOfSquares; i++) {
-    if (i % 7 === 0) {
-      var row = document.createElement('div')
-      row.className = 'row'
-      container.appendChild(row)
+  
+  const numRows = 7
+  const numCols = 7
+  
+  const numSquares = numRows * numCols
+  
+  for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
+    const row = document.createElement('div')
+    row.className = 'row'
+    
+    for (let colIndex = 0; colIndex < numCols; colIndex++) {
+      const tile = document.createElement('div')
+      tile.className = 'box'
+      tile.onclick = () => onTileClicked(tile, rowIndex * mumCols + colIndex)
+      row.appendChild(tile)
     }
-    const box = document.createElement('div')
-    box.id = i
-    box.className = 'box'// assign class
-    box.setAttribute('onclick', 'clicked(id)')
-    const content = document.createTextNode('A')
-    box.appendChild(content)
-    row.appendChild(box)
+    
+    container.appendChild(row)
   }
 }
 
@@ -65,32 +89,6 @@ function checkAnswer (checked) {
   }
 }
 
-function clicked (id) {
-  const object = document.getElementById(id)
-  // marks in blue color after click
-  if (object.style.backgroundColor !== 'blue') {
-    object.style.backgroundColor = 'blue'
-    // adds answer
-    checked.push(id)
-    checked.sort(function (a, b) {
-      return a - b
-    })
-    checked.join()
-    console.log('array checked after click: ' + checked)
-    checkAnswer(checked)
-  } else {
-    // unclicks to usual color
-    object.style.backgroundColor = '#ddd'
-    // removes nswer
-    checked.remove(id)
-    checked.sort(function (a, b) {
-      return a - b
-    })
-    checked.join()
-    checkAnswer(checked)
-    console.log('array rechecked after click: ' + checked)
-  }
-}
 // remove from array by value
 Array.prototype.remove = function () {
   let what; const a = arguments; let L = a.length; let ax
@@ -102,3 +100,5 @@ Array.prototype.remove = function () {
   }
   return this
 }
+
+window.onload = () => createTiles()
