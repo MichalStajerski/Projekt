@@ -1,0 +1,34 @@
+<html>
+<body>
+    <input type="file" accept="audio/*" capture id="recorder">
+        <audio id="audio" controls></audio>
+    <div> 
+        <button onclick="audioLength()" type="button">Pokaz dlugosc audio</button>
+        <button onclick="Pause()" type="button">Pauza</button>
+        <button onclick="PlayAudio()" type="button">Graj</button>
+        <button id="yourBtn" onclick="Reload()" type="button">Resetuj</button>
+        <button type="button" onclick="getCurTime()">Dodaj Time Stampa</button>
+        <button id="btnSave" class="button1" onclick="Save()" id="button1" type="button">Zapisz Time Stampy</button>
+    </div>
+    <form>
+        <h5 style="color:white">Time Stamps</h5>
+        <select id="mySelect" size="8">
+        </select>
+    </form>
+
+    <form>
+        <h5 style="color:white">Delta</h5>
+        <select id="Delta" size="8">
+        </select>
+    </form>
+
+    <style>
+        body {
+            background-color: #373737;
+        }
+    </style>
+<script src="script.js">
+
+</script>
+</body>
+</html>

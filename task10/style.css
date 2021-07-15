@@ -1,0 +1,48 @@
+body {
+    background: linear-gradient(90deg, rgba(29,11,71,1) 17%, rgba(69,6,117,1) 40%, rgba(115,67,16,1) 70%);
+}
+* {
+  box-sizing: border-box;
+}      
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+.row:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.button {
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    
+}
+ 
+.button {border-radius: 12px;}
+
+.zoom:hover {
+    -ms-transform: scale(0.5); 
+    -webkit-transform: scale(0.5); 
+    transform: scale(1.02); 
+}  
+
+#myProgress {
+    width: 50%;
+    background-color: #ddd;
+    margin: auto;
+}
+
+#myBar {
+    width: 0%;
+    height: 25px;
+background-color: #4CAF50;
+}

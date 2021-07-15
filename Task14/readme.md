@@ -1,0 +1,1 @@
+Wykreslanka- elementy na ekranie 7x7 kratek w kazdej kratce jedna litera. W kwadracie ukryte sa slowa. Uczen kilka pojedyncze litery tworzace slowa, dobrze zaznaczone podswietlaja sie na inny kolor zle na [D[D[D[D[D[D[D[D[D[D[D[D[D[D[D[D[C[C[D[D[D[Dkolor. Slowa moga sie przecinac
