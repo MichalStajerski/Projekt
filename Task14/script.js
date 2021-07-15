@@ -1,6 +1,3 @@
-// for now set of answers is hardcoded
-// need to fill remaining boxes with random letters from alphabet
-// for now only logic behind checking asnwers is implemented and creating board
 const numberOfColumns = 7
 const numberOfRows = 7
 const backgroundColorForTiles = '#ddd'
@@ -82,8 +79,8 @@ function checkAnswer (checked) {
         for (let e = 0; e < answers.length; e++) {
           if (i !== e) {
             if (answers[i].includes(checked[j]) && answers[e].includes(checked[j])) {
-              const index = checked.indexOf(checked[j])
-              answers[e].splice(index, 1)
+              //remove functions is still used here cause split failed to work, will change so its not needed
+              answers[e].remove(checked[j])
             }
           }
         }
@@ -99,6 +96,17 @@ function randomCharacter () {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'
   const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)]
   return randomCharacter
+}
+// remove from array by value
+Array.prototype.remove = function () {
+  let what; const a = arguments; let L = a.length; let ax
+  while (L && this.length) {
+    what = a[--L]
+    while ((ax = this.indexOf(what)) !== -1) {
+      this.splice(ax, 1)
+    }
+  }
+  return this
 }
 // function drawLettersForsquares(){
 //     for(let i =0;i<words.length;i++){
