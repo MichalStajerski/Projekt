@@ -4,14 +4,12 @@
 var numberOfColumns = 7
 var numberOfRows = 7
 var backgroundColorForTiles = '#ddd'
+var intId = 0
 var words = ['cat','dog','ape','egg']
-var a = '3,4,5'
-const answers = [{ answer: '3,4,5' }, { answer: '8,15,22' }, { answer: '35,36,37' }, { answer: '34,41,48' }]
-console.log(answers[0].answer)
-var t = []
-var split = []
+const answers =[[3,4,5],[28,29,30],[30,37,44],[15,22,29]]
 var chars = []
 const checked = []
+// var t = []
 window.onload = function () {
   createTiles()
   drawLettersForsquares()
@@ -23,24 +21,26 @@ function clickedTile (id) {
     if (object.style.backgroundColor !== 'blue') {
       object.style.backgroundColor = 'blue'
       // adds answer
-      checked.push(id)
+      
+      checked.push(Number(id))
+      // checked.sort()
       checked.sort(function (a, b) {
         return a - b
       })
-      checked.join()
-      console.log('array checked after click: ' + checked)
+      
+      //console.log('array checked after click: ' + checked)
       checkAnswer(checked)
     } else {
       // unclicks to usual color
       object.style.backgroundColor = backgroundColorForTiles
-      // removes answerd sdsd
-      checked.remove(id)
+      // removes answerd by value
+      indId = id
+      checked.remove(Number(id))
       checked.sort(function (a, b) {
         return a - b
       })
-      checked.join()
       checkAnswer(checked)
-      console.log('array rechecked after click: ' + checked)
+      //console.log('array rechecked after click: ' + checked)
     }
   }
 
@@ -48,59 +48,51 @@ function clickedTile (id) {
 function createTiles () {
   const container = document.getElementById('container')
   container.innerHTML = ''// don't want any extra boxes when you call this function again
-  const NumberOfSquares = 49
-
-  for (let i = 0; i < NumberOfSquares; i++) {
-    if (i % 7 === 0) {
+  console.log(numberOfRows)
+    for(let i =0;i<numberOfRows;i++){
       var row = document.createElement('div')
       row.className = 'row'
       container.appendChild(row)
+    for(let j = 0;j<numberOfColumns;j++){
+      const box = document.createElement('div')
+      box.id = (i*7)+j
+      
+      box.className = 'box'// assign class
+      box.onclick = function() {clickedTile(box.id)};
+      const content = document.createTextNode(randomCharacter())
+      box.appendChild(content)
+      row.appendChild(box)
     }
-    const box = document.createElement('div')
-    box.id = i
-    box.className = 'box'// assign class
-    box.setAttribute('onclick', 'clickedTile(id)')
-    const content = document.createTextNode(randomCharacter())
-    box.appendChild(content)
-    row.appendChild(box)
   }
 }
 
 function checkAnswer (checked) {
-  console.log(checked.join())
+  console.log(checked)
   for (let i = 0; i < answers.length; i++) {
-    console.log('asnwer: ' + answers[i].answer)
-    if (checked.join() === answers[i].answer) {
+    console.log('asnwer: ', answers[i])
+    if (JSON.stringify(checked)==JSON.stringify(answers[i])) {
       for (let j = 0; j < checked.length; j++) {
+        console.log("passed")
         const marked = document.getElementById(checked[j])
         marked.style.backgroundColor = 'green'
         // blocks onclick after correct word was found
         marked.onclick = null
-        // for now logic behind checking words that cross throgh one another
-        // we are looking for letters that are common in at least two answers and then we delete this letter from ther answers
-        // so they only require remaining leeters for correct marking instead of box with onclicked blocked
-        // need to look for a prettier way to write that logic
+
+        //logic for words that share the same letter, we remove the letter from other answers
         for (let e = 0; e < answers.length; e++) {
           if (i !== e) {
-            if (answers[i].answer.includes(checked[j]) && answers[e].answer.includes(checked[j])) {
-              if (answers[e].answer.includes(',' + checked[j] + ',')) {
-                answers[e].answer = answers[e].answer.replace(checked[j] + ',', '')
-              }
-              if (answers[e].answer.endsWith(',' + checked[j])) {
-                answers[e].answer = answers[e].answer.replace(',' + checked[j], '')
-              }
-              if (answers[e].answer.startsWith(checked[j] + ',')) {
-                answers[e].answer = answers[e].answer.replace(checked[j] + ',', '')
-              }
+            if(answers[i].includes(checked[j])&& answers[e].includes(checked[j])){
+              answers[e].remove(checked[j])
             }
           }
         }
       }
-      // resets our array of answers after positive check so we can look for other answers
-      checked.splice(0, checked.length)
-    }
-  }
+        // resets our array of answers after positive check so we can look for other answers
+        checked.splice(0, checked.length)
+    }  
+  }    
 }
+
 
 // remove from array by value
 Array.prototype.remove = function () {
@@ -119,18 +111,19 @@ function randomCharacter(){
   const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)]
   return randomCharacter
 }
-function drawLettersForsquares(){
-    for(let i =0;i<words.length;i++){
-        t.push(answers[i].answer.split(','))
-        chars = words[i].split('')
-        console.log(chars)
-    }   
-    console.log(t)
-}
+// function drawLettersForsquares(){
+//     for(let i =0;i<words.length;i++){
+//         t.push(answers[i])
+//         chars = words[i].
+//         console.log(chars)
+//     }   
+//     console.log(t)
+// }
 //TODO
-//usunac remove, zamiast settatrubute onclick to referencja, 
-//zamienic liste na tablice int, tworzenie layoutu po liczbie kolumn i wierszy nie po ilosci kafelek
+
 
 //DONE
 //settattribute to null,zmienic nazyw funkcji na bardziej intuicyjne, wyciagnac zmienne np. kolor do gory
-//funkcja clickedTile przed createTiles
+//funkcja clickedTile przed createTiles, zamiast settatrubute onclick uzyc referencja 
+//tworzenie layoutu po liczbie kolumn i wierszy nie po ilosci kafelek,
+//usunac remove, zamienic liste na tablice int,
