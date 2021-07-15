@@ -1,1 +1,1 @@
-Zaznaczanie obrazka- elementy na ekranie 3 kliklane grafiki(bez opcji powiekdszania) w jednym rzedzie. Wybierz obrazek do sulyszanego tekstu,komunikatu[D[D[D[D[D[D[D[D[D[D[D[C [C[C[C[C[C[C[C[C[C[C[C[D[D[D[D[D[D[D[D[D[D[Dk[C[C[C[C[D[D[o[C[C[C[C[D[D[D[D[D[D[D[D[D[D[D[D[D[D[D[D[[C[C[C[C[C[C[C[C[C[C[C[C[C[C[ uslyszanego tekstu
+Zaznaczanie obrazka- elementy na ekranie 3 kliklane grafiki(bez opcji powiekszania) w jednym rzedzie. Wybierz pasujacy obrazek do uslyszanego tekstu
