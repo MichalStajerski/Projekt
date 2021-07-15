@@ -10,13 +10,6 @@ const answers =[[3,4,5],[28,29,30],[30,37,44],[15,22,29]]
 var chars = []
 const checked = []
 
-var array = [1,2,3,4]
-var item = 4
-
-var index = array.indexOf(item);
-array.splice(index, 1);
-
-
 // var t = []
 var xd = 'hello'
 window.onload = function () {
@@ -93,7 +86,6 @@ function checkAnswer (checked) {
             if(answers[i].includes(checked[j])&& answers[e].includes(checked[j])){
               let index = checked.indexOf(checked[j]);
               answers[e].splice(index, 1);
-              // answers[e].remove(checked[j])
             }
           }
         }
@@ -105,17 +97,6 @@ function checkAnswer (checked) {
 }
 
 
-// remove from array by value
-// Array.prototype.remove = function () {
-//   let what; const a = arguments; let L = a.length; let ax
-//   while (L && this.length) {
-//     what = a[--L]
-//     while ((ax = this.indexOf(what)) !== -1) {
-//       this.splice(ax, 1)
-//     }
-//   }
-//   return this
-// }
 //random char to fill squares outside of answers
 function randomCharacter(){
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
