@@ -5,28 +5,28 @@ const colors = {
   normal: '#ddd',
   success: 'green'
 }
+const words = ['dog','ape','cat','dice']
+var spltWords = []
+for(let i =0;i<words.length;i++){
+  spltWords.push(words[i].split(''))
+}
 
+var takenSquares = []
+const answers = []
+const arraysAreEqualLength = (a1, a2) => a1.length === a2.length
+const arraysArraysAreEqual = (a1,a2) => a1.length == a2.length && a1.every(x => x === a2[x])
+const foundCommonValue = (a1,a2) => a1.some(x=> a2.includes(x))
+const ArrayValuesBetween = (a1,a2,a3) => a1.every(x =>  x >=a2 && x <= a3)
+const ValuesBetween = (a1,a2,a3) => a1>=a2 && a1 <= a3
+
+console.log('splitwords',spltWords)
 /**
  * @type string[]
  */
-const words = ['cat', 'dog', 'ape', 'egg']
-const answerss = [
-  {fields:[3, 4, 5]},
-  {fields:[28, 29, 30]},
-  {fields:[30, 37, 44]},
-  {fields:[15, 22, 29]},
-]
-const answers = [[ 4, 5, 6], [28, 29, 30], [30, 37, 44], [15, 22, 29]]
-
-/**
- * @type string[]
- */
-var chars = []
 const clickedTiles = []
-var intID = 0;
-
-var t = []
+var temp = []
 window.onload = function () {
+  drawSquaresForWords();
   createTiles()
 }
 
@@ -42,7 +42,6 @@ function clickedTile (id) {
     // adds answer
 
     clickedTiles.push(Number(id))
-    // clickedTiles.sort()
     clickedTiles.sort(function (a, b) {
       return a - b
     })
@@ -59,7 +58,6 @@ function clickedTile (id) {
       return a - b
     })
     checkAnswer(clickedTiles)
-    // console.log('array reclickedTiles after click: ' + cclickedTiles)
   }
 }
 
@@ -76,19 +74,18 @@ function createTiles () {
       const box = document.createElement('div')
       box.id = (i * 7) + j
       box.className = 'box'// assign class
-      intID = box.id
-      box.onclick = function () { clickedTile(box.id) }
-      const content = document.createTextNode(drawLettersForsquares(intID))
-      box.appendChild(content)
+      box.onclick = function () { clickedTile(box.id) }      
       row.appendChild(box)
     }
   }
+  drawLettersForsquares();
 }
 
 function checkAnswer (clickedTiles) {
   console.log(clickedTiles)
   for (let i = 0; i < answers.length; i++) {
-    console.log('asnwer: ', answers[i])
+    console.log('answer: ', answers[i])
+    //Tried to use arraysAreEqual but checking stoped working need to look into that
     if (JSON.stringify(clickedTiles) == JSON.stringify(answers[i])) {
       for (let j = 0; j < clickedTiles.length; j++) {
         console.log('passed')
@@ -130,36 +127,104 @@ Array.prototype.remove = function () {
   }
   return this
 }
-function drawLettersForsquares(intID){
-  if(intID<49){
-    //console.log("id",intID)
-    var merged = [].concat.apply([], answers);
-    console.log(merged)
-    console.log('id',Number(intID))
-    for(let j = 0;j<merged.length;j++){
-      console.log('merged j',merged[j])
-      if(merged.includes(Number(intID))){
-        console.log("Jest")
-        return 'xdd'    
-      }else{
-        return randomCharacter()
+function drawSquaresForWords(){
+  let numWords = words.length
+  for(let i = 0;i<numWords;i++){
+    let wordLength = words[i].length 
+
+    let startSquare = getRandomIntInclusive(0,48)
+    
+    console.log('wordslength',wordLength)
+    let direction = getRandomIntInclusive(0,1)
+    //vertical allignment of word
+    if(!direction){
+      for(let i = 1;i<wordLength;i++){
+        while(conditionsVertical(startSquare,wordLength,numCols)){
+          startSquare = getRandomIntInclusive(0,48)
+        }
       }
+      if(startSquare+(wordLength-1)*numRows<48){
+        for(let j =0;j<wordLength;j++){
+          takenSquares.push(startSquare+(numRows*j))
+          temp.push(startSquare+(numRows*j))
+        }
+        answers.splice(i,0,temp)
+        temp= []
+      }else{
+        for(let j =0;j<wordLength;j++){
+          takenSquares.push(startSquare-(numRows*j))
+          temp.push(startSquare-(numRows*j))
+        }
+        answers.splice(i,0,temp)
+        temp= []
+      }
+      answers[i].sort(function (a, b) {
+        return a - b
+      }) 
+    }else{//horizontal allignment of word
+      for(let i = 1;i<wordLength;i++){
+        while(conditionsHorizontal(startSquare,wordLength,numRows)){
+          startSquare = getRandomIntInclusive(0,48)     
+        }
+      }   
+      console.log('startsquare',startSquare)
+      for(let j =0;j<wordLength;j++){
+        takenSquares.push(startSquare+j)
+        temp.push(startSquare+j)
+      }
+      answers.splice(i,0,temp)
+      temp= []
+
+      answers[i].sort(function (a, b) {
+        return a - b
+      })
+    }  
+  }
+  console.log('answers',answers)
+  console.log('takensquares',takenSquares)
+}
+
+function drawLettersForsquares(square){
+  var merged = [].concat.apply([], answers);
+  var merged2 = [].concat.apply([], spltWords);
+  console.log('merged2',merged2)
+  //for drawn answers write letters from array merged2
+  for(let i = 0;i<merged.length;i++){
+    var tileId = merged[i].toString()
+    var tile = document.getElementById(tileId)
+    var content = document.createTextNode(merged2[i])
+    tile.appendChild(content)
+  }
+  //else draw random letters for others squares
+  for(let i =0;i<numRows*numCols;i++){  
+    if(!merged.includes(i)){
+      var tileId = i.toString()
+      var tile = document.getElementById(tileId)
+      var content = document.createTextNode(randomCharacter())
+      tile.appendChild(content)
     }
   }
 }
-  // console.log(merged)
-  // // if()
-  //   for(let i =0;i<words.length;i++){
-  //       t.push(answers[i])
-  //       chars = words[i].split('')
-  //       console.log(chars)
-  //   }
-  //   console.log("t",t)
-
-// TODO
-
-// DONE
-// settattribute to null,zmienic nazyw funkcji na bardziej intuicyjne, wyciagnac zmienne np. kolor do gory
-// funkcja clickedTile przed createTiles, zamiast settatrubute onclick uzyc referencja
-// tworzenie layoutu po liczbie kolumn i wierszy nie po ilosci kafelek,
-// usunac remove, zamienic liste na tablice int,
+  
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+//for now i left the conditions like this to check if its working, needs changing horizontal words will never reach last column even 
+//if its not going to cross to the next row 
+function conditionsHorizontal(startSquare,wordLength,modulo){
+  for(let i =0;i<wordLength;i++){
+    if((startSquare+i)%modulo===6 || takenSquares.includes(startSquare+i)||startSquare+wordLength-1>numRows*numCols-1){
+      return true
+    }
+  }
+}
+//checks squares up and down in comparison with takenSquares array
+function conditionsVertical(startSquare,wordLength,numRows){
+  for(let i = 0;i<wordLength;i++){
+    if(takenSquares.includes(startSquare+(numRows*i))||takenSquares.includes(startSquare-(numRows*i))){
+      return true
+    }
+  }
+}
