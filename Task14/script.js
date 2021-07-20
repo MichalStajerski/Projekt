@@ -86,25 +86,19 @@ function checkAnswer (clickedTiles) {
     // Tried to use arraysAreEqual but checking stoped working need to look into that
     if (arraysAreEqual(clickedTiles,answers[i])) {
       for (let j = 0; j < clickedTiles.length; j++) {
-        console.log('passed')
         const marked = document.getElementById(clickedTiles[j])
         marked.style.backgroundColor = colors.success
         // blocks onclick after correct word was found
         marked.onclick = null
-        // logic for words that share the same letter, we remove the letter from other answers
-        for (let e = 0; e < answers.length; e++) {
-          if (i !== e) {
-            if (answers[i].includes(clickedTiles[j]) && answers[e].includes(clickedTiles[j])) {
-              // remove functions is still used here cause split failed to work, will change so its not needed
-              answers[e].remove(clickedTiles[j])
-            }
-          }
+        for(let k = 0;k<answers.length;k++){
+          answers[k].remove(clickedTiles[j])
         }
       }
       // resets our array of answers after positive check so we can look for other answers
       clickedTiles.splice(0, clickedTiles.length)
     }
   }
+
 }
 
 // random char to fill squares outside of answers
