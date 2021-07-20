@@ -8,13 +8,12 @@ const colors = {
 const words = ['dog', 'ape', 'cat', 'dice']
 
 const splitWords = words.map(function (x) {
-  for (let i = 0; i < words.length; i++) {
-    return x.split('')
-  }
+  return x.split('')
 })
 
 const takenSquares = []
 const answers = []
+// instead of random so we will not draw from squares that are already taken
 const arrayForDraw = []
 for (let i = 0; i < numCols * numRows - 1; i++) {
   arrayForDraw.push(i)
@@ -22,6 +21,8 @@ for (let i = 0; i < numCols * numRows - 1; i++) {
 
 const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
+
+let text = ''
 
 /**
  * @type int[]
@@ -31,6 +32,7 @@ let temp = []
 window.onload = function () {
   drawSquaresForWords()
   createLayout()
+  console.log('asnwers', answers)
 }
 
 /**
@@ -43,7 +45,6 @@ function tileClicked (tile, id) {
     tile.style.backgroundColor = colors.selected
     // adds answer
     clickedTiles.push(id)
-    
   } else {
     // unclicks to usual color
     tile.style.backgroundColor = colors.normal
@@ -55,6 +56,20 @@ function tileClicked (tile, id) {
     return a - b
   })
   checkAnswer(clickedTiles)
+}
+
+function drawBoard () {
+  const board = document.getElementById('board')
+  board.className = 'board'
+  const titleForBoard = document.createElement('div')
+  titleForBoard.innerHTML = 'Search for words: '
+  board.appendChild(titleForBoard)
+  for (let i = 0; i < words.length; i++) {
+    const searchedAnswer = document.createElement('div')
+    searchedAnswer.id = words[i]
+    searchedAnswer.innerHTML = words[i]
+    board.appendChild(searchedAnswer)
+  }
 }
 
 // creates our front
@@ -80,8 +95,6 @@ function createLayout () {
 function checkAnswer (clickedTiles) {
   console.log(clickedTiles)
   for (let i = 0; i < answers.length; i++) {
-    console.log('answer: ', answers[i])
-    // Tried to use arraysAreEqual but checking stoped working need to look into that
     if (arraysAreEqual(clickedTiles, answers[i])) {
       for (let j = 0; j < clickedTiles.length; j++) {
         const marked = document.getElementById(clickedTiles[j])
@@ -89,13 +102,24 @@ function checkAnswer (clickedTiles) {
         // blocks onclick after correct word was found
         marked.onclick = null
         // deletes tiles from answer array
+
         for (let k = 0; k < answers.length; k++) {
           answers[k].remove(clickedTiles[j])
         }
+        // i place the text together so i can get the id for board to cross out
+        text += document.getElementById(clickedTiles[j]).innerHTML
       }
-      document.getElementById('answer' + i).setAttribute('style', 'color: green;text-decoration: line-through;')
+      document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
+      text = ''
+      // delete alert after good answer
+      answers.splice(i, 1)
+      // when there are no more answers show alert
+      if (!answers.length) {
+        setTimeout(() => {
+          alert('Victory')
+        }, 100)
+      }
       // resets our array of answers after positive check so we can look for other answers
-      console.log('answersLength', answers.length)
       clickedTiles.splice(0, clickedTiles.length)
     }
   }
@@ -124,8 +148,6 @@ function drawSquaresForWords () {
     const wordLength = words[i].length
     // using array instead of getRandom so we won't draw squares that are already taken
     let startSquare = randomArrayElement(arrayForDraw)
-
-    console.log('wordslength', wordLength)
     const direction = getRandomIntInclusive(0, 1)
     // vertical allignment of word
     if (!direction) {
@@ -160,7 +182,6 @@ function drawSquaresForWords () {
           startSquare = randomArrayElement(arrayForDraw)
         }
       }
-      console.log('startsquare', startSquare)
       for (let j = 0; j < wordLength; j++) {
         arrayForDraw.remove(startSquare + j)
         takenSquares.push(startSquare + j)
@@ -174,7 +195,6 @@ function drawSquaresForWords () {
       })
     }
   }
-  console.log('answers', answers)
 }
 
 function drawLettersForsquares () {
@@ -219,18 +239,5 @@ function conditionsVertical (startSquare, wordLength, numRows) {
     if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i))) {
       return true
     }
-  }
-}
-function drawBoard () {
-  const board = document.getElementById('board')
-  board.className = 'board'
-  const titleForBoard = document.createElement('div')
-  titleForBoard.innerHTML = 'Search for words: '
-  board.appendChild(titleForBoard)
-  for (let i = 0; i < words.length; i++) {
-    const searchedAnswer = document.createElement('div')
-    searchedAnswer.id = 'answer' + i
-    searchedAnswer.innerHTML = words[i]
-    board.appendChild(searchedAnswer)
   }
 }
