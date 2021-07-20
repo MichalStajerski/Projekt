@@ -15,13 +15,13 @@ const splitWords = words.map(function (x) {
 
 const takenSquares = []
 const answers = []
-const arrayForDraw = [] 
-for(let i = 0;i<numCols*numRows-1;i++){
+const arrayForDraw = []
+for (let i = 0; i < numCols * numRows - 1; i++) {
   arrayForDraw.push(i)
 }
-const arraysAreEqualLength = (a1, a2) => a1.length === a2.length
+
 const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
-const randomArrayElement =(array) => Math.floor(Math.random() * array.length)
+const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 
 /**
  * @type string[]
@@ -99,7 +99,7 @@ function checkAnswer (clickedTiles) {
           answers[k].remove(clickedTiles[j])
         }
       }
-      document.getElementById('answer'+i).setAttribute('style','color: green;text-decoration: line-through;')
+      document.getElementById('answer' + i).setAttribute('style', 'color: green;text-decoration: line-through;')
       // resets our array of answers after positive check so we can look for other answers
       console.log('answersLength', answers.length)
       clickedTiles.splice(0, clickedTiles.length)
@@ -128,7 +128,7 @@ function drawSquaresForWords () {
   const numWords = words.length
   for (let i = 0; i < numWords; i++) {
     const wordLength = words[i].length
-    //using array instead of getRandom so we won't draw squares that are already taken
+    // using array instead of getRandom so we won't draw squares that are already taken
     let startSquare = randomArrayElement(arrayForDraw)
 
     console.log('wordslength', wordLength)
@@ -227,13 +227,13 @@ function conditionsVertical (startSquare, wordLength, numRows) {
     }
   }
 }
-function drawBoard(board){
+function drawBoard (board) {
   const titleForBoard = document.createElement('div')
   titleForBoard.innerHTML = 'Search for words: '
   board.appendChild(titleForBoard)
-  for(let i=0;i<words.length;i++){
+  for (let i = 0; i < words.length; i++) {
     const searchedAnswer = document.createElement('div')
-    searchedAnswer.id = 'answer'+i
+    searchedAnswer.id = 'answer' + i
     searchedAnswer.innerHTML = words[i]
     board.appendChild(searchedAnswer)
   }
