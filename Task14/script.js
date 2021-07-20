@@ -15,10 +15,14 @@ const splitWords = words.map(function (x) {
 
 const takenSquares = []
 const answers = []
+const arrayForDraw = [] 
+for(let i = 0;i<numCols*numRows-1;i++){
+  arrayForDraw.push(i)
+}
 const arraysAreEqualLength = (a1, a2) => a1.length === a2.length
 const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
+const randomArrayElement =(array) => Math.floor(Math.random() * array.length)
 
-console.log('splitwords', splitWords)
 /**
  * @type string[]
  */
@@ -60,7 +64,10 @@ function tileClicked (tile, id) {
 function createTiles () {
   const container = document.getElementById('container')
   container.innerHTML = ''// don't want any extra boxes when you call this function again
-  console.log(numRows)
+  const board = document.createElement('div')
+  board.className = 'board'
+  container.appendChild(board)
+  drawBoard(board)
   for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
     const row = document.createElement('div')
     row.className = 'row'
@@ -92,6 +99,7 @@ function checkAnswer (clickedTiles) {
           answers[k].remove(clickedTiles[j])
         }
       }
+      document.getElementById('answer'+i).setAttribute('style','color: green;text-decoration: line-through;')
       // resets our array of answers after positive check so we can look for other answers
       console.log('answersLength', answers.length)
       clickedTiles.splice(0, clickedTiles.length)
@@ -102,7 +110,7 @@ function checkAnswer (clickedTiles) {
 // random char to fill squares outside of answers
 function randomCharacter () {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'
-  const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)]
+  const randomCharacter = alphabet[randomArrayElement(alphabet)]
   return randomCharacter
 }
 // remove from array by value
@@ -120,8 +128,8 @@ function drawSquaresForWords () {
   const numWords = words.length
   for (let i = 0; i < numWords; i++) {
     const wordLength = words[i].length
-
-    let startSquare = getRandomIntInclusive(0, 48)
+    //using array instead of getRandom so we won't draw squares that are already taken
+    let startSquare = randomArrayElement(arrayForDraw)
 
     console.log('wordslength', wordLength)
     const direction = getRandomIntInclusive(0, 1)
@@ -129,11 +137,12 @@ function drawSquaresForWords () {
     if (!direction) {
       for (let i = 1; i < wordLength; i++) {
         while (conditionsVertical(startSquare, wordLength, numCols)) {
-          startSquare = getRandomIntInclusive(0, 48)
+          startSquare = randomArrayElement(arrayForDraw)
         }
       }
       if (startSquare + (wordLength - 1) * numRows < 48) {
         for (let j = 0; j < wordLength; j++) {
+          arrayForDraw.remove(startSquare + (numRows * j))
           takenSquares.push(startSquare + (numRows * j))
           temp.push(startSquare + (numRows * j))
         }
@@ -141,6 +150,7 @@ function drawSquaresForWords () {
         temp = []
       } else {
         for (let j = 0; j < wordLength; j++) {
+          arrayForDraw.remove(startSquare - (numRows * j))
           takenSquares.push(startSquare - (numRows * j))
           temp.push(startSquare - (numRows * j))
         }
@@ -153,11 +163,12 @@ function drawSquaresForWords () {
     } else { // horizontal allignment of word
       for (let i = 1; i < wordLength; i++) {
         while (conditionsHorizontal(startSquare, wordLength, numRows)) {
-          startSquare = getRandomIntInclusive(0, 48)
+          startSquare = randomArrayElement(arrayForDraw)
         }
       }
       console.log('startsquare', startSquare)
       for (let j = 0; j < wordLength; j++) {
+        arrayForDraw.remove(startSquare + j)
         takenSquares.push(startSquare + j)
         temp.push(startSquare + j)
       }
@@ -170,10 +181,9 @@ function drawSquaresForWords () {
     }
   }
   console.log('answers', answers)
-  console.log('takensquares', takenSquares)
 }
 
-function drawLettersForsquares (square) {
+function drawLettersForsquares () {
   const merged = [].concat.apply([], answers)
   const merged2 = [].concat.apply([], splitWords)
   console.log('merged2', merged2)
@@ -215,5 +225,16 @@ function conditionsVertical (startSquare, wordLength, numRows) {
     if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i))) {
       return true
     }
+  }
+}
+function drawBoard(board){
+  const titleForBoard = document.createElement('div')
+  titleForBoard.innerHTML = 'Search for words: '
+  board.appendChild(titleForBoard)
+  for(let i=0;i<words.length;i++){
+    const searchedAnswer = document.createElement('div')
+    searchedAnswer.id = 'answer'+i
+    searchedAnswer.innerHTML = words[i]
+    board.appendChild(searchedAnswer)
   }
 }
