@@ -15,7 +15,6 @@ const takenSquares = []
 const answers = []
 const arraysAreEqualLength = (a1, a2) => a1.length === a2.length
 const arraysArraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(x => x === a2[x])
-const foundCommonValue = (a1, a2) => a1.some(x => a2.includes(x))
 const ArrayValuesBetween = (a1, a2, a3) => a1.every(x => x >= a2 && x <= a3)
 
 console.log('splitwords', spltWords)
