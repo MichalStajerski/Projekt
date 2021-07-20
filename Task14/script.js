@@ -84,7 +84,7 @@ function checkAnswer (clickedTiles) {
   for (let i = 0; i < answers.length; i++) {
     console.log('answer: ', answers[i])
     // Tried to use arraysAreEqual but checking stoped working need to look into that
-    if (JSON.stringify(clickedTiles) === JSON.stringify(answers[i])) {
+    if (arraysAreEqual(clickedTiles,answers[i])) {
       for (let j = 0; j < clickedTiles.length; j++) {
         console.log('passed')
         const marked = document.getElementById(clickedTiles[j])
