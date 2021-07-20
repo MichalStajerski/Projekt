@@ -7,7 +7,7 @@ const colors = {
 }
 const words = ['dog', 'ape', 'cat', 'dice']
 
-const splitWords = words.map(function(x){
+const splitWords = words.map(function (x) {
   for (let i = 0; i < words.length; i++) {
     return x.split('')
   }
@@ -33,18 +33,15 @@ window.onload = function () {
  *
  * @param {string} id
  */
-function tileClicked (tile,id) {
+function tileClicked (tile, id) {
   // marks in blue color after click
   if (tile.style.backgroundColor !== colors.selected) {
     tile.style.backgroundColor = colors.selected
     // adds answer
-
     clickedTiles.push(id)
     clickedTiles.sort(function (a, b) {
       return a - b
     })
-
-    // console.log('array clickedTiles after click: ' + clickedTiles)
     checkAnswer(clickedTiles)
   } else {
     // unclicks to usual color
@@ -70,7 +67,7 @@ function createTiles () {
     for (let colIndex = 0; colIndex < numCols; colIndex++) {
       const tile = document.createElement('div')
       tile.className = 'box'
-      tile.id = (rowIndex*numCols+colIndex)
+      tile.id = (rowIndex * numCols + colIndex)
       tile.onclick = () => tileClicked(tile, rowIndex * numCols + colIndex)
       row.appendChild(tile)
     }
@@ -84,21 +81,22 @@ function checkAnswer (clickedTiles) {
   for (let i = 0; i < answers.length; i++) {
     console.log('answer: ', answers[i])
     // Tried to use arraysAreEqual but checking stoped working need to look into that
-    if (arraysAreEqual(clickedTiles,answers[i])) {
+    if (arraysAreEqual(clickedTiles, answers[i])) {
       for (let j = 0; j < clickedTiles.length; j++) {
         const marked = document.getElementById(clickedTiles[j])
         marked.style.backgroundColor = colors.success
         // blocks onclick after correct word was found
         marked.onclick = null
-        for(let k = 0;k<answers.length;k++){
+        // deletes tiles from answer array
+        for (let k = 0; k < answers.length; k++) {
           answers[k].remove(clickedTiles[j])
         }
       }
       // resets our array of answers after positive check so we can look for other answers
+      console.log('answersLength', answers.length)
       clickedTiles.splice(0, clickedTiles.length)
     }
   }
-
 }
 
 // random char to fill squares outside of answers
@@ -181,16 +179,16 @@ function drawLettersForsquares (square) {
   console.log('merged2', merged2)
   // for drawn answers write letters from array merged2
   for (let i = 0; i < merged.length; i++) {
-    let tileId = merged[i].toString()
-    let tile = document.getElementById(tileId)
-    let content = document.createTextNode(merged2[i])
+    const tileId = merged[i].toString()
+    const tile = document.getElementById(tileId)
+    const content = document.createTextNode(merged2[i])
     tile.appendChild(content)
   }
   // else draw random letters for others squares
   for (let i = 0; i < numRows * numCols; i++) {
     if (!merged.includes(i)) {
       tileId = i.toString()
-      let tile = document.getElementById(tileId)
+      const tile = document.getElementById(tileId)
       content = document.createTextNode(randomCharacter())
       tile.appendChild(content)
     }
