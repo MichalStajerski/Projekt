@@ -18,6 +18,7 @@
     flex-basis: 150px;
     width: 200px;
     height: 200px;
+    font-size: large;
     background: linear-gradient(15deg, rgba(204,135,79,1) 11%, rgba(255,253,208,0.6702031154258579) 48%, rgba(158,103,103,1) 87%);
   }
 
