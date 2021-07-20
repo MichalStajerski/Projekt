@@ -24,13 +24,13 @@ const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 
 /**
- * @type string[]
+ * @type int[]
  */
 const clickedTiles = []
 let temp = []
 window.onload = function () {
   drawSquaresForWords()
-  createTiles()
+  createLayout()
 }
 
 /**
@@ -43,31 +43,25 @@ function tileClicked (tile, id) {
     tile.style.backgroundColor = colors.selected
     // adds answer
     clickedTiles.push(id)
-    clickedTiles.sort(function (a, b) {
-      return a - b
-    })
-    checkAnswer(clickedTiles)
+    
   } else {
     // unclicks to usual color
     tile.style.backgroundColor = colors.normal
     // removes answerd by value
     const index = clickedTiles.indexOf(id)
     clickedTiles.splice(index, 1)
-    clickedTiles.sort(function (a, b) {
-      return a - b
-    })
-    checkAnswer(clickedTiles)
   }
+  clickedTiles.sort(function (a, b) {
+    return a - b
+  })
+  checkAnswer(clickedTiles)
 }
 
 // creates our front
-function createTiles () {
+function createLayout () {
+  drawBoard()
   const container = document.getElementById('container')
   container.innerHTML = ''// don't want any extra boxes when you call this function again
-  const board = document.createElement('div')
-  board.className = 'board'
-  container.appendChild(board)
-  drawBoard(board)
   for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
     const row = document.createElement('div')
     row.className = 'row'
@@ -227,7 +221,9 @@ function conditionsVertical (startSquare, wordLength, numRows) {
     }
   }
 }
-function drawBoard (board) {
+function drawBoard () {
+  const board = document.getElementById('board')
+  board.className = 'board'
   const titleForBoard = document.createElement('div')
   titleForBoard.innerHTML = 'Search for words: '
   board.appendChild(titleForBoard)
