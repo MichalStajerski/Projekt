@@ -16,8 +16,7 @@ const splitWords = words.map(function(x){
 const takenSquares = []
 const answers = []
 const arraysAreEqualLength = (a1, a2) => a1.length === a2.length
-const arraysArraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(x => x === a2[x])
-const ArrayValuesBetween = (a1, a2, a3) => a1.every(x => x >= a2 && x <= a3)
+const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 
 console.log('splitwords', splitWords)
 /**
@@ -34,14 +33,13 @@ window.onload = function () {
  *
  * @param {string} id
  */
-function clickedTile (id) {
-  const object = document.getElementById(id)
+function tileClicked (tile,id) {
   // marks in blue color after click
-  if (object.style.backgroundColor !== colors.selected) {
-    object.style.backgroundColor = colors.selected
+  if (tile.style.backgroundColor !== colors.selected) {
+    tile.style.backgroundColor = colors.selected
     // adds answer
 
-    clickedTiles.push(Number(id))
+    clickedTiles.push(id)
     clickedTiles.sort(function (a, b) {
       return a - b
     })
@@ -50,9 +48,9 @@ function clickedTile (id) {
     checkAnswer(clickedTiles)
   } else {
     // unclicks to usual color
-    object.style.backgroundColor = colors.normal
+    tile.style.backgroundColor = colors.normal
     // removes answerd by value
-    const index = clickedTiles.indexOf(Number(id))
+    const index = clickedTiles.indexOf(id)
     clickedTiles.splice(index, 1)
     clickedTiles.sort(function (a, b) {
       return a - b
@@ -66,17 +64,17 @@ function createTiles () {
   const container = document.getElementById('container')
   container.innerHTML = ''// don't want any extra boxes when you call this function again
   console.log(numRows)
-  for (let i = 0; i < numRows; i++) {
+  for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
     const row = document.createElement('div')
     row.className = 'row'
-    container.appendChild(row)
-    for (let j = 0; j < numCols; j++) {
-      const box = document.createElement('div')
-      box.id = (i * 7) + j
-      box.className = 'box'// assign class
-      box.onclick = function () { clickedTile(box.id) }
-      row.appendChild(box)
+    for (let colIndex = 0; colIndex < numCols; colIndex++) {
+      const tile = document.createElement('div')
+      tile.className = 'box'
+      tile.id = (rowIndex*numCols+colIndex)
+      tile.onclick = () => tileClicked(tile, rowIndex * numCols + colIndex)
+      row.appendChild(tile)
     }
+    container.appendChild(row)
   }
   drawLettersForsquares()
 }
@@ -93,7 +91,6 @@ function checkAnswer (clickedTiles) {
         marked.style.backgroundColor = colors.success
         // blocks onclick after correct word was found
         marked.onclick = null
-
         // logic for words that share the same letter, we remove the letter from other answers
         for (let e = 0; e < answers.length; e++) {
           if (i !== e) {
