@@ -6,10 +6,12 @@ const colors = {
   success: 'green'
 }
 const words = ['dog', 'ape', 'cat', 'dice']
-const spltWords = []
-for (let i = 0; i < words.length; i++) {
-  spltWords.push(words[i].split(''))
-}
+
+const splitWords = words.map(function(x){
+  for (let i = 0; i < words.length; i++) {
+    return x.split('')
+  }
+})
 
 const takenSquares = []
 const answers = []
@@ -17,7 +19,7 @@ const arraysAreEqualLength = (a1, a2) => a1.length === a2.length
 const arraysArraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(x => x === a2[x])
 const ArrayValuesBetween = (a1, a2, a3) => a1.every(x => x >= a2 && x <= a3)
 
-console.log('splitwords', spltWords)
+console.log('splitwords', splitWords)
 /**
  * @type string[]
  */
@@ -184,7 +186,7 @@ function drawSquaresForWords () {
 
 function drawLettersForsquares (square) {
   const merged = [].concat.apply([], answers)
-  const merged2 = [].concat.apply([], spltWords)
+  const merged2 = [].concat.apply([], splitWords)
   console.log('merged2', merged2)
   // for drawn answers write letters from array merged2
   for (let i = 0; i < merged.length; i++) {
