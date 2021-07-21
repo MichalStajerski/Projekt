@@ -1,10 +1,8 @@
 const upperLimit = 100
 const select = document.getElementById('mySelect')
 let lowerLimit  =1
-// let state = document.getElementById('mySelect')
-
-var tabelaContent = document.getElementById('mySelect')
-localStorage.setItem('selectContent',tabelaContent);
+let storageArray = []
+var option2 = document.createElement('option')
 
 function countForwardsByOneIteration(){ 
     for(let i = 0;i<1;i++){
@@ -28,19 +26,21 @@ function countForwardsByOneIteration(){
             }
             select.add(option)
             lowerLimit++
-            // state = document.getElementById('mySelect')
+            storageArray.push(option.text)
+            localStorage.setItem('options',storageArray.slice(-1).pop())
+            console.log(localStorage)
         }
     }
-    
 }
+
 function modulo(divident,divider){
     let scoreWithoutRestOfDivision = parseInt(divident / divider);  
     let dividentWithoutRestOfdivision = scoreWithoutRestOfDivision * divider;  
     return divident - dividentWithoutRestOfdivision;  
   }
 
-  window.onload = function(){   
-    window.localStorage.setItem('state', JSON.stringify(this.state));
-    // localStorage.setItem( 'myState', state );
-    // state = localStorage.getItem('myState')
-  }
+window.onload = function(){  
+    option2.text =  localStorage.getItem('options')
+    select.add(option2)    
+}
+

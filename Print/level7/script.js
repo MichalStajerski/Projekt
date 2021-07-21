@@ -1,9 +1,9 @@
-let counter  
+let lowerLimit  
 let upperLimit 
 const select = document.getElementById('mySelect')
 
 function countBackWardsByOneIteration() {
-    if(upperLimit>=counter){
+    if(upperLimit>=lowerLimit){
         var option = document.createElement('option')
         if(modulo(upperLimit,3)==0 && modulo(upperLimit,5)!=0){
             console.log('Fizz')
@@ -27,36 +27,35 @@ function countBackWardsByOneIteration() {
 }
 
 function countForwardsByOneIteration(){ 
-    if(counter<=upperLimit){
+    if(lowerLimit<=upperLimit){
         var option = document.createElement('option')
-        if(modulo(counter,3)==0 && modulo(counter,5)!=0){
+        if(modulo(lowerLimit,3)==0 && modulo(lowerLimit,5)!=0){
             console.log('Fizz')
             option.text = 'Fizz'
         }
-        if(modulo(counter,5)==0 && modulo(counter,3)!=0){
+        if(modulo(lowerLimit,5)==0 && modulo(lowerLimit,3)!=0){
             option.text = 'Buzz'
             console.log('Buzz')
         }
-        if(modulo(counter,3)==0 && modulo(counter,5)==0){
+        if(modulo(lowerLimit,3)==0 && modulo(lowerLimit,5)==0){
             option.text = 'FizzBuzz'
             console.log('FizzBuzz')
         }
-        if(modulo(counter,5)!=0 && modulo(counter,3)!=0){
-            option.text = counter
-            console.log(counter)
+        if(modulo(lowerLimit,5)!=0 && modulo(lowerLimit,3)!=0){
+            option.text = lowerLimit
+            console.log(lowerLimit)
         }
         select.add(option)
     }
-    counter++
+    lowerLimit++
 }
 function submitValues(){
-    counter = parseInt(document.getElementById('lowerLimit').value)
+    lowerLimit = parseInt(document.getElementById('lowerLimit').value)
     upperLimit = parseInt(document.getElementById('upperLimit').value)
-
 }
 
 function modulo(divident,divider){
     let scoreWithoutRestOfDivision = parseInt(divident / divider);  
     let dividentWithoutRestOfdivision = scoreWithoutRestOfDivision * divider;  
     return divident - dividentWithoutRestOfdivision;  
-  }
+}
