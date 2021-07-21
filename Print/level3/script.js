@@ -3,6 +3,7 @@ const select = document.getElementById('mySelect')
 let lowerLimit  =1
 let storageArray = []
 var option2 = document.createElement('option')
+let localStoragebool = false
 
 function countForwardsByOneIteration(){ 
     for(let i = 0;i<1;i++){
@@ -28,7 +29,9 @@ function countForwardsByOneIteration(){
             lowerLimit++
             storageArray.push(option.text)
             localStorage.setItem('options',storageArray.slice(-1).pop())
+            localStorage.setItem('lastIndex',lowerLimit)
             console.log(localStorage)
+            localStoragebool = true
         }
     }
 }
@@ -40,7 +43,10 @@ function modulo(divident,divider){
   }
 
 window.onload = function(){  
-    option2.text =  localStorage.getItem('options')
-    select.add(option2)    
+    if(localStorage.getItem('options')!= null){
+        option2.text =  localStorage.getItem('options')
+        lowerLimit = parseInt(localStorage.getItem('lastIndex'))
+        select.add(option2)    
+    }
 }
 
