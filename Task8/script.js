@@ -32,7 +32,7 @@ function ChangeAndCheck (id) {
         // check answers by alt
         if (document.getElementById(answerarray[0]).alt !== document.getElementById(answerarray[1]).alt) {
           for (let i = 0; i < answerarray.length; i++) {
-            // return them to back card upon wrong pairing after set interval  
+            // return them to back card upon wrong pairing after set interval
             document.getElementById(answerarray[i]).src = stan[id]
           }
           // clear our asnwer array after set of two
@@ -123,7 +123,7 @@ function CreateLayout () {
       div.setAttribute('class', 'column')
       div.setAttribute('id', 'divcol')
       const img = document.createElement('img')
-      setAttributes(img,{'src': 'Images/back.jpg','class': 'zoom img','style': 'width:80%','alt': ' ','onclick': 'ChangeAndCheck(id)'})
+      setAttributes(img, { src: 'Images/back.jpg', class: 'zoom img', style: 'width:80%', alt: ' ', onclick: 'ChangeAndCheck(id)' })
       img.id = i
       div.appendChild(img)
       divrow.appendChild(div)
@@ -132,16 +132,16 @@ function CreateLayout () {
       div.setAttribute('class', 'column')
       div.setAttribute('id', 'divcol')
       const img = document.createElement('img')
-      setAttributes(img,{'src': 'Images/back.jpg','class': 'zoom img','style': 'width:80%','alt': ' ','onclick': 'ChangeAndCheck(id)'})
+      setAttributes(img, { src: 'Images/back.jpg', class: 'zoom img', style: 'width:80%', alt: ' ', onclick: 'ChangeAndCheck(id)' })
       img.id = i
       div.appendChild(img)
       divrow2.appendChild(div)
     }
   }
 }
-//function so there is no need to call setAttribute several times for each property
-function setAttributes(el, attrs) {
-  for(var key in attrs) {
-    el.setAttribute(key, attrs[key]);
+// function so there is no need to call setAttribute several times for each property
+function setAttributes (el, attrs) {
+  for (const key in attrs) {
+    el.setAttribute(key, attrs[key])
   }
 }
