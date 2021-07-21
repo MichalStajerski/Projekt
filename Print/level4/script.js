@@ -1,6 +1,8 @@
 const upperLimit = 100
 const select = document.getElementById('mySelect')
 let lowerLimit  =1
+let storageArray = []
+var option2 = document.createElement('option')
 
 function countForwardsByOneIteration(){ 
     if(lowerLimit<=upperLimit){
@@ -22,8 +24,13 @@ function countForwardsByOneIteration(){
             console.log(lowerLimit)
         }
         select.add(option)
+        lowerLimit++
+        storageArray.push(option.text)
+        localStorage.setItem('options',storageArray.slice(-1).pop())
+        localStorage.setItem('lastIndex',lowerLimit)
+        console.log(localStorage)     
     }
-    lowerLimit++
+    
 }
 
 function modulo(divident,divider){
@@ -31,3 +38,11 @@ function modulo(divident,divider){
     let dividentWithoutRestOfdivision = scoreWithoutRestOfDivision * divider;  
     return divident - dividentWithoutRestOfdivision;  
   }
+
+window.onload = function(){  
+    if(localStorage.getItem('options')!= null){
+        option2.text =  localStorage.getItem('options')
+        lowerLimit = parseInt(localStorage.getItem('lastIndex'))
+        select.add(option2)    
+    }
+}

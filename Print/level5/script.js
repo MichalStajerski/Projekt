@@ -1,30 +1,37 @@
 //code is the same as in lvl4 since from the beginning i displayed results on the screen instead of terminal 
 const upperLimit = 100
 const select = document.getElementById('mySelect')
-let counter  =1
+let lowerLimit  =1
+let storageArray = []
+var option2 = document.createElement('option')
 
 function countForwardsByOneIteration(){ 
-    if(counter<=upperLimit){
+    if(lowerLimit<=upperLimit){
         var option = document.createElement('option')
-        if(modulo(counter,3)==0 && modulo(counter,5)!=0){
+        if(modulo(lowerLimit,3)==0 && modulo(lowerLimit,5)!=0){
             console.log('Fizz')
             option.text = 'Fizz'
         }
-        if(modulo(counter,5)==0 && modulo(counter,3)!=0){
+        if(modulo(lowerLimit,5)==0 && modulo(lowerLimit,3)!=0){
             option.text = 'Buzz'
             console.log('Buzz')
         }
-        if(modulo(counter,3)==0 && modulo(counter,5)==0){
+        if(modulo(lowerLimit,3)==0 && modulo(lowerLimit,5)==0){
             option.text = 'FizzBuzz'
             console.log('FizzBuzz')
         }
-        if(modulo(counter,5)!=0 && modulo(counter,3)!=0){
-            option.text = counter
-            console.log(counter)
+        if(modulo(lowerLimit,5)!=0 && modulo(lowerLimit,3)!=0){
+            option.text = lowerLimit
+            console.log(lowerLimit)
         }
         select.add(option)
+        lowerLimit++
+        storageArray.push(option.text)
+        localStorage.setItem('options',storageArray.slice(-1).pop())
+        localStorage.setItem('lastIndex',lowerLimit)
+        console.log(localStorage)     
     }
-    counter++
+    
 }
 
 function modulo(divident,divider){
@@ -32,3 +39,11 @@ function modulo(divident,divider){
     let dividentWithoutRestOfdivision = scoreWithoutRestOfDivision * divider;  
     return divident - dividentWithoutRestOfdivision;  
   }
+
+  window.onload = function(){  
+    if(localStorage.getItem('options')!= null){
+        option2.text =  localStorage.getItem('options')
+        lowerLimit = parseInt(localStorage.getItem('lastIndex'))
+        select.add(option2)    
+    }
+}

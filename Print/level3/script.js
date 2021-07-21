@@ -3,7 +3,6 @@ const select = document.getElementById('mySelect')
 let lowerLimit  =1
 let storageArray = []
 var option2 = document.createElement('option')
-let localStoragebool = false
 
 function countForwardsByOneIteration(){ 
     for(let i = 0;i<1;i++){
@@ -31,7 +30,6 @@ function countForwardsByOneIteration(){
             localStorage.setItem('options',storageArray.slice(-1).pop())
             localStorage.setItem('lastIndex',lowerLimit)
             console.log(localStorage)
-            localStoragebool = true
         }
     }
 }
