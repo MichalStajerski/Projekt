@@ -3,6 +3,9 @@ let lowerLimit
 let upperLimit
 const select = document.getElementById('mySelect')
 const constraints = []
+let counter = 0
+
+
 
 function countBackWardsByOneIteration () {
   if (upperLimit >= lowerLimit) {
@@ -28,21 +31,32 @@ function countBackWardsByOneIteration () {
   upperLimit--
 }
 
-function countForwardsByOneIteration () {
-  if (lowerLimit <= upperLimit) {
+function iterateForward(){
+  if(lowerLimit <= upperLimit){
     const option = document.createElement('option')
-    for (let i = 0; i < constraints.length; i++) {
-      if (modulo(i, 2) == 0) {
-        if (modulo(lowerLimit, constraints[i + 1]) == 0) {
-          option.text = constraints[i]
-        } else {
-          option.text = lowerLimit
-        }
+    for(let i = 0;i<constraints.length-1;i+=2){
+      if(modulo(lowerLimit,constraints[i+1]==0)){
+        option.text = constraints[i]
+      }else{
+        option.text = lowerLimit
       }
+      select.add(option)    
     }
-    select.add(option)
-  }
   lowerLimit++
+  }
+}
+
+function countForwardsByOneIteration () {
+  if(lowerLimit <= upperLimit){
+    const option = document.createElement('option')
+    for(let i = 0;i<constraints.length;i+=2){
+      if(modulo(lowerLimit,constraints[i+1]==0)){
+        option.text = constraints[i]
+      }
+      select.add(option)    
+    }
+  lowerLimit++
+  }
 }
 function submitValues () {
   lowerLimit = parseInt(document.getElementById('lowerLimit').value)
@@ -59,3 +73,4 @@ function modulo (divident, divider) {
   const dividentWithoutRestOfdivision = scoreWithoutRestOfDivision * divider
   return divident - dividentWithoutRestOfdivision
 }
+
