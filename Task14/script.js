@@ -6,11 +6,6 @@ const colors = {
   success: 'green'
 }
 const words = ['dog', 'ape', 'cat', 'dice']
-
-const splitWords = words.map(function (x) {
-  return x.split('')
-})
-
 const takenSquares = []
 const answers = []
 // instead of random so we will not draw from squares that are already taken
@@ -21,8 +16,15 @@ for (let i = 0; i < numCols * numRows - 1; i++) {
 
 const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
+const descByLengthOfElementInArray = (a1) => a1.sort((el1,el2) => el2.length - el1.length);
+
+descByLengthOfElementInArray(words)
+const splitWords = words.map(function (x) {
+  return x.split('')
+})
 
 let text = ''
+let canCross = true
 
 /**
  * @type int[]
@@ -117,6 +119,10 @@ function checkAnswer (clickedTiles) {
       if (!answers.length) {
         setTimeout(() => {
           alert('Victory')
+          //blocks all the tiles after win
+          for(let i =0;i<numCols*numRows;i++){
+            document.getElementById(i).onclick= null
+          }
         }, 100)
       }
       // resets our array of answers after positive check so we can look for other answers
@@ -143,6 +149,17 @@ Array.prototype.remove = function () {
   return this
 }
 function drawSquaresForWords () {
+  // console.log('samewordsandIndex',wordsAndindexesOfcommonChar())
+  // if(wordsAndindexesOfcommonChar()!=null && canCross ===true){
+  //   let startSquareForCrossing = randomArrayElement(arrayForDraw)
+  //   for(let i = 0;i<2;i++){
+      
+  //   }
+  //   horizontalDraw
+  //   words.remove(wordsAndindexesOfcommonChar()[0][0])
+  //   words.remove(wordsAndindexesOfcommonChar()[0][1])
+  //   canCross = false
+  // }
   const numWords = words.length
   for (let i = 0; i < numWords; i++) {
     const wordLength = words[i].length
@@ -151,48 +168,9 @@ function drawSquaresForWords () {
     const direction = getRandomIntInclusive(0, 1)
     // vertical allignment of word
     if (!direction) {
-      for (let i = 1; i < wordLength; i++) {
-        while (conditionsVertical(startSquare, wordLength, numCols)) {
-          startSquare = randomArrayElement(arrayForDraw)
-        }
-      }
-      if (startSquare + (wordLength - 1) * numRows < 48) {
-        for (let j = 0; j < wordLength; j++) {
-          arrayForDraw.remove(startSquare + (numRows * j))
-          takenSquares.push(startSquare + (numRows * j))
-          temp.push(startSquare + (numRows * j))
-        }
-        answers.splice(i, 0, temp)
-        temp = []
-      } else {
-        for (let j = 0; j < wordLength; j++) {
-          arrayForDraw.remove(startSquare - (numRows * j))
-          takenSquares.push(startSquare - (numRows * j))
-          temp.push(startSquare - (numRows * j))
-        }
-        answers.splice(i, 0, temp)
-        temp = []
-      }
-      answers[i].sort(function (a, b) {
-        return a - b
-      })
+      verticalDraw(startSquare,wordLength,i)
     } else { // horizontal allignment of word
-      for (let i = 1; i < wordLength; i++) {
-        while (conditionsHorizontal(startSquare, wordLength, numRows)) {
-          startSquare = randomArrayElement(arrayForDraw)
-        }
-      }
-      for (let j = 0; j < wordLength; j++) {
-        arrayForDraw.remove(startSquare + j)
-        takenSquares.push(startSquare + j)
-        temp.push(startSquare + j)
-      }
-      answers.splice(i, 0, temp)
-      temp = []
-
-      answers[i].sort(function (a, b) {
-        return a - b
-      })
+      horizontalDraw(startSquare, wordLength,i)
     }
   }
 }
@@ -238,6 +216,71 @@ function conditionsVertical (startSquare, wordLength, numRows) {
   for (let i = 0; i < wordLength; i++) {
     if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i))) {
       return true
+    }
+  }
+}
+
+
+function verticalDraw(startSquare, wordLength,i){
+  for (let i = 1; i < wordLength; i++) {
+    while (conditionsVertical(startSquare, wordLength, numCols)) {
+      startSquare = randomArrayElement(arrayForDraw)
+    }
+  }
+  if (startSquare + (wordLength - 1) * numRows < 48) {
+    for (let j = 0; j < wordLength; j++) {
+      arrayForDraw.remove(startSquare + (numRows * j))
+      takenSquares.push(startSquare + (numRows * j))
+      temp.push(startSquare + (numRows * j))
+    }
+    answers.splice(i, 0, temp)
+    temp = []
+  } else {
+    for (let j = 0; j < wordLength; j++) {
+      arrayForDraw.remove(startSquare - (numRows * j))
+      takenSquares.push(startSquare - (numRows * j))
+      temp.push(startSquare - (numRows * j))
+    }
+    answers.splice(i, 0, temp)
+    temp = []
+  }
+  answers[i].sort(function (a, b) {
+    return a - b
+  })
+}
+
+function horizontalDraw(startSquare, wordLength,i){
+  for (let i = 1; i < wordLength; i++) {
+    while (conditionsHorizontal(startSquare, wordLength, numRows)) {
+      startSquare = randomArrayElement(arrayForDraw)
+    }
+  }
+  for (let j = 0; j < wordLength; j++) {
+    arrayForDraw.remove(startSquare + j)
+    takenSquares.push(startSquare + j)
+    temp.push(startSquare + j)
+  }
+  answers.splice(i, 0, temp)
+  temp = []
+
+  answers[i].sort(function (a, b) {
+    return a - b
+  })
+}
+
+function indexOfCommonchar(w1,w2){
+  for(let i = 0;w1.length;i++){
+    for(let j =0;j<w2.length;j++){
+      if(w1[i]===w2[j]){
+        return [w1,w2,i,j]
+      }
+    }
+  }
+}
+function wordsAndindexesOfcommonChar(){
+  for(let i = 0;i<words.length;i++){
+    for(let j = 0;j<words.length && j!=i;j++){
+      return[indexOfCommonchar(words[i],words[j])]
     }
   }
 }
