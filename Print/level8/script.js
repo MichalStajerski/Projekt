@@ -34,29 +34,51 @@ function countBackWardsByOneIteration () {
 function iterateForward(){
   if(lowerLimit <= upperLimit){
     const option = document.createElement('option')
-    for(let i = 0;i<constraints.length-1;i+=2){
-      if(modulo(lowerLimit,constraints[i+1]==0)){
-        option.text = constraints[i]
-      }else{
-        option.text = lowerLimit
-      }
-      select.add(option)    
+    for(let i = 1;i<constraints.length;i+=2)
+    switch(i){
+      case i : 
+        if(modulo(lowerLimit,constraints[i])==0){
+          option.text = constraints[i-1]
+        }
+      break;
     }
-  lowerLimit++
+    select.add(option)
+    lowerLimit++
   }
 }
 
 function countForwardsByOneIteration () {
   if(lowerLimit <= upperLimit){
     const option = document.createElement('option')
-    for(let i = 0;i<constraints.length;i+=2){
-      if(modulo(lowerLimit,constraints[i+1]==0)){
-        option.text = constraints[i]
-      }
-      select.add(option)    
+    for(let i = 1;i<constraints.length;i+=2)
+    switch(i){
+      case i : 
+        if(modulo(lowerLimit,constraints[i])==0){
+          option.text = constraints[i-1]
+        }
+      break;
     }
-  lowerLimit++
-  }
+    select.add(option)
+    lowerLimit++
+  }  
+    
+}
+  
+  //why the code below does not work?
+  // if(lowerLimit <= upperLimit){
+  //   const option = document.createElement('option')
+  //   for(let i = 1;i<constraints.length;i=i+2){
+  //     switch(modulo(lowerLimit,constraints[i])){
+  //       case 0 :  
+  //         option.text = constraints[i-1]
+  //       break;
+  //       default:
+  //         option.text = lowerLimit
+  //     }
+  //   }
+  //   select.add(option)
+  //   lowerLimit++
+  // }
 }
 function submitValues () {
   lowerLimit = parseInt(document.getElementById('lowerLimit').value)
@@ -73,4 +95,6 @@ function modulo (divident, divider) {
   const dividentWithoutRestOfdivision = scoreWithoutRestOfDivision * divider
   return divident - dividentWithoutRestOfdivision
 }
+
+
 
