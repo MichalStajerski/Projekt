@@ -103,6 +103,8 @@ function checkAnswer (clickedTiles) {
         marked.style.backgroundColor = colors.success
         // blocks onclick after correct word was found
         marked.onclick = null
+        //changing class so there is no more box hover tranition on good answers
+        marked.className = 'boxNoHover'
         // deletes tiles from answer array
 
         for (let k = 0; k < answers.length; k++) {
