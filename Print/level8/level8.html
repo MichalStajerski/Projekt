@@ -1,13 +1,12 @@
-<label for="fname">Lower limit:</label>
-<input type="text" id="lowerLimit"><br><br>
-<label for="fname">Upper limit:</label>
-<input type="text" id="upperLimit" ><br><br>
-<input id="submitBtn" type="submit" onclick="submitValues()" value="Submit Limits"><br><br>
 <label for="fname">Word:</label>
 <input type="text" id="word"><br><br>
-<label for="fname">Dividor:</label>
+<label for="fname">Divider:</label>
 <input type="text" id="divisor" ><br><br>
-<input id="submitBtn" type="submit" onclick="submitWordsAndDivisors()" value="Submit Limits">
+<input id="submitBtn" type="submit" onclick="submitWordsAndDivisors()" value="Submit Word and Divider"><br>
+<label for="fname">Lower limit:</label>
+<input type="text" onchange="submitValues()" id="lowerLimit"><br><br>
+<label for="fname">Upper limit:</label>
+<input type="text" onchange="submitValues()" id="upperLimit" ><br><br>
 <div>
     <select id="mySelect" size="8">
     </select>

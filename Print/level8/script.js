@@ -7,8 +7,6 @@ let mod = []
 let counter = 1
 let counterarr = []
 
-
-
 function countBackWardsByOneIteration () {
   if (upperLimit >= lowerLimit) {
     const option = document.createElement('option')
@@ -36,7 +34,11 @@ function countBackWardsByOneIteration () {
     mod = []
     select.add(option)
     upperLimit--
-  }  
+  }else{
+    setTimeout(() => {
+      alert('Wrong values')
+    }, 100)
+  }
 }
 
 function countForwardsByOneIteration () {
@@ -66,6 +68,10 @@ function countForwardsByOneIteration () {
     mod = []
     select.add(option)
     lowerLimit++
+  }else{
+    setTimeout(() => {
+      alert('Wrong values')
+    }, 100)
   }
 }  
 
@@ -78,11 +84,13 @@ function countForwardsByOneIteration () {
 function submitValues () {
   lowerLimit = parseInt(document.getElementById('lowerLimit').value)
   upperLimit = parseInt(document.getElementById('upperLimit').value)
+  console.log('loweLimit',lowerLimit)
+  console.log('uppperLimit',upperLimit)
 }
 function submitWordsAndDivisors () {
   constraints.push(document.getElementById('word').value)
   constraints.push(parseInt(document.getElementById('divisor').value))
-  console.log(constraints)
+  console.log(constraints)  
 }
 
 function modulo (divident, divider) {
