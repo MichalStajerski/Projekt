@@ -17,12 +17,10 @@ for (let i = 0; i < numCols * numRows - 1; i++) {
 const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 const descByLengthOfElementInArray = (a1) => a1.sort((el1,el2) => el2.length - el1.length);
-
 descByLengthOfElementInArray(words)
 const splitWords = words.map(function (x) {
   return x.split('')
 })
-
 let text = ''
 let canCross = true
 
@@ -106,7 +104,6 @@ function checkAnswer (clickedTiles) {
         //changing class so there is no more box hover tranition on good answers
         marked.className = 'boxNoHover'
         // deletes tiles from answer array
-
         for (let k = 0; k < answers.length; k++) {
           answers[k].remove(clickedTiles[j])
         }
@@ -124,6 +121,7 @@ function checkAnswer (clickedTiles) {
           //blocks all the tiles after win
           for(let i =0;i<numCols*numRows;i++){
             document.getElementById(i).onclick= null
+            document.getElementById(i).className = 'boxNoHover'
           }
         }, 100)
       }
@@ -221,7 +219,6 @@ function conditionsVertical (startSquare, wordLength, numRows) {
     }
   }
 }
-
 
 function verticalDraw(startSquare, wordLength,i){
   for (let i = 1; i < wordLength; i++) {
