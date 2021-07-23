@@ -6,6 +6,7 @@ const constraints = []
 let mod = []
 let counter = 1
 let counterarr = []
+let test = 1
 
 const insteadOfLoop = (array) => array.map(el=>el)
 
@@ -48,7 +49,7 @@ function countForwardsByOneIteration () {
   if(lowerLimit <= upperLimit){
     const option = document.createElement('option') 
     console.log('insteadofLoop',insteadOfLoop(constraints)) 
-    for(let i =1;i<constraints.length;i+=2){
+    function action(i){
       mod.push(constraintForLowerLimitEqual(lowerLimit,constraints[i]))
       if(constraintForLowerLimitEqual(lowerLimit,constraints[i])==true){
         counter = i
@@ -56,7 +57,6 @@ function countForwardsByOneIteration () {
       }
       console.log(mod)
       if(mod.includes(true) && countInArray(mod,true)>1){
-        map()
         for(let i =0;i<counterarr.length;i++){
           if(!option.text.includes(constraints[counterarr[i]-1]))
           option.text += constraints[counterarr[i]-1]
@@ -68,7 +68,12 @@ function countForwardsByOneIteration () {
       if(!mod.includes(true)){
         option.text = lowerLimit
       }
+      if(i<constraints.length){
+        action(i+2)
+      }
     }
+    action(test)
+
     counterarr = []
     mod = []
     select.add(option)
@@ -110,21 +115,23 @@ function countInArray(array, what) {
 
 //instead of going by loop through each element we can use map and defined function f that will make changes to each item for example
 //will use recursive version to swap all the loops
-const arr = [2,3]
-console.log(map(f,arr,2))
-function map(f, a,divider) {
-  if (a.length === 0) { return []; }
-  return [f(a[0],divider)].concat(map(f, a.slice(1),divider));
-}
+// const arr = [2,3]
+// const iterate = (a1) => a1.map(res => res )
+// console.log(iterate(arr))
+
+// console.log(map(f,arr,4))
+// function map(f, a,divider) {
+//   if (a.length === 0) { return []; }
+//   return [f(a[0],divider)].concat(map(f, a.slice(1),divider));
+// }
 // function f(item){
 //   if(!option.text.includes(constraints[counterarr[item]-1]))
 //   return option.text += constraints[counterarr[item]-1]
 // }
-function f(item,divider){
-  if(constraintForLowerLimitEqual(item,divider)==true){
-    return item+' => jest podzielne'
-  }else{
-    return item+' => nie jest podzielne'
-  }
-  
-}
+// function f(item,divider){
+//   if(constraintForLowerLimitEqual(item,divider)==true){
+//     return item+' => jest podzielne przez '+divider
+//   }else{
+//     return item+' => nie jest podzielne przez '+divider
+//   }
+// }
