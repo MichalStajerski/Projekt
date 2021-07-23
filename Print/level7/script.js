@@ -28,6 +28,10 @@ function countBackWardsByOneIteration () {
     storageArray.push(option.text)
     localStorage.setItem('options', storageArray.slice(-1).pop())
     localStorage.setItem('upperLimit', upperLimit)
+  }else{
+    setTimeout(() => {
+      alert('Wrong values')
+    }, 100)
   }
 }
 
@@ -56,6 +60,10 @@ function countForwardsByOneIteration () {
     localStorage.setItem('options', storageArray.slice(-1).pop())
     localStorage.setItem('lowerLimit', lowerLimit)
     console.log(localStorage)
+  }else{
+    setTimeout(() => {
+      alert('Wrong values')
+    }, 100)
   }
 }
 function submitValues () {

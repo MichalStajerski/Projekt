@@ -29,6 +29,10 @@ function countForwardsByOneIteration () {
     localStorage.setItem('options', storageArray.slice(-1).pop())
     localStorage.setItem('lowerLimit', lowerLimit)
     console.log(localStorage)
+  }else{
+    setTimeout(() => {
+      alert('Wrong values')
+    }, 100)
   }
 }
 function submitValues () {
