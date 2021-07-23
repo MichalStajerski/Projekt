@@ -3,7 +3,8 @@ let lowerLimit
 let upperLimit
 const select = document.getElementById('mySelect')
 const constraints = []
-let counter = 0
+let mod = []
+let counter = 1
 
 
 
@@ -49,21 +50,35 @@ function iterateForward(){
 
 function countForwardsByOneIteration () {
   if(lowerLimit <= upperLimit){
-    const option = document.createElement('option')
-    for(let i = 1;i<constraints.length;i+=2)
-    switch(i){
-      case i : 
-        if(modulo(lowerLimit,constraints[i])==0){
-          option.text = constraints[i-1]
-        }
-      break;
+    const option = document.createElement('option')    
+    for(let i =1;i<constraints.length;i+=2){
+      mod.push(constraintForLowerLimitEqual(lowerLimit,constraints[i]))
+      if(constraintForLowerLimitEqual(lowerLimit,constraints[i])==true){
+        counter = i
+      }
+      console.log(mod)
+      if(mod.includes(true) || countInArray(mod,true)>1){
+        option.text = constraints[counter-1]
+      }else{
+        option.text = lowerLimit
+      }
     }
+    mod = []
     select.add(option)
     lowerLimit++
-  }  
-    
-}
-  
+  }
+}  
+  function constraintForLowerLimitNotEqual(lowerLimit,a){
+    if(modulo(lowerLimit, a) !== 0){
+      return true
+    }
+  }
+
+  function constraintForLowerLimitEqual(lowerLimit,a){
+    if(modulo(lowerLimit, a) == 0){
+      return true
+    }else{return false}
+  }
   //why the code below does not work?
   // if(lowerLimit <= upperLimit){
   //   const option = document.createElement('option')
@@ -79,7 +94,6 @@ function countForwardsByOneIteration () {
   //   select.add(option)
   //   lowerLimit++
   // }
-}
 function submitValues () {
   lowerLimit = parseInt(document.getElementById('lowerLimit').value)
   upperLimit = parseInt(document.getElementById('upperLimit').value)
@@ -96,5 +110,6 @@ function modulo (divident, divider) {
   return divident - dividentWithoutRestOfdivision
 }
 
-
-
+function countInArray(array, what) {
+  return array.filter(item => item == what).length;
+}
