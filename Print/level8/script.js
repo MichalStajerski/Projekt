@@ -1,4 +1,4 @@
-// not working yet
+// TODO get rid of for and present words and dividers in div, add  localStorage for this level
 let lowerLimit
 let upperLimit
 const select = document.getElementById('mySelect')
@@ -6,6 +6,9 @@ const constraints = []
 let mod = []
 let counter = 1
 let counterarr = []
+
+const insteadOfLoop = (array) => array.map(el=>el)
+
 
 function countBackWardsByOneIteration () {
   if (upperLimit >= lowerLimit) {
@@ -43,7 +46,8 @@ function countBackWardsByOneIteration () {
 
 function countForwardsByOneIteration () {
   if(lowerLimit <= upperLimit){
-    const option = document.createElement('option')    
+    const option = document.createElement('option') 
+    console.log('insteadofLoop',insteadOfLoop(constraints)) 
     for(let i =1;i<constraints.length;i+=2){
       mod.push(constraintForLowerLimitEqual(lowerLimit,constraints[i]))
       if(constraintForLowerLimitEqual(lowerLimit,constraints[i])==true){
@@ -52,6 +56,7 @@ function countForwardsByOneIteration () {
       }
       console.log(mod)
       if(mod.includes(true) && countInArray(mod,true)>1){
+        map()
         for(let i =0;i<counterarr.length;i++){
           if(!option.text.includes(constraints[counterarr[i]-1]))
           option.text += constraints[counterarr[i]-1]
@@ -101,4 +106,25 @@ function modulo (divident, divider) {
 
 function countInArray(array, what) {
   return array.filter(item => item == what).length;
+}
+
+//instead of going by loop through each element we can use map and defined function f that will make changes to each item for example
+//will use recursive version to swap all the loops
+const arr = [2,3]
+console.log(map(f,arr,2))
+function map(f, a,divider) {
+  if (a.length === 0) { return []; }
+  return [f(a[0],divider)].concat(map(f, a.slice(1),divider));
+}
+// function f(item){
+//   if(!option.text.includes(constraints[counterarr[item]-1]))
+//   return option.text += constraints[counterarr[item]-1]
+// }
+function f(item,divider){
+  if(constraintForLowerLimitEqual(item,divider)==true){
+    return item+' => jest podzielne'
+  }else{
+    return item+' => nie jest podzielne'
+  }
+  
 }
