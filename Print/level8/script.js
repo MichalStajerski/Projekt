@@ -11,25 +11,22 @@ let counter = 1
 function countBackWardsByOneIteration () {
   if (upperLimit >= lowerLimit) {
     const option = document.createElement('option')
-    if (modulo(upperLimit, 3) == 0 && modulo(upperLimit, 5) != 0) {
-      console.log('Fizz')
-      option.text = 'Fizz'
+    for(let i =1;i<constraints.length;i+=2){
+      mod.push(constraintForLowerLimitEqual(upperLimit,constraints[i]))
+      if(constraintForLowerLimitEqual(upperLimit,constraints[i])==true){
+        counter = i
+      }
+      console.log(mod)
+      if(mod.includes(true) || countInArray(mod,true)>1){
+        option.text = constraints[counter-1]
+      }else{
+        option.text = upperLimit
+      }
     }
-    if (modulo(upperLimit, 5) == 0 && modulo(upperLimit, 3) != 0) {
-      option.text = 'Buzz'
-      console.log('Buzz')
-    }
-    if (modulo(upperLimit, 3) == 0 && modulo(upperLimit, 5) == 0) {
-      option.text = 'FizzBuzz'
-      console.log('FizzBuzz')
-    }
-    if (modulo(upperLimit, 5) != 0 && modulo(upperLimit, 3) != 0) {
-      option.text = upperLimit
-      console.log(upperLimit)
-    }
+    mod = []
     select.add(option)
-  }
-  upperLimit--
+    upperLimit--
+  }  
 }
 
 function iterateForward(){
