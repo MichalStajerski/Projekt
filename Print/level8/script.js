@@ -1,4 +1,4 @@
-// TODO get rid of for and present words and dividers in div, add  localStorage for this level
+// TODO functions share much of the logic can look to merge them in one and cut down on doubling the code
 let lowerLimit
 let upperLimit
 const select = document.getElementById('mySelect')
