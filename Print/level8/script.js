@@ -117,6 +117,8 @@ function submitWordsAndDivisors () {
   constraints.push(document.getElementById('word').value)
   constraints.push(parseInt(document.getElementById('divisor').value))
   localStorage.setItem('constraints',constraints )
+  const moduloBoard = document.getElementById('moduloBoard')
+  moduloBoard.innerHTML += document.getElementById('word').value + '==>' + document.getElementById('divisor').value+'<br>'
   console.log(constraints)  
 }
 
