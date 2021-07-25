@@ -16,13 +16,13 @@ for (let i = 0; i < numCols * numRows - 1; i++) {
 
 const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
-const descByLengthOfElementInArray = (a1) => a1.sort((el1,el2) => el2.length - el1.length);
+const descByLengthOfElementInArray = (a1) => a1.sort((el1, el2) => el2.length - el1.length)
 descByLengthOfElementInArray(words)
 const splitWords = words.map(function (x) {
   return x.split('')
 })
 let text = ''
-let canCross = true
+const canCross = true
 
 /**
  * @type int[]
@@ -101,7 +101,7 @@ function checkAnswer (clickedTiles) {
         marked.style.backgroundColor = colors.success
         // blocks onclick after correct word was found
         marked.onclick = null
-        //changing class so there is no more box hover tranition on good answers
+        // changing class so there is no more box hover tranition on good answers
         marked.className = 'boxNoHover'
         // deletes tiles from answer array
         for (let k = 0; k < answers.length; k++) {
@@ -118,9 +118,9 @@ function checkAnswer (clickedTiles) {
       if (!answers.length) {
         setTimeout(() => {
           alert('Victory')
-          //blocks all the tiles after win
-          for(let i =0;i<numCols*numRows;i++){
-            document.getElementById(i).onclick= null
+          // blocks all the tiles after win
+          for (let i = 0; i < numCols * numRows; i++) {
+            document.getElementById(i).onclick = null
             document.getElementById(i).className = 'boxNoHover'
           }
         }, 100)
@@ -153,7 +153,7 @@ function drawSquaresForWords () {
   // if(wordsAndindexesOfcommonChar()!=null && canCross ===true){
   //   let startSquareForCrossing = randomArrayElement(arrayForDraw)
   //   for(let i = 0;i<2;i++){
-      
+
   //   }
   //   horizontalDraw
   //   words.remove(wordsAndindexesOfcommonChar()[0][0])
@@ -164,13 +164,13 @@ function drawSquaresForWords () {
   for (let i = 0; i < numWords; i++) {
     const wordLength = words[i].length
     // using array instead of getRandom so we won't draw squares that are already taken
-    let startSquare = randomArrayElement(arrayForDraw)
+    const startSquare = randomArrayElement(arrayForDraw)
     const direction = getRandomIntInclusive(0, 1)
     // vertical allignment of word
     if (!direction) {
-      verticalDraw(startSquare,wordLength,i)
+      verticalDraw(startSquare, wordLength, i)
     } else { // horizontal allignment of word
-      horizontalDraw(startSquare, wordLength,i)
+      horizontalDraw(startSquare, wordLength, i)
     }
   }
 }
@@ -220,7 +220,7 @@ function conditionsVertical (startSquare, wordLength, numRows) {
   }
 }
 
-function verticalDraw(startSquare, wordLength,i){
+function verticalDraw (startSquare, wordLength, i) {
   for (let i = 1; i < wordLength; i++) {
     while (conditionsVertical(startSquare, wordLength, numCols)) {
       startSquare = randomArrayElement(arrayForDraw)
@@ -248,7 +248,7 @@ function verticalDraw(startSquare, wordLength,i){
   })
 }
 
-function horizontalDraw(startSquare, wordLength,i){
+function horizontalDraw (startSquare, wordLength, i) {
   for (let i = 1; i < wordLength; i++) {
     while (conditionsHorizontal(startSquare, wordLength, numRows)) {
       startSquare = randomArrayElement(arrayForDraw)
@@ -267,19 +267,19 @@ function horizontalDraw(startSquare, wordLength,i){
   })
 }
 
-function indexOfCommonchar(w1,w2){
-  for(let i = 0;w1.length;i++){
-    for(let j =0;j<w2.length;j++){
-      if(w1[i]===w2[j]){
-        return [w1,w2,i,j]
+function indexOfCommonchar (w1, w2) {
+  for (let i = 0; w1.length; i++) {
+    for (let j = 0; j < w2.length; j++) {
+      if (w1[i] === w2[j]) {
+        return [w1, w2, i, j]
       }
     }
   }
 }
-function wordsAndindexesOfcommonChar(){
-  for(let i = 0;i<words.length;i++){
-    for(let j = 0;j<words.length && j!=i;j++){
-      return[indexOfCommonchar(words[i],words[j])]
+function wordsAndindexesOfcommonChar () {
+  for (let i = 0; i < words.length; i++) {
+    for (let j = 0; j < words.length && j != i; j++) {
+      return [indexOfCommonchar(words[i], words[j])]
     }
   }
 }

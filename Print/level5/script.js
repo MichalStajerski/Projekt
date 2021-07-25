@@ -30,7 +30,7 @@ function countForwardsByOneIteration () {
     localStorage.setItem('options', storageArray.slice(-1).pop())
     localStorage.setItem('lastIndex', lowerLimit)
     console.log(localStorage)
-  }else{
+  } else {
     setTimeout(() => {
       alert('Wrong values')
     }, 100)
