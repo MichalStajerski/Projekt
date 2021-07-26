@@ -28,8 +28,8 @@ function countForwardsOrBackwards (decider) {
   if (upperLimit >= lowerLimit) {
     const option = document.createElement('option')
     function count (limit, i) {
-      moduloBool.push(constraintForLowerLimitEqual(limit, constraints[i]))
-      if (constraintForLowerLimitEqual(limit, constraints[i]) == true) {
+      moduloBool.push(bollModulo(limit, constraints[i]))
+      if (bollModulo(limit, constraints[i]) == true) {
         counter = i
         counterarr.push(counter)
       }
@@ -66,7 +66,7 @@ function countForwardsOrBackwards (decider) {
   }
 }
 
-function constraintForLowerLimitEqual (lowerLimit, a) {
+function bollModulo (lowerLimit, a) {
   if (modulo(lowerLimit, a) == 0) {
     return true
   } else { return false }
