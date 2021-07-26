@@ -9,6 +9,7 @@ const storageArray = []
 const option2 = document.createElement('option')
 const parseEverySecond = (a1) => a1.every(x => modulo(a1.indexOf(x), 2) != 0, x = parseInt(x))
 const moduloBoolean = (num1,num2) => (modulo(num1,num2)===0) ? true : false
+const countElementsInArray = (ar,el) => ar.filter(item => item == el).length
 // used instead of for loop
 function combineModulosCase (array, i, option) {
   if (!option.text.includes(constraints[array[i] - 1])) {
@@ -35,10 +36,10 @@ function countForwardsOrBackwards (decider) {
         counterarr.push(counter)
       }
       console.log('mod', moduloBool)
-      if (moduloBool.includes(true) && countInArray(moduloBool, true) > 1) {
+      if (moduloBool.includes(true) && countElementsInArray(moduloBool, true) > 1) {
         combineModulosCase(counterarr, 1, option)
       }
-      if (moduloBool.includes(true) && countInArray(moduloBool, true) == 1) {
+      if (moduloBool.includes(true) && countElementsInArray(moduloBool, true) == 1) {
         option.text = constraints[counter - 1]
       }
       if (!moduloBool.includes(true)) {
@@ -85,10 +86,6 @@ function modulo (divident, divider) {
   const scoreWithoutRestOfDivision = parseInt(divident / divider)
   const dividentWithoutRestOfdivision = scoreWithoutRestOfDivision * divider
   return divident - dividentWithoutRestOfdivision
-}
-
-function countInArray (array, what) {
-  return array.filter(item => item == what).length
 }
 
 window.onload = function () {
