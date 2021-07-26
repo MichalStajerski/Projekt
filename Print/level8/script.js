@@ -20,12 +20,17 @@ function combineModulosCase (array, i,option) {
   }
 }
 
-function countBackWards () {
+function countForwardsOrBackwards(decider){
+  if(decider === 'backwards'){
+    limit = upperLimit
+  }else{
+    limit = lowerLimit
+  }
   if (upperLimit >= lowerLimit) {
     const option = document.createElement('option')
-    function countBackwards (i) {
-      moduloBool.push(constraintForLowerLimitEqual(upperLimit, constraints[i]))
-      if (constraintForLowerLimitEqual(upperLimit, constraints[i]) == true) {
+    function count (limit,i) {
+      moduloBool.push(constraintForLowerLimitEqual(limit, constraints[i]))
+      if (constraintForLowerLimitEqual(limit, constraints[i]) == true) {
         counter = i
         counterarr.push(counter)
       }
@@ -37,57 +42,28 @@ function countBackWards () {
         option.text = constraints[counter - 1]
       }
       if (!moduloBool.includes(true)) {
-        option.text = upperLimit
+        option.text = limit
       }
       if (i < constraints.length) {
-        countBackwards(i + 2)
+        count(limit,i + 2)
       }
     }
-    countBackwards(1)
+    count(limit,1)
 
     counterarr = []
     moduloBool = []
     select.add(option)
-    upperLimit--
-    storageArray.push(option.text)
-    localStorage.setItem('options', storageArray.slice(-1).pop())
-    localStorage.setItem('upperLimit', upperLimit)
-  }
-}
-
-function countForwards () {
-  if (lowerLimit <= upperLimit) {
-    const option = document.createElement('option')
-    function actionCountForwad (i) {
-      moduloBool.push(constraintForLowerLimitEqual(lowerLimit, constraints[i]))
-      if (constraintForLowerLimitEqual(lowerLimit, constraints[i])) {
-        counter = i
-        counterarr.push(counter)
-        console.log('counterarr', counterarr)
-      }
-      console.log(moduloBool)
-      if (moduloBool.includes(true) && countInArray(moduloBool, true) > 1) {
-        combineModulosCase(counterarr, 0,option)
-      }
-      if (moduloBool.includes(true) && countInArray(moduloBool, true) == 1) {
-        option.text = constraints[counter - 1]
-      }
-      if (!moduloBool.includes(true)) {
-        option.text = lowerLimit
-      }
-      if (i < constraints.length) {
-        actionCountForwad(i + 2)
-      }
-    }
-    actionCountForwad(1)
-
-    counterarr = []
-    moduloBool = []
-    select.add(option)
-    lowerLimit++
-    storageArray.push(option.text)
-    localStorage.setItem('options', storageArray.slice(-1).pop())
-    localStorage.setItem('lowerLimit', lowerLimit)
+    if(decider ==='backwards'){
+      upperLimit--
+      storageArray.push(option.text)
+      localStorage.setItem('options', storageArray.slice(-1).pop())
+      localStorage.setItem('upperLimit', upperLimit)
+    }else{
+      lowerLimit++
+      storageArray.push(option.text)
+      localStorage.setItem('options', storageArray.slice(-1).pop())
+      localStorage.setItem('lowerLimit', lowerLimit)
+    }  
   }
 }
 
