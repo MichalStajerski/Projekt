@@ -9,19 +9,20 @@ let counterarr = []
 const storageArray = []
 const option2 = document.createElement('option')
 const parseEverySecond = (a1) => a1.every(x => modulo(a1.indexOf(x), 2) != 0, x = parseInt(x))
+//used instead of for loop
+function combineModulosCase (array, i,option) {
+  if (!option.text.includes(constraints[array[i] - 1])) {
+    option.text += constraints[array[i] - 1]
+  }
+  i++
+  if (i < array.length) {
+    combineModulosCase(counterarr, i,option)
+  }
+}
 
 function countBackWards () {
   if (upperLimit >= lowerLimit) {
     const option = document.createElement('option')
-    function combineModulosCase (array, i) {
-      if (!option.text.includes(constraints[array[i] - 1])) {
-        option.text += constraints[array[i] - 1]
-      }
-      i++
-      if (i < array.length) {
-        combineModulosCase(counterarr, i)
-      }
-    }
     function countBackwards (i) {
       moduloBool.push(constraintForLowerLimitEqual(upperLimit, constraints[i]))
       if (constraintForLowerLimitEqual(upperLimit, constraints[i]) == true) {
@@ -30,7 +31,7 @@ function countBackWards () {
       }
       console.log('mod', moduloBool)
       if (moduloBool.includes(true) && countInArray(moduloBool, true) > 1) {
-        combineModulosCase(counterarr, 1)
+        combineModulosCase(counterarr, 1,option)
       }
       if (moduloBool.includes(true) && countInArray(moduloBool, true) == 1) {
         option.text = constraints[counter - 1]
@@ -57,16 +58,6 @@ function countBackWards () {
 function countForwards () {
   if (lowerLimit <= upperLimit) {
     const option = document.createElement('option')
-    function combineModulosCase (array, i) {
-      if (!option.text.includes(constraints[array[i] - 1])) {
-        option.text += constraints[array[i] - 1]
-      }
-      i++
-      if (i < array.length) {
-        combineModulosCase(counterarr, i)
-      }
-    }
-
     function actionCountForwad (i) {
       moduloBool.push(constraintForLowerLimitEqual(lowerLimit, constraints[i]))
       if (constraintForLowerLimitEqual(lowerLimit, constraints[i])) {
@@ -76,7 +67,7 @@ function countForwards () {
       }
       console.log(moduloBool)
       if (moduloBool.includes(true) && countInArray(moduloBool, true) > 1) {
-        combineModulosCase(counterarr, 0)
+        combineModulosCase(counterarr, 0,option)
       }
       if (moduloBool.includes(true) && countInArray(moduloBool, true) == 1) {
         option.text = constraints[counter - 1]
