@@ -8,6 +8,7 @@ let counterarr = []
 const storageArray = []
 const option2 = document.createElement('option')
 const parseEverySecond = (a1) => a1.every(x => modulo(a1.indexOf(x), 2) != 0, x = parseInt(x))
+const moduloBoolean = (num1,num2) => (modulo(num1,num2)===0) ? true : false
 // used instead of for loop
 function combineModulosCase (array, i, option) {
   if (!option.text.includes(constraints[array[i] - 1])) {
@@ -28,8 +29,8 @@ function countForwardsOrBackwards (decider) {
   if (upperLimit >= lowerLimit) {
     const option = document.createElement('option')
     function count (limit, i) {
-      moduloBool.push(boolModulo(limit, constraints[i]))
-      if (boolModulo(limit, constraints[i]) == true) {
+      moduloBool.push(moduloBoolean(limit, constraints[i]))
+      if (moduloBoolean(limit, constraints[i]) == true) {
         counter = i
         counterarr.push(counter)
       }
@@ -65,13 +66,6 @@ function countForwardsOrBackwards (decider) {
     }
   }
 }
-
-function boolModulo (lowerLimit, a) {
-  if (modulo(lowerLimit, a) == 0) {
-    return true
-  } else { return false }
-}
-
 function submitValues () {
   lowerLimit = parseInt(document.getElementById('lowerLimit').value)
   upperLimit = parseInt(document.getElementById('upperLimit').value)
