@@ -1,4 +1,3 @@
-// TODO functions share much of the logic can look to merge them in one and cut down on doubling the code
 let lowerLimit
 let upperLimit
 const select = document.getElementById('mySelect')
@@ -9,26 +8,26 @@ let counterarr = []
 const storageArray = []
 const option2 = document.createElement('option')
 const parseEverySecond = (a1) => a1.every(x => modulo(a1.indexOf(x), 2) != 0, x = parseInt(x))
-//used instead of for loop
-function combineModulosCase (array, i,option) {
+// used instead of for loop
+function combineModulosCase (array, i, option) {
   if (!option.text.includes(constraints[array[i] - 1])) {
     option.text += constraints[array[i] - 1]
   }
   i++
   if (i < array.length) {
-    combineModulosCase(counterarr, i,option)
+    combineModulosCase(counterarr, i, option)
   }
 }
 
-function countForwardsOrBackwards(decider){
-  if(decider === 'backwards'){
+function countForwardsOrBackwards (decider) {
+  if (decider === 'backwards') {
     limit = upperLimit
-  }else{
+  } else {
     limit = lowerLimit
   }
   if (upperLimit >= lowerLimit) {
     const option = document.createElement('option')
-    function count (limit,i) {
+    function count (limit, i) {
       moduloBool.push(constraintForLowerLimitEqual(limit, constraints[i]))
       if (constraintForLowerLimitEqual(limit, constraints[i]) == true) {
         counter = i
@@ -36,7 +35,7 @@ function countForwardsOrBackwards(decider){
       }
       console.log('mod', moduloBool)
       if (moduloBool.includes(true) && countInArray(moduloBool, true) > 1) {
-        combineModulosCase(counterarr, 1,option)
+        combineModulosCase(counterarr, 1, option)
       }
       if (moduloBool.includes(true) && countInArray(moduloBool, true) == 1) {
         option.text = constraints[counter - 1]
@@ -45,25 +44,25 @@ function countForwardsOrBackwards(decider){
         option.text = limit
       }
       if (i < constraints.length) {
-        count(limit,i + 2)
+        count(limit, i + 2)
       }
     }
-    count(limit,1)
+    count(limit, 1)
 
     counterarr = []
     moduloBool = []
     select.add(option)
-    if(decider ==='backwards'){
+    if (decider === 'backwards') {
       upperLimit--
       storageArray.push(option.text)
       localStorage.setItem('options', storageArray.slice(-1).pop())
       localStorage.setItem('upperLimit', upperLimit)
-    }else{
+    } else {
       lowerLimit++
       storageArray.push(option.text)
       localStorage.setItem('options', storageArray.slice(-1).pop())
       localStorage.setItem('lowerLimit', lowerLimit)
-    }  
+    }
   }
 }
 
