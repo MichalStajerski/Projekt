@@ -37,9 +37,9 @@ function move(ball) {
     ball.x += ball.xSpeed;
     ball.y += ball.ySpeed;
 }
-function start(chosenSpeed,test){
+function start(chosenSpeed){
     ball.xSpeed =chosenSpeed
-    ball.ySpeed =test
+    ball.ySpeed =chosenSpeed
 
     var timer = setInterval(() => {
         let time = document.getElementById('timer')
@@ -96,8 +96,11 @@ function start(chosenSpeed,test){
         console.log('counterOfHits=> ',counterOfHits)
         draw( context,colors[lastColor],ball.x,ball.y,ball.radius);
         if(timeCounter>10){
+            document.getElementById('Slow').disabled = 'false'
+            document.getElementById('Medium').disabled = 'false'
+            document.getElementById('Fast').disabled = 'false'
             clearInterval(action)
-            clearInterval(timer)
+            clearInterval(timer)       
         }
     }
 }
@@ -115,13 +118,13 @@ function setPace(id){
     document.getElementById('Fast').disabled = 'true'
     switch(id){
         case 'Slow':
-            start(3,randomIntFromInterval(1,3))
+            start(3)
         break;
         case 'Medium':
-            start(8,randomIntFromInterval(4,8))
+            start(6)
         break;
         case 'Fast':
-            start(13,randomIntFromInterval(8,13))
+            start(9)
         break;
     }
 }
