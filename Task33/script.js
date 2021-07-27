@@ -10,7 +10,7 @@ const drawDirection = (num1, num2) => (num2 == 0) ? num1 : -num1
 const colors = ['black', 'blue', 'red', 'green', 'pink', 'yellow', 'brown', 'orange', 'gray']
 
 const ball = {
-  //draws random position of our ball within boundaries
+  // draws random position of our ball within boundaries
   x: randomIntFromInterval(25, 875),
   y: randomIntFromInterval(25, 575),
   radius: 25,

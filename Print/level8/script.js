@@ -3,7 +3,6 @@ let upperLimit
 const select = document.getElementById('mySelect')
 let constraints = []
 let moduloBool = []
-let counter = 1
 let counterarr = []
 const storageArray = []
 const option2 = document.createElement('option')
