@@ -11,21 +11,20 @@ const moduloBoolean = (num1, num2) => (modulo(num1, num2) === 0)
 const countElementsInArray = (ar, el) => ar.filter(item => item == el).length
 // used instead of for loop in case when more than one condition is met
 function combineModulosCase (array, i, option) {
-  if (!option.text.includes(constraints[array[i] - 1])) {
+  if (!option.text.includes(constraints[array[i] - 1])){ 
     option.text += constraints[array[i] - 1]
   }
   i++
-  if (i < array.length) {
-    combineModulosCase(counterarr, i, option)
-  }
+  if (i < array.length) 
+  combineModulosCase(counterarr, i, option)  
+  
 }
 
 function countForwardsOrBackwards (decider) {
   if (decider === 'backwards') {
     limit = upperLimit
-  } else {
-    limit = lowerLimit
-  }
+  } else limit = lowerLimit
+    
   if (upperLimit >= lowerLimit) {
     const option = document.createElement('option')
     function count (limit, i) {
@@ -53,7 +52,6 @@ function countForwardsOrBackwards (decider) {
       }
     }
     count(limit, 1)
-
     counterarr = []
     moduloBool = []
     select.innerHTML += option.value + '<br>'
@@ -105,9 +103,8 @@ window.onload = function () {
     function parseEverySecondElementToInt (array, i) {
       array[i] = parseInt(array[i])
       i += 2
-      if (array.length > i) {
-        parseEverySecondElementToInt(constraints, i)
-      }
+      if (array.length > i) 
+      parseEverySecondElementToInt(constraints, i)     
     }
     parseEverySecondElementToInt(constraints, 1)
     console.log(constraints)
