@@ -90,7 +90,7 @@ function submitWordsAndDivisors () {
 }
 // our function that works just like %
 function modulo (divident, divider) {
-  const scoreWithoutRestOfDivision = parseInt(divident / divider)
+  const scoreWithoutRestOfDivision = Math.floor(divident / divider)
   const dividentWithoutRestOfdivision = scoreWithoutRestOfDivision * divider
   return divident - dividentWithoutRestOfdivision
 }
