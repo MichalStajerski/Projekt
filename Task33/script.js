@@ -6,6 +6,7 @@ let counterOfHits = 0
 let lastColor
 let timeCounter = 0
 context.strokeRect( 0, 0, width, height );
+const drawDirection = (num1,num2) => (num2==0) ? num1 : -num1
 
 
 // const colors = {
@@ -116,15 +117,17 @@ function setPace(id){
     document.getElementById('Slow').disabled = 'true'
     document.getElementById('Medium').disabled = 'true'
     document.getElementById('Fast').disabled = 'true'
+    let direction = randomIntFromInterval(0,1)
+
     switch(id){
         case 'Slow':
-            start(3)
+            start(drawDirection(3,direction))
         break;
         case 'Medium':
-            start(6)
+            start(drawDirection(6,direction))
         break;
         case 'Fast':
-            start(9)
+            start(drawDirection(9,direction))
         break;
     }
 }
