@@ -8,6 +8,36 @@ function modulo(divident, divider) {
     var dividentWithoutRestOfdivision = scoreWithoutRestOfDivision * divider;
     return divident - dividentWithoutRestOfdivision;
 }
+function countBackWardsByOneIteration() {
+    if (lowerLimit <= upperLimit) {
+        var option = document.createElement('option');
+        if (modulo(upperLimit, 3) == 0 && modulo(upperLimit, 5) != 0) {
+            console.log('Fizz');
+            option.text = 'Fizz';
+        }
+        if (modulo(upperLimit, 5) == 0 && modulo(upperLimit, 3) != 0) {
+            option.text = 'Buzz';
+            console.log('Buzz');
+        }
+        if (modulo(upperLimit, 3) == 0 && modulo(upperLimit, 5) == 0) {
+            option.text = 'FizzBuzz';
+            console.log('FizzBuzz');
+        }
+        if (modulo(upperLimit, 5) != 0 && modulo(upperLimit, 3) != 0) {
+            option.text = String(upperLimit);
+            console.log(upperLimit);
+        }
+        select.innerHTML += option.value + '<br>';
+        console.log(option);
+        upperLimit--;
+        storageArray.push(option.text);
+    }
+    else {
+        setTimeout(function () {
+            alert('Wrong values');
+        }, 100);
+    }
+}
 function countForwardsByOneIteration() {
     if (lowerLimit <= upperLimit) {
         var option = document.createElement('option');
