@@ -66,6 +66,10 @@ function countForwardsOrBackwards (decider) {
       localStorage.setItem('options', storageArray.slice(-1).pop())
       localStorage.setItem('lowerLimit', lowerLimit)
     }
+  }else{
+    setTimeout(() => {
+      alert('Wrong values')
+    }, 100)
   }
 }
 function submitValues () {
