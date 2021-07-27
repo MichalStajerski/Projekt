@@ -36,19 +36,19 @@ function countForwardsOrBackwards (decider) {
         counterarr.push(counter)
       }
       console.log('mod', moduloBool)
-      //we have more than one modulo equals zero case
+      // we have more than one modulo equals zero case
       if (moduloBool.includes(true) && countElementsInArray(moduloBool, true) > 1) {
         combineModulosCase(counterarr, 1, option)
       }
-      //we have exactly one modulo that returns zero from given constraints
+      // we have exactly one modulo that returns zero from given constraints
       if (moduloBool.includes(true) && countElementsInArray(moduloBool, true) == 1) {
         option.text = constraints[counter - 1]
       }
-      //if no requirements are met return number
+      // if no requirements are met return number
       if (!moduloBool.includes(true)) {
         option.text = limit
       }
-      //until the condition is no loner met execute function count(), we chceck every added int from constraints so i+2
+      // until the condition is no loner met execute function count(), we chceck every added int from constraints so i+2
       if (i < constraints.length) {
         count(limit, i + 2)
       }
@@ -79,8 +79,8 @@ function submitValues () {
 }
 function submitWordsAndDivisors () {
   const moduloBoard = document.getElementById('moduloBoard')
-  //same word and number for constraint cant be added again
-  if(!constraints.includes(document.getElementById('word').value) && !constraints.includes(document.getElementById('divisor').value)){
+  // same word and number for constraint cant be added again
+  if (!constraints.includes(document.getElementById('word').value) && !constraints.includes(document.getElementById('divisor').value)) {
     constraints.push(document.getElementById('word').value)
     constraints.push(parseInt(document.getElementById('divisor').value))
     moduloBoard.innerHTML += document.getElementById('word').value + '==>' + document.getElementById('divisor').value + '<br>'
@@ -88,7 +88,7 @@ function submitWordsAndDivisors () {
   localStorage.setItem('constraints', constraints)
   console.log(constraints)
 }
-//our function that works just like %
+// our function that works just like %
 function modulo (divident, divider) {
   const scoreWithoutRestOfDivision = parseInt(divident / divider)
   const dividentWithoutRestOfdivision = scoreWithoutRestOfDivision * divider
@@ -102,7 +102,7 @@ window.onload = function () {
     lowerLimit = parseInt(localStorage.getItem('lowerLimit'))
     upperLimit = parseInt(localStorage.getItem('upperLimit'))
     constraints = localStorage.getItem('constraints').split(',')
-    //what we get from localStorage is a string so we  have to parse back every second element back to int to get original array
+    // what we get from localStorage is a string so we  have to parse back every second element back to int to get original array
     function parseEverySecondElementToInt (array, i) {
       array[i] = parseInt(array[i])
       i += 2
