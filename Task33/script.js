@@ -7,20 +7,10 @@ let lastColor
 let timeCounter = 0
 context.strokeRect(0, 0, width, height)
 const drawDirection = (num1, num2) => (num2 == 0) ? num1 : -num1
-
-// const colors = {
-//     color: 'blue',
-//     color: 'red',
-//     color: 'green',
-//     color: 'pink',
-//     color: 'yellow',
-//     color: 'brown',
-//     color: 'orange',
-//     color: 'gray'
-// }
 const colors = ['black', 'blue', 'red', 'green', 'pink', 'yellow', 'brown', 'orange', 'gray']
 
 const ball = {
+  //draws random position of our ball within boundaries
   x: randomIntFromInterval(25, 875),
   y: randomIntFromInterval(25, 575),
   radius: 25,
