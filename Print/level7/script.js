@@ -3,7 +3,8 @@ let lowerLimit
 let upperLimit
 const storageArray = []
 const option2 = document.createElement('option')
-
+//count backwards and forwards share much of the same logic can merge them into one and shorten the code
+//i did that in level8 so at this level i'll just leave it like this
 function countBackWardsByOneIteration () {
   if (upperLimit >= lowerLimit) {
     const option = document.createElement('option')
