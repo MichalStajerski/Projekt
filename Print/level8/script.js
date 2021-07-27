@@ -8,8 +8,8 @@ let counterarr = []
 const storageArray = []
 const option2 = document.createElement('option')
 const parseEverySecond = (a1) => a1.every(x => modulo(a1.indexOf(x), 2) != 0, x = parseInt(x))
-const moduloBoolean = (num1,num2) => (modulo(num1,num2)===0) ? true : false
-const countElementsInArray = (ar,el) => ar.filter(item => item == el).length
+const moduloBoolean = (num1, num2) => (modulo(num1, num2) === 0)
+const countElementsInArray = (ar, el) => ar.filter(item => item == el).length
 // used instead of for loop
 function combineModulosCase (array, i, option) {
   if (!option.text.includes(constraints[array[i] - 1])) {
@@ -53,7 +53,7 @@ function countForwardsOrBackwards (decider) {
 
     counterarr = []
     moduloBool = []
-    select.innerHTML += option.value+'<br>'
+    select.innerHTML += option.value + '<br>'
     if (decider === 'backwards') {
       upperLimit--
       storageArray.push(option.text)
@@ -105,6 +105,6 @@ window.onload = function () {
     }
     parseEverySecondElementToInt(constraints, 1)
     console.log(constraints)
-    select.innerHTML += option2.value+'<br>' 
+    select.innerHTML += option2.value + '<br>'
   }
 }
