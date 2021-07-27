@@ -8,14 +8,16 @@
 <label for="fname">Upper limit:</label>
 <input type="text" onchange="submitValues()" id="upperLimit" ><br><br>
 <div>
-    <select id="mySelect" size="8">
-    </select>
-</div>
-<div>
     <button id="forwards" onclick="countForwardsOrBackwards(id)">Iterate one by one Forward</button>
     <button id="backwards" onclick="countForwardsOrBackwards(id)" >Iterate one by one backwards</button>
 </div>
+<div>
+    <div id="mySelect">
+    </div>
+</div>
+
 <div id ="moduloBoard">
+    ================<br>
 </div>
 <script src="script.js">
 </script>

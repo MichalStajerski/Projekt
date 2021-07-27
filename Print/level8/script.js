@@ -53,7 +53,7 @@ function countForwardsOrBackwards (decider) {
 
     counterarr = []
     moduloBool = []
-    select.add(option)
+    select.innerHTML += option.value+'<br>'
     if (decider === 'backwards') {
       upperLimit--
       storageArray.push(option.text)
@@ -105,6 +105,6 @@ window.onload = function () {
     }
     parseEverySecondElementToInt(constraints, 1)
     console.log(constraints)
-    select.add(option2)
+    select.innerHTML += option2.value+'<br>' 
   }
 }
