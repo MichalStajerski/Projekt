@@ -78,11 +78,14 @@ function submitValues () {
   localStorage.setItem('upperLimit', upperLimit)
 }
 function submitWordsAndDivisors () {
-  constraints.push(document.getElementById('word').value)
-  constraints.push(parseInt(document.getElementById('divisor').value))
-  localStorage.setItem('constraints', constraints)
   const moduloBoard = document.getElementById('moduloBoard')
-  moduloBoard.innerHTML += document.getElementById('word').value + '==>' + document.getElementById('divisor').value + '<br>'
+  //same word and number for constraint cant be added again
+  if(!constraints.includes(document.getElementById('word').value) && !constraints.includes(document.getElementById('divisor').value)){
+    constraints.push(document.getElementById('word').value)
+    constraints.push(parseInt(document.getElementById('divisor').value))
+    moduloBoard.innerHTML += document.getElementById('word').value + '==>' + document.getElementById('divisor').value + '<br>'
+  }
+  localStorage.setItem('constraints', constraints)
   console.log(constraints)
 }
 //our function that works just like %
