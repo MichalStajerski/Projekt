@@ -5,6 +5,7 @@ var height = 600;
 let counterOfHits = 0
 let lastColor
 let timeCounter = 0
+context.strokeRect( 0, 0, width, height );
 
 
 // const colors = {
@@ -18,11 +19,10 @@ let timeCounter = 0
 //     color: 'gray'
 // }
 const colors = ['black','blue','red','green','pink','yellow','brown','orange','gray']
-console.log('colorsLength',colors.length)
 
 var ball = {
-    x: 100,
-    y: 100,
+    x: randomIntFromInterval(25,875),
+    y: randomIntFromInterval(25,575),
     radius: 25,
     xSpeed: 0,
     ySpeed: 0,
@@ -37,9 +37,9 @@ function move(ball) {
     ball.x += ball.xSpeed;
     ball.y += ball.ySpeed;
 }
-function start(chosenSpeed){
+function start(chosenSpeed,test){
     ball.xSpeed =chosenSpeed
-    ball.ySpeed =chosenSpeed
+    ball.ySpeed =test
 
     var timer = setInterval(() => {
         let time = document.getElementById('timer')
@@ -76,7 +76,7 @@ function start(chosenSpeed){
             counterOfHits++
         }
         
-        // down
+        // up
         if ( ball.y + ball.radius >= height ) {
             ball.y = height - ball.radius;
             ball.ySpeed = -ball.ySpeed;
@@ -85,7 +85,7 @@ function start(chosenSpeed){
             counterOfHits++
         }
         
-        // up
+        // down
         if ( ball.y - ball.radius <= 0 ) {
             ball.y = ball.radius;
             ball.ySpeed = -ball.ySpeed;
@@ -110,15 +110,22 @@ function submitAnswer(){
 }
 
 function setPace(id){
+    document.getElementById('Slow').disabled = 'true'
+    document.getElementById('Medium').disabled = 'true'
+    document.getElementById('Fast').disabled = 'true'
     switch(id){
         case 'Slow':
-            start(3)
+            start(3,randomIntFromInterval(1,3))
         break;
         case 'Medium':
-            start(8)
+            start(8,randomIntFromInterval(4,8))
         break;
         case 'Fast':
-            start(13)
+            start(13,randomIntFromInterval(8,13))
         break;
     }
+}
+
+function randomIntFromInterval(min, max) { 
+    return Math.floor(Math.random() * (max - min + 1) + min)
 }
