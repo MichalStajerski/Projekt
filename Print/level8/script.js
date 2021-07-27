@@ -104,7 +104,6 @@ window.onload = function () {
       }
     }
     parseEverySecondElementToInt(constraints, 1)
-
     console.log(constraints)
     select.add(option2)
   }
