@@ -143,16 +143,6 @@ function remove(arr, what) {
     return arr;
 }
 function drawSquaresForWords() {
-    // console.log('samewordsandIndex',wordsAndindexesOfcommonChar())
-    // if(wordsAndindexesOfcommonChar()!=null && canCross ===true){
-    //   let startSquareForCrossing = randomArrayElement(arrayForDraw)
-    //   for(let i = 0;i<2;i++){
-    //   }
-    //   horizontalDraw
-    //   words.remove(wordsAndindexesOfcommonChar()[0][0])
-    //   words.remove(wordsAndindexesOfcommonChar()[0][1])
-    //   canCross = false
-    // }
     const numWords = words.length;
     for (let i = 0; i < numWords; i++) {
         const wordLength = words[i].length;

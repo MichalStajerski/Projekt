@@ -1,15 +1,15 @@
-const numRows = 7
-const numCols = 7
+const numRows :number = 7
+const numCols :number = 7
 const colors = {
   selected: 'blue',
   normal: '#ddd',
   success: 'green'
 }
-const words = ['dog', 'ape', 'cat', 'dice']
+const words :string[] = ['dog', 'ape', 'cat', 'dice']
 const takenSquares = []
-const answers = []
+const answers  = []
 // instead of random so we will not draw from squares that are already taken
-const arrayForDraw = []
+const arrayForDraw :number[] = []
 for (let i = 0; i < numCols * numRows - 1; i++) {
   arrayForDraw.push(i)
 }
@@ -21,13 +21,13 @@ descByLengthOfElementInArray(words)
 const splitWords = words.map(function (x) {
   return x.split('')
 })
-let text = ''
-const canCross = true
+let text :string = ''
+const canCross :boolean = true
 
 /**
  * @type int[]
  */
-const clickedTiles = []
+const clickedTiles :number[] = []
 let temp = []
 window.onload = function () {
   drawSquaresForWords()
@@ -49,7 +49,7 @@ function tileClicked (tile, id) {
     // unclicks to usual color
     tile.style.backgroundColor = colors.normal
     // removes answerd by value
-    const index = clickedTiles.indexOf(id)
+    const index :number = clickedTiles.indexOf(id)
     clickedTiles.splice(index, 1)
   }
   clickedTiles.sort(function (a, b) {
@@ -133,8 +133,8 @@ function checkAnswer (clickedTiles) {
 
 // random char to fill squares outside of answers
 function randomCharacter () {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz'
-  const randomCharacter = alphabet[randomArrayElement(alphabet)]
+  const alphabet :string = 'abcdefghijklmnopqrstuvwxyz'
+  const randomCharacter :string = alphabet[randomArrayElement(alphabet)]
   return randomCharacter
 }
 // remove from array by value
@@ -150,17 +150,6 @@ function remove(arr,what) {
 }
 
 function drawSquaresForWords () {
-  // console.log('samewordsandIndex',wordsAndindexesOfcommonChar())
-  // if(wordsAndindexesOfcommonChar()!=null && canCross ===true){
-  //   let startSquareForCrossing = randomArrayElement(arrayForDraw)
-  //   for(let i = 0;i<2;i++){
-
-  //   }
-  //   horizontalDraw
-  //   words.remove(wordsAndindexesOfcommonChar()[0][0])
-  //   words.remove(wordsAndindexesOfcommonChar()[0][1])
-  //   canCross = false
-  // }
   const numWords = words.length
   for (let i = 0; i < numWords; i++) {
     const wordLength = words[i].length
