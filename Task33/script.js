@@ -94,8 +94,12 @@ function start (chosenSpeed) {
 function submitAnswer () {
   const asnwer = parseInt(document.getElementById('submittedAnswer').value)
   if (asnwer === counterOfHits) {
-    alert('Victory')
-  } else alert('Wrong Answer')
+    setTimeout(() => {
+      alert('Victory')      
+    }, 500);
+  }else setTimeout(() => {
+    alert('Wrong Answer')
+  }, 500); 
 }
 
 function setPace (id) {
