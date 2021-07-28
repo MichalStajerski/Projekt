@@ -8,6 +8,7 @@ const colors = {
 const words = ['dog', 'ape', 'cat', 'dice'];
 const takenSquares = [];
 const answers = [];
+// instead of random so we will not draw from squares that are already taken
 const arrayForDraw = [];
 for (let i = 0; i < numCols * numRows - 1; i++) {
     arrayForDraw.push(i);
@@ -21,6 +22,9 @@ const splitWords = words.map(function (x) {
 });
 let text = '';
 const canCross = true;
+/**
+ * @type int[]
+ */
 const clickedTiles = [];
 let temp = [];
 window.onload = function () {
@@ -28,6 +32,10 @@ window.onload = function () {
     createLayout();
     console.log('asnwers', answers);
 };
+/**
+ *
+ * @param {string} id
+ */
 function tileClicked(tile, id) {
     // marks in blue color after click
     if (tile.style.backgroundColor !== colors.selected) {
@@ -45,7 +53,7 @@ function tileClicked(tile, id) {
     clickedTiles.sort(function (a, b) {
         return a - b;
     });
-    //checkAnswer(clickedTiles)
+    checkAnswer(clickedTiles);
 }
 function drawBoard() {
     const board = document.getElementById('board');
@@ -60,6 +68,7 @@ function drawBoard() {
         board.appendChild(searchedAnswer);
     }
 }
+// creates our front
 function createLayout() {
     drawBoard();
     const container = document.getElementById('container');
@@ -70,7 +79,7 @@ function createLayout() {
         for (let colIndex = 0; colIndex < numCols; colIndex++) {
             const tile = document.createElement('div');
             tile.className = 'box';
-            tile.id = String(rowIndex * numCols + colIndex);
+            tile.id = (rowIndex * numCols + colIndex);
             tile.onclick = () => tileClicked(tile, rowIndex * numCols + colIndex);
             row.appendChild(tile);
         }
@@ -91,7 +100,7 @@ function checkAnswer(clickedTiles) {
                 marked.className = 'boxNoHover';
                 // deletes tiles from answer array
                 for (let k = 0; k < answers.length; k++) {
-                    answers[k].remove(clickedTiles[j]);
+                    remove(answers[k], clickedTiles[j]);
                 }
                 // i place the text together so i can get the id for board to cross out
                 text += document.getElementById(clickedTiles[j]).innerHTML;
@@ -116,22 +125,13 @@ function checkAnswer(clickedTiles) {
         }
     }
 }
+// random char to fill squares outside of answers
 function randomCharacter() {
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
     const randomCharacter = alphabet[randomArrayElement(alphabet)];
     return randomCharacter;
 }
 // remove from array by value
-// Array.prototype.remove = function () {
-//   let what; const a = arguments; let L = a.length; let ax
-//   while (L && this.length) {
-//     what = a[--L]
-//     while ((ax = this.indexOf(what)) !== -1) {
-//       this.splice(ax, 1)
-//     }
-//   }
-//   return this
-// }
 function remove(arr, what) {
     var what, a = arguments, L = a.length, ax;
     while (L > 1 && arr.length) {
@@ -143,6 +143,16 @@ function remove(arr, what) {
     return arr;
 }
 function drawSquaresForWords() {
+    // console.log('samewordsandIndex',wordsAndindexesOfcommonChar())
+    // if(wordsAndindexesOfcommonChar()!=null && canCross ===true){
+    //   let startSquareForCrossing = randomArrayElement(arrayForDraw)
+    //   for(let i = 0;i<2;i++){
+    //   }
+    //   horizontalDraw
+    //   words.remove(wordsAndindexesOfcommonChar()[0][0])
+    //   words.remove(wordsAndindexesOfcommonChar()[0][1])
+    //   canCross = false
+    // }
     const numWords = words.length;
     for (let i = 0; i < numWords; i++) {
         const wordLength = words[i].length;
@@ -164,7 +174,7 @@ function drawLettersForsquares() {
     console.log('merged2', merged2);
     // for drawn answers write letters from array merged2
     for (let i = 0; i < merged.length; i++) {
-        let tileId = merged[i].toString();
+        const tileId = merged[i].toString();
         const tile = document.getElementById(tileId);
         const content = document.createTextNode(merged2[i]);
         tile.appendChild(content);
@@ -172,7 +182,7 @@ function drawLettersForsquares() {
     // else draw random letters for others squares
     for (let i = 0; i < numRows * numCols; i++) {
         if (!merged.includes(i)) {
-            let tileId = i.toString();
+            const tileId = i.toString();
             const tile = document.getElementById(tileId);
             const content = document.createTextNode(randomCharacter());
             tile.appendChild(content);
@@ -213,7 +223,7 @@ function verticalDraw(startSquare, wordLength, i) {
             takenSquares.push(startSquare + (numRows * j));
             temp.push(startSquare + (numRows * j));
         }
-        answers.splice(i, 0, temp[0]);
+        answers.splice(i, 0, temp);
         temp = [];
     }
     else {
@@ -222,12 +232,12 @@ function verticalDraw(startSquare, wordLength, i) {
             takenSquares.push(startSquare - (numRows * j));
             temp.push(startSquare - (numRows * j));
         }
-        answers.splice(i, 0, temp[0]);
+        answers.splice(i, 0, temp);
         temp = [];
     }
-    // answers[i].sort(function (a, b) {
-    //     return a - b;
-    // });
+    answers[i].sort(function (a, b) {
+        return a - b;
+    });
 }
 function horizontalDraw(startSquare, wordLength, i) {
     for (let i = 1; i < wordLength; i++) {
@@ -242,7 +252,23 @@ function horizontalDraw(startSquare, wordLength, i) {
     }
     answers.splice(i, 0, temp);
     temp = [];
-    // answers[i].sort(function (a, b) {
-    //     return a - b;
-    // });
+    answers[i].sort(function (a, b) {
+        return a - b;
+    });
+}
+function indexOfCommonchar(w1, w2) {
+    for (let i = 0; w1.length; i++) {
+        for (let j = 0; j < w2.length; j++) {
+            if (w1[i] === w2[j]) {
+                return [w1, w2, i, j];
+            }
+        }
+    }
+}
+function wordsAndindexesOfcommonChar() {
+    for (let i = 0; i < words.length; i++) {
+        for (let j = 0; j < words.length && j != i; j++) {
+            return [indexOfCommonchar(words[i], words[j])];
+        }
+    }
 }
