@@ -62,7 +62,7 @@ function drawBoard () {
   const board = document.getElementById('board')
   board.className = 'board'
   const titleForBoard = document.createElement('div')
-  titleForBoard.innerHTML = 'Search for words: '
+  titleForBoard.innerHTML = 'Search for words: <br>'
   board.appendChild(titleForBoard)
   for (let i = 0; i < words.length; i++) {
     const searchedAnswer = document.createElement('div')
