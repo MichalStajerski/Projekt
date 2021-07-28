@@ -246,19 +246,3 @@ function horizontalDraw(startSquare, wordLength, i) {
         return a - b;
     });
 }
-function indexOfCommonchar(w1, w2) {
-    for (let i = 0; w1.length; i++) {
-        for (let j = 0; j < w2.length; j++) {
-            if (w1[i] === w2[j]) {
-                return [w1, w2, i, j];
-            }
-        }
-    }
-}
-function wordsAndindexesOfcommonChar() {
-    for (let i = 0; i < words.length; i++) {
-        for (let j = 0; j < words.length && j != i; j++) {
-            return [indexOfCommonchar(words[i], words[j])];
-        }
-    }
-}

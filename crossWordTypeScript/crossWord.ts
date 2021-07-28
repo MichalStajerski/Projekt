@@ -150,12 +150,12 @@ function remove(arr,what) {
 }
 
 function drawSquaresForWords () {
-  const numWords = words.length
+  const numWords :number = words.length
   for (let i = 0; i < numWords; i++) {
-    const wordLength = words[i].length
+    const wordLength :number = words[i].length
     // using array instead of getRandom so we won't draw squares that are already taken
-    const startSquare = randomArrayElement(arrayForDraw)
-    const direction = getRandomIntInclusive(0, 1)
+    const startSquare :number = randomArrayElement(arrayForDraw)
+    const direction :number = getRandomIntInclusive(0, 1)
     // vertical allignment of word
     if (!direction) {
       verticalDraw(startSquare, wordLength, i)
@@ -167,11 +167,11 @@ function drawSquaresForWords () {
 
 function drawLettersForsquares () {
   const merged = [].concat.apply([], answers)
-  const merged2 = [].concat.apply([], splitWords)
+  const merged2 :string = [].concat.apply([], splitWords)
   console.log('merged2', merged2)
   // for drawn answers write letters from array merged2
   for (let i = 0; i < merged.length; i++) {
-    const tileId = merged[i].toString()
+    const tileId :string = merged[i].toString()
     const tile = document.getElementById(tileId)
     const content = document.createTextNode(merged2[i])
     tile.appendChild(content)
@@ -179,7 +179,7 @@ function drawLettersForsquares () {
   // else draw random letters for others squares
   for (let i = 0; i < numRows * numCols; i++) {
     if (!merged.includes(i)) {
-      const tileId = i.toString()
+      const tileId :string = i.toString()
       const tile = document.getElementById(tileId)
       const content = document.createTextNode(randomCharacter())
       tile.appendChild(content)
@@ -187,14 +187,14 @@ function drawLettersForsquares () {
   }
 }
 
-function getRandomIntInclusive (min, max) {
+function getRandomIntInclusive (min :number, max :number) {
   min = Math.ceil(min)
   max = Math.floor(max)
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 // for now i left the conditions like this to check if its working, needs changing horizontal words will never reach last column even
 // if its not going to cross to the next row
-function conditionsHorizontal (startSquare, wordLength, modulo) {
+function conditionsHorizontal (startSquare :number, wordLength :number, modulo :number) {
   for (let i = 0; i < wordLength; i++) {
     if ((startSquare + i) % modulo === 6 || takenSquares.includes(startSquare + i) || startSquare + wordLength - 1 > numRows * numCols - 1) {
       return true
@@ -202,7 +202,7 @@ function conditionsHorizontal (startSquare, wordLength, modulo) {
   }
 }
 // checks squares up and down in comparison with takenSquares array
-function conditionsVertical (startSquare, wordLength, numRows) {
+function conditionsVertical (startSquare :number, wordLength :number, numRows :number) {
   for (let i = 0; i < wordLength; i++) {
     if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i))) {
       return true
@@ -210,7 +210,7 @@ function conditionsVertical (startSquare, wordLength, numRows) {
   }
 }
 
-function verticalDraw (startSquare, wordLength, i) {
+function verticalDraw (startSquare :number, wordLength :number, i :number) {
   for (let i = 1; i < wordLength; i++) {
     while (conditionsVertical(startSquare, wordLength, numCols)) {
       startSquare = randomArrayElement(arrayForDraw)
@@ -238,7 +238,7 @@ function verticalDraw (startSquare, wordLength, i) {
   })
 }
 
-function horizontalDraw (startSquare, wordLength, i) {
+function horizontalDraw (startSquare :number, wordLength :number, i :number) {
   for (let i = 1; i < wordLength; i++) {
     while (conditionsHorizontal(startSquare, wordLength, numRows)) {
       startSquare = randomArrayElement(arrayForDraw)
@@ -257,21 +257,5 @@ function horizontalDraw (startSquare, wordLength, i) {
   })
 }
 
-function indexOfCommonchar (w1, w2) {
-  for (let i = 0; w1.length; i++) {
-    for (let j = 0; j < w2.length; j++) {
-      if (w1[i] === w2[j]) {
-        return [w1, w2, i, j]
-      }
-    }
-  }
-}
-function wordsAndindexesOfcommonChar () {
-  for (let i = 0; i < words.length; i++) {
-    for (let j = 0; j < words.length && j != i; j++) {
-      return [indexOfCommonchar(words[i], words[j])]
-    }
-  }
-}
 
 
