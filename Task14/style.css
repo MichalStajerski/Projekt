@@ -12,6 +12,8 @@
   background-color: #ddd;
   text-align: center;
   position: relative;
+  vertical-align: middle;
+  line-height: 100px;
   transition: transform .2s;
 }
 .box:hover {

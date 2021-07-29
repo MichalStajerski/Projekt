@@ -8,8 +8,8 @@ const { protocol } = require('electron')
 
 const {app,BrowserWindow} = electron
 let mainWindow
-
 app.on('ready',function(){
+    //preferences added so require('fs') works
     mainWindow = new BrowserWindow({webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,

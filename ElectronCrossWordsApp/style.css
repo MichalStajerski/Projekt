@@ -12,6 +12,7 @@
     background-color: #ddd;
     text-align: center;
     position: relative;
+    line-height: 100px;
     transition: transform .2s;
   }
   .box:hover {

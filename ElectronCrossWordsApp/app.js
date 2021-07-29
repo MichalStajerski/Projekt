@@ -5,7 +5,16 @@ const colors = {
   normal: '#ddd',
   success: 'green'
 }
-const words = []
+
+let words = ['dog','cat','dice','ape']
+const fs = require('fs');
+
+// let rawdata = fs.readFile('C:/Users/m9185/Desktop/string-to-json-online.json');
+// let wordsSet = JSON.parse(rawdata);
+// console.log(wordsSet);
+
+// const fs = require('fs')
+
 const takenSquares = []
 const answers = []
 // instead of random so we will not draw from squares that are already taken
@@ -23,27 +32,12 @@ const splitWords = words.map(function (x) {
 })
 let text = ''
 const canCross = true
-
 /**
  * @type int[]
  */
 const clickedTiles = []
 let temp = []
 window.onload = function () {
-  const fs = require('fs')
-  fs.readFile('C:/Users/m9185/Desktop/string-to-json-online.json', 'utf8', (err, jsonString) => {
-    if (err) {
-        console.log("Error reading file from disk:", err)
-        return
-    }
-    try {
-        words = JSON.parse(jsonString)
-        console.log('words',words)
-    } catch(err) {
-        console.log('Error parsing JSON string:', words)
-    }
-  })
-
   drawSquaresForWords()
   createLayout()
   console.log('asnwers', answers)
