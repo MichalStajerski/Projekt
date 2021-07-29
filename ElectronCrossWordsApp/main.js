@@ -5,11 +5,15 @@ const { protocol } = require('electron')
 // const createLayout = require('./app.js')
 
 
+
 const {app,BrowserWindow} = electron
 let mainWindow
 
 app.on('ready',function(){
-    mainWindow = new BrowserWindow({})
+    mainWindow = new BrowserWindow({webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+    }})
     //loading html into window
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname,'mainWindow.html'),

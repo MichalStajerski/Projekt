@@ -5,7 +5,7 @@ const colors = {
   normal: '#ddd',
   success: 'green'
 }
-const words = ['dog', 'ape', 'cat', 'dice']
+const words = []
 const takenSquares = []
 const answers = []
 // instead of random so we will not draw from squares that are already taken
@@ -30,15 +30,25 @@ const canCross = true
 const clickedTiles = []
 let temp = []
 window.onload = function () {
+  const fs = require('fs')
+  fs.readFile('C:/Users/m9185/Desktop/string-to-json-online.json', 'utf8', (err, jsonString) => {
+    if (err) {
+        console.log("Error reading file from disk:", err)
+        return
+    }
+    try {
+        words = JSON.parse(jsonString)
+        console.log('words',words)
+    } catch(err) {
+        console.log('Error parsing JSON string:', words)
+    }
+  })
+
   drawSquaresForWords()
   createLayout()
   console.log('asnwers', answers)
 }
 
-/**
- *
- * @param {string} id
- */
 function tileClicked (tile, id) {
   // marks in blue color after click
   if (tile.style.backgroundColor !== colors.selected) {
