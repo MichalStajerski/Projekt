@@ -6,14 +6,15 @@ const colors = {
   success: 'green'
 }
 
-let words = ['dog','cat','dice','ape']
+//reads pur answers from JSON file whose path we provide 
 const fs = require('fs');
+let rawdata = fs.readFileSync('C:/Users/m9185/Desktop/string-to-json-online.json');
+let wordsSet = JSON.parse(rawdata);
 
-// let rawdata = fs.readFile('C:/Users/m9185/Desktop/string-to-json-online.json');
-// let wordsSet = JSON.parse(rawdata);
-// console.log(wordsSet);
-
-// const fs = require('fs')
+//maps our answer to array words
+const words = wordsSet.words.map(function(x){
+  return x
+})
 
 const takenSquares = []
 const answers = []
@@ -31,7 +32,6 @@ const splitWords = words.map(function (x) {
   return x.split('')
 })
 let text = ''
-const canCross = true
 /**
  * @type int[]
  */
