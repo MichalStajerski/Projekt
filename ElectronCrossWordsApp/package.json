@@ -1,0 +1,14 @@
+{
+  "name": "electroncrosswordsapp",
+  "version": "1.0.0",
+  "description": "Cross Words App\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[\u001b[C\u001b[D\u001b[C\u001b[C\u001b[C\u001b[C\u001b\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[ing Words App",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Michal Stajerski",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^13.1.7"
+  }
+}
