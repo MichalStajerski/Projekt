@@ -22,7 +22,7 @@ const splitWords = words.map(function (x) {
   return x.split('')
 })
 let text = ''
-const canCross = true
+let canCross = true
 
 /**
  * @type int[]
@@ -149,15 +149,15 @@ Array.prototype.remove = function () {
   return this
 }
 function drawSquaresForWords () {
-  // console.log('samewordsandIndex',wordsAndindexesOfcommonChar())
+  console.log('samewordsandIndex',wordsAndindexesOfcommonChar())
   // if(wordsAndindexesOfcommonChar()!=null && canCross ===true){
   //   let startSquareForCrossing = randomArrayElement(arrayForDraw)
-  //   for(let i = 0;i<2;i++){
-
-  //   }
-  //   horizontalDraw
-  //   words.remove(wordsAndindexesOfcommonChar()[0][0])
-  //   words.remove(wordsAndindexesOfcommonChar()[0][1])
+  //   // for(let i = 0;i<2;i++){
+  //   //   crossingDraw(startSquareForCrossing,wordsAndindexesOfcommonChar()[0][0].wordsAndindexesOfcommonChar()[0][1])
+  //   // }
+    
+  //   // words.remove(wordsAndindexesOfcommonChar()[0][0])
+  //   // words.remove(wordsAndindexesOfcommonChar()[0][1])
   //   canCross = false
   // }
   const numWords = words.length
@@ -267,6 +267,10 @@ function horizontalDraw (startSquare, wordLength, i) {
   })
 }
 
+function crossingDraw(startSquare,word1,word2){
+
+}
+
 function indexOfCommonchar (w1, w2) {
   for (let i = 0; w1.length; i++) {
     for (let j = 0; j < w2.length; j++) {
@@ -277,9 +281,12 @@ function indexOfCommonchar (w1, w2) {
   }
 }
 function wordsAndindexesOfcommonChar () {
+  console.log(words[0])
   for (let i = 0; i < words.length; i++) {
-    for (let j = 0; j < words.length && j != i; j++) {
-      return [indexOfCommonchar(words[i], words[j])]
+    for (let j = 0; j < words.length; j++) {
+      if(i!=j){
+        return(indexOfCommonchar(words[i], words[j]))
+      }
     }
   }
 }
