@@ -6,13 +6,13 @@ const colors = {
   success: 'green'
 }
 
-//reads pur answers from JSON file whose path we provide 
-const fs = require('fs');
-let rawdata = fs.readFileSync('C:/Users/m9185/Desktop/string-to-json-online.json');
-let wordsSet = JSON.parse(rawdata);
+// reads pur answers from JSON file whose path we provide
+const fs = require('fs')
+const rawdata = fs.readFileSync('C:/Users/m9185/Desktop/string-to-json-online.json')
+const wordsSet = JSON.parse(rawdata)
 
-//maps our answer to array words
-const words = wordsSet.words.map(function(x){
+// maps our answer to array words
+const words = wordsSet.words.map(function (x) {
   return x
 })
 
@@ -259,4 +259,3 @@ function horizontalDraw (startSquare, wordLength, i) {
     return a - b
   })
 }
-
