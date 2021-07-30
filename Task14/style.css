@@ -7,13 +7,13 @@
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
-  display: inline-block;
   border: 4px solid rgb(19, 61, 9);
   background-color: #ddd;
   text-align: center;
   position: relative;
   vertical-align: middle;
   line-height: 100px;
+  overflow: hidden;
   transition: transform .2s;
 }
 .box:hover {
@@ -54,17 +54,22 @@
     display:flex;
   }
   #layout{
+    overflow: hidden;
     width: 50%;
     height: 80%;
     display: flex;
     text-align: center;
-    margin: auto;
-    padding: 10px;
-    display:flex;
+    margin: 0;
+    padding: 0;
   }
   #container {
     display: flex;
     text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   }
   
 
