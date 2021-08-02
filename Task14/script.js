@@ -1,11 +1,12 @@
 const numRows = 7
 const numCols = 7
+const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 const colors = {
   selected: 'blue',
   normal: '#ddd',
   success: 'green'
 }
-const words = ['dog', 'ape', 'cat', 'dice']
+const words = ['dog', 'ape', 'cat','dice']
 const takenSquares = []
 const answers = []
 // instead of random so we will not draw from squares that are already taken
@@ -13,10 +14,18 @@ const arrayForDraw = []
 for (let i = 0; i < numCols * numRows - 1; i++) {
   arrayForDraw.push(i)
 }
+var MAX_CHAR = 26
+const v = Array(alphabet).map(function (x){
+  return (x.split(''))
+})
 
 const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 const descByLengthOfElementInArray = (a1) => a1.sort((el1, el2) => el2.length - el1.length)
+const haveSameLetter = (w1,w2,el) => w1.includes(el) && w2.includes(el)
+// console.log(words[0],words[3])
+// console.log('haveSameLetters',haveSameLetter(words[0],words[3]))
+// const haveSameLetter = (ar1) => ar1.every(el=>el.includes(x))
 descByLengthOfElementInArray(words)
 const splitWords = words.map(function (x) {
   return x.split('')
@@ -133,7 +142,6 @@ function checkAnswer (clickedTiles) {
 
 // random char to fill squares outside of answers
 function randomCharacter () {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz'
   const randomCharacter = alphabet[randomArrayElement(alphabet)]
   return randomCharacter
 }
@@ -149,17 +157,12 @@ Array.prototype.remove = function () {
   return this
 }
 function drawSquaresForWords () {
-  console.log('samewordsandIndex',wordsAndindexesOfcommonChar())
-  // if(wordsAndindexesOfcommonChar()!=null && canCross ===true){
-  //   let startSquareForCrossing = randomArrayElement(arrayForDraw)
-  //   // for(let i = 0;i<2;i++){
-  //   //   crossingDraw(startSquareForCrossing,wordsAndindexesOfcommonChar()[0][0].wordsAndindexesOfcommonChar()[0][1])
-  //   // }
-    
-  //   // words.remove(wordsAndindexesOfcommonChar()[0][0])
-  //   // words.remove(wordsAndindexesOfcommonChar()[0][1])
-  //   canCross = false
-  // }
+ if(canCross===true){
+
+  const cross =[actionForCrossSearch()]
+  console.log(cross)
+  canCross =false
+ }
   const numWords = words.length
   for (let i = 0; i < numWords; i++) {
     const wordLength = words[i].length
@@ -267,26 +270,48 @@ function horizontalDraw (startSquare, wordLength, i) {
   })
 }
 
-function crossingDraw(startSquare,word1,word2){
-
-}
-
-function indexOfCommonchar (w1, w2) {
-  for (let i = 0; w1.length; i++) {
-    for (let j = 0; j < w2.length; j++) {
-      if (w1[i] === w2[j]) {
-        return [w1, w2, i, j]
-      }
-    }
+function serchForwordswithCommonLetter(w1,w2,letter){
+  if(haveSameLetter(w1,w2,letter)){
+      console.log("word 1 and word 2, letter",w1,w2,letter)
+      console.log('index1 and index2',w1.indexOf(letter),w2.indexOf(letter))
+      return true
   }
 }
-function wordsAndindexesOfcommonChar () {
-  console.log(words[0])
-  for (let i = 0; i < words.length; i++) {
-    for (let j = 0; j < words.length; j++) {
-      if(i!=j){
-        return(indexOfCommonchar(words[i], words[j]))
+
+function actionForCrossSearch(){
+  for(let i=0;i<words.length;i++){
+      for(let j =0;j<words.length;j++){
+          if(j!==i){
+              for(let k = 0;k<v[0].length;k++){
+                  if(serchForwordswithCommonLetter(words[i],words[j],v[0][k])){
+                      console.log('indexy words',i,j)
+                      return [words[i],words[j],v[0][k],words[i].indexOf(v[0][k]),words[j].indexOf(v[0][k]),i,j]
+                  }
+              }
+          }
       }
-    }
   }
 }
+
+
+
+// function indexOfCommonchar (w1, w2) {
+//   for(let i =0;i<v.length;i++){
+//     if(haveSameLetter(w1,w2,v[0][i])){
+//       return w1,w2,v[0][i]
+//     }
+//   }
+// }
+// function wordsAndindexesOfcommonChar () {
+//   console.log(words[0],words[1])
+//   console.log('twostrings',anythingInCommon(words[0],words[1]))
+//   for (let i = 0; i < words.length; i++) {
+//     for (let j = 0; j < words.length; j++) {
+//       if(i!=j){
+//         if(indexOfCommonchar(words[i],words[j])){
+//           return(indexOfCommonchar(words[i], words[j]))
+//         } 
+//       }   
+//     }
+//   }
+// }
