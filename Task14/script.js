@@ -6,7 +6,7 @@ const colors = {
   normal: '#ddd',
   success: 'green'
 }
-const words = ['dog', 'ape', 'cat','dice']
+const words = ['wdog', 'ape', 'cat','dice']
 const takenSquares = []
 const answers = []
 // instead of random so we will not draw from squares that are already taken
@@ -14,7 +14,6 @@ const arrayForDraw = []
 for (let i = 0; i < numCols * numRows - 1; i++) {
   arrayForDraw.push(i)
 }
-var MAX_CHAR = 26
 const v = Array(alphabet).map(function (x){
   return (x.split(''))
 })
@@ -35,6 +34,7 @@ let canCross = true
  */
 const clickedTiles = []
 let temp = []
+let crossArray = []
 window.onload = function () {
   drawSquaresForWords()
   createLayout()
@@ -155,14 +155,14 @@ Array.prototype.remove = function () {
 }
 function drawSquaresForWords () {
  if(canCross===true){
-  const cross =[actionForCrossSearch()]
+  crossArray =[actionForCrossSearch()]
   // const direction = getRandomIntInclusive(0,1)
-  console.log(cross)
+  console.log(crossArray)
   const startSquare = randomArrayElement(arrayForDraw)
   // console.log('cross8',cross[0][8])
-  horizontalDrawCross(startSquare,cross[0][7],0)
-  console.log('an place',answers[0][cross[0][3]])
-  verticalDraw(startSquare,cross[0][8],1)
+  horizontalDrawCross(startSquare,crossArray[0][7],0)
+  console.log('an place',answers[0][crossArray[0][3]])
+  //verticalDraw(answers[0][cross[0][3]]-cross[0][4],cross[0][8],1)
  
   // words.remove(words[0])
   // words.remove(words[1])
@@ -254,6 +254,10 @@ function verticalDraw (startSquare, wordLength, i) {
       startSquare = randomArrayElement(arrayForDraw)
     }
   }
+  if(startSquare!=answers[0][crossArray[0][3]]-crossArray[0][4]){
+    arrayForDraw.remove(answers[0][crossArray[0][3]]-crossArray[0][4])
+    takenSquares.push(answers[0][crossArray[0][3]]-crossArray[0][4])
+  }
   for (let j = 0; j < wordLength; j++) {
     arrayForDraw.remove(startSquare + j)
     takenSquares.push(startSquare + j)
@@ -274,7 +278,7 @@ function horizontalDrawCross (startSquare, wordLength, i) {
     }
   }
   for (let j = 0; j < wordLength; j++) {
-    if(j!=0){
+    if(j!=crossArray[0][3]){
       arrayForDraw.remove(startSquare + (numRows * j))
       takenSquares.push(startSquare + (numRows * j))
     }
@@ -285,7 +289,9 @@ function horizontalDrawCross (startSquare, wordLength, i) {
  
   answers[i].sort(function (a, b) {
     return a - b
-  }) 
+  })
+  console.log('*',answers[0][crossArray[0][3]]-crossArray[0][4])
+  verticalDraw(answers[0][crossArray[0][3]]-crossArray[0][4],crossArray[0][8],1)
 }
 
 
@@ -311,26 +317,3 @@ function actionForCrossSearch(){
     }
   }
 }
-
-
-
-// function indexOfCommonchar (w1, w2) {
-//   for(let i =0;i<v.length;i++){
-//     if(haveSameLetter(w1,w2,v[0][i])){
-//       return w1,w2,v[0][i]
-//     }
-//   }
-// }
-// function wordsAndindexesOfcommonChar () {
-//   console.log(words[0],words[1])
-//   console.log('twostrings',anythingInCommon(words[0],words[1]))
-//   for (let i = 0; i < words.length; i++) {
-//     for (let j = 0; j < words.length; j++) {
-//       if(i!=j){
-//         if(indexOfCommonchar(words[i],words[j])){
-//           return(indexOfCommonchar(words[i], words[j]))
-//         } 
-//       }   
-//     }
-//   }
-// }
