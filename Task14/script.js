@@ -158,9 +158,11 @@ function drawSquaresForWords () {
   const cross =[actionForCrossSearch()]
   // const direction = getRandomIntInclusive(0,1)
   console.log(cross)
-  //const startSquare = randomArrayElement(arrayForDraw)
-  verticalDrawCross(9,4,0)
-  horizontalDraw(9,3,1)
+  const startSquare = randomArrayElement(arrayForDraw)
+  // console.log('cross8',cross[0][8])
+  horiDrawCross(startSquare,cross[0][7],0)
+  verticalDraw(startSquare,cross[0][8],1)
+  
   // words.remove(words[0])
   // words.remove(words[1])
   canCross = false
@@ -210,7 +212,7 @@ function getRandomIntInclusive (min, max) {
 }
 // for now i left the conditions like this to check if its working, needs changing horizontal words will never reach last column even
 // if its not going to cross to the next row
-function conditionsHorizontal (startSquare, wordLength, modulo) {
+function conditionsVertical (startSquare, wordLength, modulo) {
   for (let i = 0; i < wordLength; i++) {
     if ((startSquare + i) % modulo === 6 || takenSquares.includes(startSquare + i) || startSquare + wordLength - 1 > numRows * numCols - 1) {
       return true
@@ -218,7 +220,7 @@ function conditionsHorizontal (startSquare, wordLength, modulo) {
   }
 }
 // checks squares up and down in comparison with takenSquares array
-function conditionsVertical (startSquare, wordLength, numRows) {
+function conditionsHorizontal (startSquare, wordLength, numRows) {
   for (let i = 0; i < wordLength; i++) {
     if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i))) {
       return true
@@ -226,9 +228,9 @@ function conditionsVertical (startSquare, wordLength, numRows) {
   }
 }
 
-function verticalDraw (startSquare, wordLength, i) {
+function horizontalDraw (startSquare, wordLength, i) {
   for (let i = 1; i < wordLength; i++) {
-    while (conditionsVertical(startSquare, wordLength, numCols)) {
+    while (conditionsHorizontal(startSquare, wordLength, numCols)) {
       startSquare = randomArrayElement(arrayForDraw)
     }
   }
@@ -254,9 +256,9 @@ function verticalDraw (startSquare, wordLength, i) {
   })
 }
 
-function horizontalDraw (startSquare, wordLength, i) {
+function verticalDraw (startSquare, wordLength, i) {
   for (let i = 1; i < wordLength; i++) {
-    while (conditionsHorizontal(startSquare, wordLength, numRows)) {
+    while (conditionsVertical(startSquare, wordLength, numRows)) {
       startSquare = randomArrayElement(arrayForDraw)
     }
   }
@@ -273,9 +275,9 @@ function horizontalDraw (startSquare, wordLength, i) {
   })
 }
 
-function verticalDrawCross (startSquare, wordLength, i) {
+function horiDrawCross (startSquare, wordLength, i) {
   for (let i = 1; i < wordLength; i++) {
-    while (conditionsVertical(startSquare, wordLength, numCols)) {
+    while (conditionsHorizontal(startSquare, wordLength, numCols)) {
       startSquare = randomArrayElement(arrayForDraw)
     }
   }
