@@ -116,8 +116,8 @@ function checkAnswer (clickedTiles) {
         // i place the text together so i can get the id for board to cross out
         text += document.getElementById(clickedTiles[j]).innerHTML
       }
-      //document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
-      //text = ''
+      // document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
+      // text = ''
       // delete alert after good answer
       answers.splice(i, 1)
       // when there are no more answers show alert
@@ -160,9 +160,10 @@ function drawSquaresForWords () {
   console.log(cross)
   const startSquare = randomArrayElement(arrayForDraw)
   // console.log('cross8',cross[0][8])
-  horiDrawCross(startSquare,cross[0][7],0)
+  horizontalDrawCross(startSquare,cross[0][7],0)
+  console.log('an place',answers[0][cross[0][3]])
   verticalDraw(startSquare,cross[0][8],1)
-  
+ 
   // words.remove(words[0])
   // words.remove(words[1])
   canCross = false
@@ -222,7 +223,7 @@ function conditionsVertical (startSquare, wordLength, modulo) {
 // checks squares up and down in comparison with takenSquares array
 function conditionsHorizontal (startSquare, wordLength, numRows) {
   for (let i = 0; i < wordLength; i++) {
-    if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i))) {
+    if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i)) ||startSquare + (wordLength - 1) * numRows > 48 ) {
       return true
     }
   }
@@ -234,25 +235,16 @@ function horizontalDraw (startSquare, wordLength, i) {
       startSquare = randomArrayElement(arrayForDraw)
     }
   }
-  if (startSquare + (wordLength - 1) * numRows < 48) {
-    for (let j = 0; j < wordLength; j++) {
-      arrayForDraw.remove(startSquare + (numRows * j))
-      takenSquares.push(startSquare + (numRows * j))
-      temp.push(startSquare + (numRows * j))
-    }
-    answers.splice(i, 0, temp)
-    temp = []
-  } else {
-    for (let j = 0; j < wordLength; j++) {
-      arrayForDraw.remove(startSquare - (numRows * j))
-      takenSquares.push(startSquare - (numRows * j))
-      temp.push(startSquare - (numRows * j))
-    }
-    answers.splice(i, 0, temp)
-    temp = []
+  for (let j = 0; j < wordLength; j++) {
+    arrayForDraw.remove(startSquare + (numRows * j))
+    takenSquares.push(startSquare + (numRows * j))
+    temp.push(startSquare + (numRows * j))
   }
+  answers.splice(i, 0, temp)
+  temp = []
+
   answers[i].sort(function (a, b) {
-    return a - b
+  return a - b
   })
 }
 
@@ -275,59 +267,48 @@ function verticalDraw (startSquare, wordLength, i) {
   })
 }
 
-function horiDrawCross (startSquare, wordLength, i) {
+function horizontalDrawCross (startSquare, wordLength, i) {
   for (let i = 1; i < wordLength; i++) {
     while (conditionsHorizontal(startSquare, wordLength, numCols)) {
       startSquare = randomArrayElement(arrayForDraw)
     }
   }
-  if (startSquare + (wordLength - 1) * numRows < 48) {
-    for (let j = 0; j < wordLength; j++) {
-      if(j!=0){
-        arrayForDraw.remove(startSquare + (numRows * j))
-        takenSquares.push(startSquare + (numRows * j))
-      }
-      temp.push(startSquare + (numRows * j))
+  for (let j = 0; j < wordLength; j++) {
+    if(j!=0){
+      arrayForDraw.remove(startSquare + (numRows * j))
+      takenSquares.push(startSquare + (numRows * j))
     }
-    answers.splice(i, 0, temp)
-    temp = []
-  } else {
-    for (let j = 0; j < wordLength; j++) {
-      arrayForDraw.remove(startSquare - (numRows * j))
-      if(j!=0){
-        takenSquares.push(startSquare - (numRows * j))
-      }
-      temp.push(startSquare - (numRows * j))
-    }
-    answers.splice(i, 0, temp)
-    temp = []
+    temp.push(startSquare + (numRows * j))
   }
+  answers.splice(i, 0, temp)
+  temp = []
+ 
   answers[i].sort(function (a, b) {
     return a - b
-  })
+  }) 
 }
 
 
 function serchForwordswithCommonLetter(w1,w2,letter){
   if(haveSameLetter(w1,w2,letter)){
-      console.log("word 1 and word 2, letter",w1,w2,letter)
-      console.log('index1 and index2',w1.indexOf(letter),w2.indexOf(letter))
-      return true
+    console.log("word 1 and word 2, letter",w1,w2,letter)
+    console.log('index1 and index2',w1.indexOf(letter),w2.indexOf(letter))
+    return true
   }
 }
 
 function actionForCrossSearch(){
   for(let i=0;i<words.length;i++){
-      for(let j =0;j<words.length;j++){
-          if(j!==i){
-              for(let k = 0;k<v[0].length;k++){
-                  if(serchForwordswithCommonLetter(words[i],words[j],v[0][k])){
-                      console.log('indexy words',i,j)
-                      return [words[i],words[j],v[0][k],words[i].indexOf(v[0][k]),words[j].indexOf(v[0][k]),i,j,words[i].length,words[j].length]
-                  }
-              }
+    for(let j =0;j<words.length;j++){
+      if(j!==i){
+        for(let k = 0;k<v[0].length;k++){
+          if(serchForwordswithCommonLetter(words[i],words[j],v[0][k])){
+            console.log('indexy words',i,j)
+            return [words[i],words[j],v[0][k],words[i].indexOf(v[0][k]),words[j].indexOf(v[0][k]),i,j,words[i].length,words[j].length]
           }
-      }
+        }
+      }   
+    }
   }
 }
 
