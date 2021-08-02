@@ -1,7 +1,6 @@
 const electron = require('electron')
 const url = require('url')
 const path = require('path')
-const { protocol } = require('electron')
 const { app, BrowserWindow } = electron
 let mainWindow
 
