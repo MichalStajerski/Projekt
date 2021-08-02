@@ -172,6 +172,7 @@ function drawLettersForsquares () {
   const merged = [].concat.apply([], answers)
   const merged2 = [].concat.apply([], splitWords)
   console.log('merged2', merged2)
+  console.log('merged', merged)
   // for drawn answers write letters from array merged2
   for (let i = 0; i < merged.length; i++) {
     const tileId = merged[i].toString()
