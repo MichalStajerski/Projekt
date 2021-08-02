@@ -23,9 +23,6 @@ const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 const descByLengthOfElementInArray = (a1) => a1.sort((el1, el2) => el2.length - el1.length)
 const haveSameLetter = (w1,w2,el) => w1.includes(el) && w2.includes(el)
-// console.log(words[0],words[3])
-// console.log('haveSameLetters',haveSameLetter(words[0],words[3]))
-// const haveSameLetter = (ar1) => ar1.every(el=>el.includes(x))
 descByLengthOfElementInArray(words)
 const splitWords = words.map(function (x) {
   return x.split('')
@@ -164,11 +161,12 @@ function drawSquaresForWords () {
   //const startSquare = randomArrayElement(arrayForDraw)
   verticalDrawCross(9,4,0)
   horizontalDraw(9,3,1)
-  
+  // words.remove(words[0])
+  // words.remove(words[1])
   canCross = false
  }
   const numWords = words.length
-  for (let i = 0; i < numWords; i++) {
+  for (let i = 2; i < numWords; i++) {
     const wordLength = words[i].length
     // using array instead of getRandom so we won't draw squares that are already taken
     const startSquare = randomArrayElement(arrayForDraw)
@@ -186,6 +184,7 @@ function drawLettersForsquares () {
   const merged = [].concat.apply([], answers)
   const merged2 = [].concat.apply([], splitWords)
   console.log('merged2', merged2)
+  console.log('merged', merged)
   // for drawn answers write letters from array merged2
   for (let i = 0; i < merged.length; i++) {
     const tileId = merged[i].toString()
@@ -282,8 +281,8 @@ function verticalDrawCross (startSquare, wordLength, i) {
   }
   if (startSquare + (wordLength - 1) * numRows < 48) {
     for (let j = 0; j < wordLength; j++) {
-      arrayForDraw.remove(startSquare + (numRows * j))
       if(j!=0){
+        arrayForDraw.remove(startSquare + (numRows * j))
         takenSquares.push(startSquare + (numRows * j))
       }
       temp.push(startSquare + (numRows * j))
