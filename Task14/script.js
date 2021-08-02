@@ -119,8 +119,8 @@ function checkAnswer (clickedTiles) {
         // i place the text together so i can get the id for board to cross out
         text += document.getElementById(clickedTiles[j]).innerHTML
       }
-      document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
-      text = ''
+      //document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
+      //text = ''
       // delete alert after good answer
       answers.splice(i, 1)
       // when there are no more answers show alert
@@ -158,10 +158,14 @@ Array.prototype.remove = function () {
 }
 function drawSquaresForWords () {
  if(canCross===true){
-
   const cross =[actionForCrossSearch()]
+  // const direction = getRandomIntInclusive(0,1)
   console.log(cross)
-  canCross =false
+  //const startSquare = randomArrayElement(arrayForDraw)
+  verticalDrawCross(9,4,0)
+  horizontalDraw(9,3,1)
+  
+  canCross = false
  }
   const numWords = words.length
   for (let i = 0; i < numWords; i++) {
@@ -270,6 +274,39 @@ function horizontalDraw (startSquare, wordLength, i) {
   })
 }
 
+function verticalDrawCross (startSquare, wordLength, i) {
+  for (let i = 1; i < wordLength; i++) {
+    while (conditionsVertical(startSquare, wordLength, numCols)) {
+      startSquare = randomArrayElement(arrayForDraw)
+    }
+  }
+  if (startSquare + (wordLength - 1) * numRows < 48) {
+    for (let j = 0; j < wordLength; j++) {
+      arrayForDraw.remove(startSquare + (numRows * j))
+      if(j!=0){
+        takenSquares.push(startSquare + (numRows * j))
+      }
+      temp.push(startSquare + (numRows * j))
+    }
+    answers.splice(i, 0, temp)
+    temp = []
+  } else {
+    for (let j = 0; j < wordLength; j++) {
+      arrayForDraw.remove(startSquare - (numRows * j))
+      if(j!=0){
+        takenSquares.push(startSquare - (numRows * j))
+      }
+      temp.push(startSquare - (numRows * j))
+    }
+    answers.splice(i, 0, temp)
+    temp = []
+  }
+  answers[i].sort(function (a, b) {
+    return a - b
+  })
+}
+
+
 function serchForwordswithCommonLetter(w1,w2,letter){
   if(haveSameLetter(w1,w2,letter)){
       console.log("word 1 and word 2, letter",w1,w2,letter)
@@ -285,7 +322,7 @@ function actionForCrossSearch(){
               for(let k = 0;k<v[0].length;k++){
                   if(serchForwordswithCommonLetter(words[i],words[j],v[0][k])){
                       console.log('indexy words',i,j)
-                      return [words[i],words[j],v[0][k],words[i].indexOf(v[0][k]),words[j].indexOf(v[0][k]),i,j]
+                      return [words[i],words[j],v[0][k],words[i].indexOf(v[0][k]),words[j].indexOf(v[0][k]),i,j,words[i].length,words[j].length]
                   }
               }
           }
