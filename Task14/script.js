@@ -293,14 +293,6 @@ function horizontalDrawCross (startSquare, wordLength, i) {
   verticalDraw(answers[0][crossArray[0][3]] - crossArray[0][4], crossArray[0][8], 1)
 }
 
-function serchForwordswithCommonLetter (w1, w2, letter) {
-  if (haveSameLetter(w1, w2, letter)) {
-    console.log('word 1 and word 2, letter', w1, w2, letter)
-    console.log('index1 and index2', w1.indexOf(letter), w2.indexOf(letter))
-    return true
-  }
-}
-
 //function returns words with common char, this char, indexes at which char is existing in said words,indexes at which words are placed in words array
 //and finally lenghth of two words
 //function always returns one pair of words so crossed words will be the same for now unelss we change letters so it finds other matches
@@ -309,7 +301,7 @@ function actionForCrossSearch () {
     for (let j = 0; j < words.length; j++) {
       if (j !== i) {
         for (let k = 0; k < v[0].length; k++) {
-          if (serchForwordswithCommonLetter(words[i], words[j], v[0][k])) {
+          if (haveSameLetter(words[i], words[j], v[0][k])) {
             console.log('indexy words', i, j)
             return [words[i], words[j], v[0][k], words[i].indexOf(v[0][k]), words[j].indexOf(v[0][k]), i, j, words[i].length, words[j].length]
           }
