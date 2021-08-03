@@ -6,7 +6,7 @@ const colors = {
   normal: '#ddd',
   success: 'green'
 }
-const words = ['wdog', 'ape', 'cat','dice']
+const words = ['dog', 'aper', 'cat','dice']
 const takenSquares = []
 const answers = []
 // instead of random so we will not draw from squares that are already taken
@@ -192,16 +192,18 @@ function drawLettersForsquares () {
   for (let i = 0; i < merged.length; i++) {
     const tileId = merged[i].toString()
     const tile = document.getElementById(tileId)
-    const content = document.createTextNode(merged2[i])
-    tile.appendChild(content)
+    tile.innerHTML = (merged2[i])
+    // const content = document.createTextNode(merged2[i])
+    // tile.appendChild(content)
   }
   // else draw random letters for others squares
   for (let i = 0; i < numRows * numCols; i++) {
     if (!merged.includes(i)) {
       tileId = i.toString()
       const tile = document.getElementById(tileId)
-      content = document.createTextNode(randomCharacter())
-      tile.appendChild(content)
+      tile.innerHTML = (randomCharacter())
+      // content = document.createTextNode(randomCharacter())
+      // tile.appendChild(content)
     }
   }
 }
@@ -291,6 +293,7 @@ function horizontalDrawCross (startSquare, wordLength, i) {
     return a - b
   })
   console.log('*',answers[0][crossArray[0][3]]-crossArray[0][4])
+  console.log('&',answers[0][crossArray[0][3]])
   verticalDraw(answers[0][crossArray[0][3]]-crossArray[0][4],crossArray[0][8],1)
 }
 
