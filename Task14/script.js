@@ -2,6 +2,8 @@
 //TODO: now that word crossing works the words aren't being crossed out when share char since previously 
 //we were building up the id of div from letters in checked tlies now after one word is srossed out we miss the needed letter for 
 //the other one
+//currently one word can only cross with different one, a scenario where one word would be crossing for example with three words would nedd 
+//implmentation
 //afeter that implement the changes to electron version of this app   
 const numRows = 7
 const numCols = 7
@@ -20,9 +22,11 @@ for (let i = 0; i < numCols * numRows - 1; i++) {
   arrayForDraw.push(i)
 }
 
-const v = Array(alphabet).map(function (x) {
+let v = Array(alphabet).map(function (x) {
   return (x.split(''))
 })
+//reduces to array of elements instead of array of arrays
+v = [].concat.apply([], v)
 
 const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
@@ -160,6 +164,8 @@ Array.prototype.remove = function () {
 function drawSquaresForWords () {
   //returns table with values
   crossArray = [actionForCrossSearch()]
+  //here i don't reduce to array instead of array of arrays for now beacuse later maybe we will have a set of words with common char
+  //instead of one find  
   //returns undefined when there are no mathces
   if (canCross === true && crossArray[0] !== undefined) {
     // const direction = getRandomIntInclusive(0,1)
@@ -300,10 +306,10 @@ function actionForCrossSearch () {
   for (let i = 0; i < words.length; i++) {
     for (let j = 0; j < words.length; j++) {
       if (j !== i) {
-        for (let k = 0; k < v[0].length; k++) {
-          if (haveSameLetter(words[i], words[j], v[0][k])) {
+        for (let k = 0; k < v.length; k++) {
+          if (haveSameLetter(words[i], words[j], v[k])) {
             console.log('indexy words', i, j)
-            return [words[i], words[j], v[0][k], words[i].indexOf(v[0][k]), words[j].indexOf(v[0][k]), i, j, words[i].length, words[j].length]
+            return [words[i], words[j], v[k], words[i].indexOf(v[k]), words[j].indexOf(v[k]), i, j, words[i].length, words[j].length]
           }
         }
       }
