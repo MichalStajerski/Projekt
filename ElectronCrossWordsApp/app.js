@@ -239,10 +239,6 @@ function verticalDraw (startSquare, wordLength, i) {
       startSquare = randomArrayElement(arrayForDraw)
     }
   }
-  if(startSquare!=answers[0][crossArray[0][3]]-crossArray[0][4]){
-    arrayForDraw.remove(answers[0][crossArray[0][3]]-crossArray[0][4])
-    takenSquares.push(answers[0][crossArray[0][3]]-crossArray[0][4])
-  }
   for (let j = 0; j < wordLength; j++) {
     arrayForDraw.remove(startSquare + j)
     takenSquares.push(startSquare + j)
