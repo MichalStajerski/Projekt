@@ -301,9 +301,9 @@ function serchForwordswithCommonLetter (w1, w2, letter) {
   }
 }
 
-//functions returns words with common char, this char, indexes at which char is existing,indexes at which words are placed in words array
+//function returns words with common char, this char, indexes at which char is existing in said words,indexes at which words are placed in words array
 //and finally lenghth of two words
-//function alwas returns one pair of words so crossed words will be the same for now unelss we change letters so there are other matches
+//function always returns one pair of words so crossed words will be the same for now unelss we change letters so it finds other matches
 function actionForCrossSearch () {
   for (let i = 0; i < words.length; i++) {
     for (let j = 0; j < words.length; j++) {
