@@ -6,7 +6,7 @@ const colors = {
   normal: '#ddd',
   success: 'green'
 }
-const words = ['tgw','mon','apr','dice']
+const words = ['dog', 'cat', 'ape', 'dice']
 const takenSquares = []
 const answers = []
 // instead of random so we will not draw from squares that are already taken
@@ -15,14 +15,14 @@ for (let i = 0; i < numCols * numRows - 1; i++) {
   arrayForDraw.push(i)
 }
 
-const v = Array(alphabet).map(function (x){
+const v = Array(alphabet).map(function (x) {
   return (x.split(''))
 })
 
 const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 const descByLengthOfElementInArray = (a1) => a1.sort((el1, el2) => el2.length - el1.length)
-const haveSameLetter = (w1,w2,el) => w1.includes(el) && w2.includes(el)
+const haveSameLetter = (w1, w2, el) => w1.includes(el) && w2.includes(el)
 descByLengthOfElementInArray(words)
 const splitWords = words.map(function (x) {
   return x.split('')
@@ -111,8 +111,8 @@ function checkAnswer (clickedTiles) {
         // i place the text together so i can get the id for board to cross out
         text += document.getElementById(clickedTiles[j]).innerHTML
       }
-      // document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
-      // text = ''
+      document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
+      text = ''
       // delete alert after good answer
       answers.splice(i, 1)
       // when there are no more answers show alert
@@ -150,14 +150,14 @@ Array.prototype.remove = function () {
   return this
 }
 function drawSquaresForWords () {
-  crossArray =[actionForCrossSearch()]
-  if(canCross===true && crossArray[0] !== undefined){
+  crossArray = [actionForCrossSearch()]
+  if (canCross === true && crossArray[0] !== undefined) {
     // const direction = getRandomIntInclusive(0,1)
     console.log(crossArray)
     const startSquare = randomArrayElement(arrayForDraw)
     // console.log('cross8',cross[0][8])
-    horizontalDrawCross(startSquare,crossArray[0][7],0)
-    console.log('an place',answers[0][crossArray[0][3]])    
+    horizontalDrawCross(startSquare, crossArray[0][7], 0)
+    console.log('an place', answers[0][crossArray[0][3]])
     canCross = false
   }
   const numWords = words.length
@@ -213,7 +213,7 @@ function conditionsVertical (startSquare, wordLength, modulo) {
 // checks squares up and down in comparison with takenSquares array
 function conditionsHorizontal (startSquare, wordLength, numRows) {
   for (let i = 0; i < wordLength; i++) {
-    if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i)) ||startSquare + (wordLength - 1) * numRows > 48 ) {
+    if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i)) || startSquare + (wordLength - 1) * numRows > 48) {
       return true
     }
   }
@@ -234,7 +234,7 @@ function horizontalDraw (startSquare, wordLength, i) {
   temp = []
 
   answers[i].sort(function (a, b) {
-  return a - b
+    return a - b
   })
 }
 
@@ -243,9 +243,9 @@ function verticalDraw (startSquare, wordLength, i) {
     while (conditionsVertical(startSquare, wordLength, numRows)) {
       startSquare = randomArrayElement(arrayForDraw)
     }
-  } if(crossArray[0] !== undefined && startSquare!=answers[0][crossArray[0][3]]-crossArray[0][4]){
-    arrayForDraw.remove(answers[0][crossArray[0][3]]-crossArray[0][4])
-    takenSquares.push(answers[0][crossArray[0][3]]-crossArray[0][4])
+  } if (crossArray[0] !== undefined && startSquare != answers[0][crossArray[0][3]] - crossArray[0][4]) {
+    arrayForDraw.remove(answers[0][crossArray[0][3]] - crossArray[0][4])
+    takenSquares.push(answers[0][crossArray[0][3]] - crossArray[0][4])
   }
   for (let j = 0; j < wordLength; j++) {
     arrayForDraw.remove(startSquare + j)
@@ -267,7 +267,7 @@ function horizontalDrawCross (startSquare, wordLength, i) {
     }
   }
   for (let j = 0; j < wordLength; j++) {
-    if(j!=crossArray[0][3]){
+    if (j != crossArray[0][3]) {
       arrayForDraw.remove(startSquare + (numRows * j))
       takenSquares.push(startSquare + (numRows * j))
     }
@@ -275,35 +275,34 @@ function horizontalDrawCross (startSquare, wordLength, i) {
   }
   answers.splice(i, 0, temp)
   temp = []
- 
+
   answers[i].sort(function (a, b) {
     return a - b
   })
-  console.log('*',answers[0][crossArray[0][3]]-crossArray[0][4])
-  console.log('&',answers[0][crossArray[0][3]])
-  verticalDraw(answers[0][crossArray[0][3]]-crossArray[0][4],crossArray[0][8],1)
+  console.log('*', answers[0][crossArray[0][3]] - crossArray[0][4])
+  console.log('&', answers[0][crossArray[0][3]])
+  verticalDraw(answers[0][crossArray[0][3]] - crossArray[0][4], crossArray[0][8], 1)
 }
 
-
-function serchForwordswithCommonLetter(w1,w2,letter){
-  if(haveSameLetter(w1,w2,letter)){
-    console.log("word 1 and word 2, letter",w1,w2,letter)
-    console.log('index1 and index2',w1.indexOf(letter),w2.indexOf(letter))
+function serchForwordswithCommonLetter (w1, w2, letter) {
+  if (haveSameLetter(w1, w2, letter)) {
+    console.log('word 1 and word 2, letter', w1, w2, letter)
+    console.log('index1 and index2', w1.indexOf(letter), w2.indexOf(letter))
     return true
   }
 }
 
-function actionForCrossSearch(){
-  for(let i=0;i<words.length;i++){
-    for(let j =0;j<words.length;j++){
-      if(j!==i){
-        for(let k = 0;k<v[0].length;k++){
-          if(serchForwordswithCommonLetter(words[i],words[j],v[0][k])){
-            console.log('indexy words',i,j)
-            return [words[i],words[j],v[0][k],words[i].indexOf(v[0][k]),words[j].indexOf(v[0][k]),i,j,words[i].length,words[j].length]
+function actionForCrossSearch () {
+  for (let i = 0; i < words.length; i++) {
+    for (let j = 0; j < words.length; j++) {
+      if (j !== i) {
+        for (let k = 0; k < v[0].length; k++) {
+          if (serchForwordswithCommonLetter(words[i], words[j], v[0][k])) {
+            console.log('indexy words', i, j)
+            return [words[i], words[j], v[0][k], words[i].indexOf(v[0][k]), words[j].indexOf(v[0][k]), i, j, words[i].length, words[j].length]
           }
         }
-      }   
+      }
     }
   }
 }
