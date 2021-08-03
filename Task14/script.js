@@ -162,10 +162,6 @@ function drawSquaresForWords () {
   // console.log('cross8',cross[0][8])
   horizontalDrawCross(startSquare,crossArray[0][7],0)
   console.log('an place',answers[0][crossArray[0][3]])
-  //verticalDraw(answers[0][cross[0][3]]-cross[0][4],cross[0][8],1)
- 
-  // words.remove(words[0])
-  // words.remove(words[1])
   canCross = false
  }
   const numWords = words.length
@@ -193,8 +189,6 @@ function drawLettersForsquares () {
     const tileId = merged[i].toString()
     const tile = document.getElementById(tileId)
     tile.innerHTML = (merged2[i])
-    // const content = document.createTextNode(merged2[i])
-    // tile.appendChild(content)
   }
   // else draw random letters for others squares
   for (let i = 0; i < numRows * numCols; i++) {
@@ -202,8 +196,6 @@ function drawLettersForsquares () {
       tileId = i.toString()
       const tile = document.getElementById(tileId)
       tile.innerHTML = (randomCharacter())
-      // content = document.createTextNode(randomCharacter())
-      // tile.appendChild(content)
     }
   }
 }
