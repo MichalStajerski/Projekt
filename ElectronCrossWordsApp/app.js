@@ -198,7 +198,7 @@ function getRandomIntInclusive (min, max) {
 }
 // for now i left the conditions like this to check if its working, needs changing horizontal words will never reach last column even
 // if its not going to cross to the next row
-function conditionsHorizontal (startSquare, wordLength, modulo) {
+function conditionsVertical (startSquare, wordLength, modulo) {
   for (let i = 0; i < wordLength; i++) {
     if ((startSquare + i) % modulo === 6 || takenSquares.includes(startSquare + i) || startSquare + wordLength - 1 > numRows * numCols - 1) {
       return true
@@ -206,47 +206,42 @@ function conditionsHorizontal (startSquare, wordLength, modulo) {
   }
 }
 // checks squares up and down in comparison with takenSquares array
-function conditionsVertical (startSquare, wordLength, numRows) {
+function conditionsHorizontal (startSquare, wordLength, numRows) {
   for (let i = 0; i < wordLength; i++) {
-    if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i))) {
+    if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i)) ||startSquare + (wordLength - 1) * numRows > 48 ) {
       return true
     }
   }
 }
 
-function verticalDraw (startSquare, wordLength, i) {
+function horizontalDraw (startSquare, wordLength, i) {
   for (let i = 1; i < wordLength; i++) {
-    while (conditionsVertical(startSquare, wordLength, numCols)) {
+    while (conditionsHorizontal(startSquare, wordLength, numCols)) {
       startSquare = randomArrayElement(arrayForDraw)
     }
   }
-  if (startSquare + (wordLength - 1) * numRows < 48) {
-    for (let j = 0; j < wordLength; j++) {
-      arrayForDraw.remove(startSquare + (numRows * j))
-      takenSquares.push(startSquare + (numRows * j))
-      temp.push(startSquare + (numRows * j))
-    }
-    answers.splice(i, 0, temp)
-    temp = []
-  } else {
-    for (let j = 0; j < wordLength; j++) {
-      arrayForDraw.remove(startSquare - (numRows * j))
-      takenSquares.push(startSquare - (numRows * j))
-      temp.push(startSquare - (numRows * j))
-    }
-    answers.splice(i, 0, temp)
-    temp = []
+  for (let j = 0; j < wordLength; j++) {
+    arrayForDraw.remove(startSquare + (numRows * j))
+    takenSquares.push(startSquare + (numRows * j))
+    temp.push(startSquare + (numRows * j))
   }
+  answers.splice(i, 0, temp)
+  temp = []
+
   answers[i].sort(function (a, b) {
-    return a - b
+  return a - b
   })
 }
 
-function horizontalDraw (startSquare, wordLength, i) {
+function verticalDraw (startSquare, wordLength, i) {
   for (let i = 1; i < wordLength; i++) {
-    while (conditionsHorizontal(startSquare, wordLength, numRows)) {
+    while (conditionsVertical(startSquare, wordLength, numRows)) {
       startSquare = randomArrayElement(arrayForDraw)
     }
+  }
+  if(startSquare!=answers[0][crossArray[0][3]]-crossArray[0][4]){
+    arrayForDraw.remove(answers[0][crossArray[0][3]]-crossArray[0][4])
+    takenSquares.push(answers[0][crossArray[0][3]]-crossArray[0][4])
   }
   for (let j = 0; j < wordLength; j++) {
     arrayForDraw.remove(startSquare + j)
