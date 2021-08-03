@@ -6,7 +6,7 @@ const colors = {
   normal: '#ddd',
   success: 'green'
 }
-const words = ['dog','cat','ape','dice']
+const words = ['tgw','mon','apr','dice']
 const takenSquares = []
 const answers = []
 // instead of random so we will not draw from squares that are already taken
@@ -161,7 +161,7 @@ function drawSquaresForWords () {
     canCross = false
   }
   const numWords = words.length
-  for (let i = 2; i < numWords; i++) {
+  for (let i = canCross === false ? 2 : 0; i < numWords; i++) {
     const wordLength = words[i].length
     // using array instead of getRandom so we won't draw squares that are already taken
     const startSquare = randomArrayElement(arrayForDraw)
