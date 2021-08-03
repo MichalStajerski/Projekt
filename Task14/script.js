@@ -6,7 +6,7 @@ const colors = {
   normal: '#ddd',
   success: 'green'
 }
-const words = ['dog', 'aper', 'cat','dice']
+const words = ['dog','cat','ape','dice']
 const takenSquares = []
 const answers = []
 // instead of random so we will not draw from squares that are already taken
@@ -14,6 +14,7 @@ const arrayForDraw = []
 for (let i = 0; i < numCols * numRows - 1; i++) {
   arrayForDraw.push(i)
 }
+
 const v = Array(alphabet).map(function (x){
   return (x.split(''))
 })
@@ -28,23 +29,17 @@ const splitWords = words.map(function (x) {
 })
 let text = ''
 let canCross = true
-
 /**
  * @type int[]
  */
 const clickedTiles = []
 let temp = []
-let crossArray = []
 window.onload = function () {
   drawSquaresForWords()
   createLayout()
   console.log('asnwers', answers)
 }
 
-/**
- *
- * @param {string} id
- */
 function tileClicked (tile, id) {
   // marks in blue color after click
   if (tile.style.backgroundColor !== colors.selected) {
@@ -68,7 +63,7 @@ function drawBoard () {
   const board = document.getElementById('board')
   board.className = 'board'
   const titleForBoard = document.createElement('div')
-  titleForBoard.innerHTML = 'Search for words: <br>'
+  titleForBoard.innerHTML = 'Search for words:'
   board.appendChild(titleForBoard)
   for (let i = 0; i < words.length; i++) {
     const searchedAnswer = document.createElement('div')
@@ -139,6 +134,7 @@ function checkAnswer (clickedTiles) {
 
 // random char to fill squares outside of answers
 function randomCharacter () {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz'
   const randomCharacter = alphabet[randomArrayElement(alphabet)]
   return randomCharacter
 }
@@ -154,16 +150,16 @@ Array.prototype.remove = function () {
   return this
 }
 function drawSquaresForWords () {
- if(canCross===true){
   crossArray =[actionForCrossSearch()]
-  // const direction = getRandomIntInclusive(0,1)
-  console.log(crossArray)
-  const startSquare = randomArrayElement(arrayForDraw)
-  // console.log('cross8',cross[0][8])
-  horizontalDrawCross(startSquare,crossArray[0][7],0)
-  console.log('an place',answers[0][crossArray[0][3]])
-  canCross = false
- }
+  if(canCross===true && crossArray[0] !== undefined){
+    // const direction = getRandomIntInclusive(0,1)
+    console.log(crossArray)
+    const startSquare = randomArrayElement(arrayForDraw)
+    // console.log('cross8',cross[0][8])
+    horizontalDrawCross(startSquare,crossArray[0][7],0)
+    console.log('an place',answers[0][crossArray[0][3]])    
+    canCross = false
+  }
   const numWords = words.length
   for (let i = 2; i < numWords; i++) {
     const wordLength = words[i].length
@@ -247,8 +243,7 @@ function verticalDraw (startSquare, wordLength, i) {
     while (conditionsVertical(startSquare, wordLength, numRows)) {
       startSquare = randomArrayElement(arrayForDraw)
     }
-  }
-  if(startSquare!=answers[0][crossArray[0][3]]-crossArray[0][4]){
+  } if(crossArray[0] !== undefined && startSquare!=answers[0][crossArray[0][3]]-crossArray[0][4]){
     arrayForDraw.remove(answers[0][crossArray[0][3]]-crossArray[0][4])
     takenSquares.push(answers[0][crossArray[0][3]]-crossArray[0][4])
   }
