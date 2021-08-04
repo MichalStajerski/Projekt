@@ -16,6 +16,10 @@ const words = ['dog', 'cat', 'ape', 'dice']
 const takenSquares = []
 const answers = []
 let crossArray = []
+let available = []
+for(let i =0;i<words.length;i++){
+available[i] = i
+}
 // instead of random so we will not draw from squares that are already taken
 const arrayForDraw = []
 for (let i = 0; i < numCols * numRows - 1; i++) {
@@ -174,6 +178,7 @@ function drawSquaresForWords () {
     let pairOfWords = getRandomIntInclusive(0,crossArray.length-1)
     console.log('word1 & word2: ',crossArray[pairOfWords][0],crossArray[pairOfWords][1])
     // console.log('cross8',cross[0][8])
+    const firstWord = words.indexOf(crossArray[pairOfWords][0])
     horizontalDrawCross(startSquare, crossArray[pairOfWords][7], 0,pairOfWords)
     //console.log('an place', answers[pairOfWords][crossArray[pairOfWords][3]])
     canCross = false
@@ -249,7 +254,7 @@ function horizontalDraw (startSquare, wordLength, i) {
     takenSquares.push(startSquare + (numRows * j))
     temp.push(startSquare + (numRows * j))
   }
-  answers.splice(i, 0, temp)
+  answers[i] = temp
   temp = []
 
   answers[i].sort(function (a, b) {
@@ -303,7 +308,11 @@ function horizontalDrawCross (startSquare, wordLength, i,pairOfWords) {
   console.log(answers)
   console.log('square',answers[i][crossArray[i][3]] - crossArray[i][4])
   console.log('square without sub',crossArray[i][3])
-  verticalDraw(answers[i][crossArray[pairOfWords][3]] - crossArray[pairOfWords][4], crossArray[pairOfWords][8], 1)
+  console.log('final square',answers[i][crossArray[pairOfWords][3]])
+  console.log('word length', crossArray[pairOfWords][8])
+  const secondWord = words.indexOf(crossArray[pairOfWords][1])
+
+  verticalDraw(answers[i][crossArray[pairOfWords][3]] - crossArray[pairOfWords][4], crossArray[pairOfWords][8],1 )
 }
 
 //function returns words with common char, this char, indexes at which char is existing in said words,indexes at which words are placed in words array
