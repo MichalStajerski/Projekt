@@ -1,9 +1,8 @@
-//TODO: now that word crossing works the words aren't being crossed out when share char since previously 
-//we were building up the id of div from letters in checked tlies now after one word is srossed out we miss the needed letter for 
-//the other one
-//currently one word can only cross with different one, a scenario where one word would be crossing for example with three words would nedd 
-//implmentation
-//afeter that implement the changes to electron version of this app   
+//DONE: drawing squares for words including an option of crossing works
+//TODO: now that word crossing works the words aren't always being crossed out when they checked since previously 
+//we were building up the id of div from letters in checked tlies now after one word is crossed out we miss the needed letter for 
+//the other one in case they are crossing
+//after fixing draing need to change also the way letters are being drawn for tiles with answers   
 const numRows = 7
 const numCols = 7
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'
