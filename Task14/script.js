@@ -179,24 +179,26 @@ function drawSquaresForWords () {
     console.log('word1 & word2: ',crossArray[pairOfWords][0],crossArray[pairOfWords][1])
     // console.log('cross8',cross[0][8])
     const firstWord = words.indexOf(crossArray[pairOfWords][0])
+    words.remove(crossArray[pairOfWords][0])
+    words.remove(crossArray[pairOfWords][1])
     horizontalDrawCross(startSquare, crossArray[pairOfWords][7], 0,pairOfWords)
     //console.log('an place', answers[pairOfWords][crossArray[pairOfWords][3]])
     canCross = false
   }
   const numWords = words.length
   //value of i is either 2 when tjere are 2 matches for crossing words so we exclude them or 0 when every words has qnique letters
-  // for (let i = canCross === false ? 2 : 0; i < numWords; i++) {
-  //   const wordLength = words[i].length
-  //   // using array instead of getRandom so we won't draw squares that are already taken
-  //   const startSquare = randomArrayElement(arrayForDraw)
-  //   const direction = getRandomIntInclusive(0, 1)
-  //   // vertical allignment of word
-  //   if (!direction) {
-  //     verticalDraw(startSquare, wordLength, i)
-  //   } else { // horizontal allignment of word
-  //     horizontalDraw(startSquare, wordLength, i)
-  //   }
-  // }
+  for (let i = 0; i < numWords; i++) {
+    const wordLength = words[i].length
+    // using array instead of getRandom so we won't draw squares that are already taken
+    const startSquare = randomArrayElement(arrayForDraw)
+    const direction = getRandomIntInclusive(0, 1)
+    // vertical allignment of word
+    if (!direction) {
+      verticalDraw(startSquare, wordLength, i)
+    } else { // horizontal allignment of word
+      horizontalDraw(startSquare, wordLength, i)
+    }
+  }
 }
 
 function drawLettersForsquares () {
@@ -254,7 +256,7 @@ function horizontalDraw (startSquare, wordLength, i) {
     takenSquares.push(startSquare + (numRows * j))
     temp.push(startSquare + (numRows * j))
   }
-  answers[i] = temp
+  answers.push(temp)
   temp = []
 
   answers[i].sort(function (a, b) {
@@ -276,7 +278,7 @@ function verticalDraw (startSquare, wordLength, i) {
     takenSquares.push(startSquare + j)
     temp.push(startSquare + j)
   }
-  answers[i] = temp
+  answers.push(temp)
   //answers.splice(i, 0, temp)
   temp = []
 
@@ -311,7 +313,6 @@ function horizontalDrawCross (startSquare, wordLength, i,pairOfWords) {
   console.log('final square',answers[i][crossArray[pairOfWords][3]])
   console.log('word length', crossArray[pairOfWords][8])
   const secondWord = words.indexOf(crossArray[pairOfWords][1])
-
   verticalDraw(answers[i][crossArray[pairOfWords][3]] - crossArray[pairOfWords][4], crossArray[pairOfWords][8],1 )
 }
 
