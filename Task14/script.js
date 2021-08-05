@@ -1,4 +1,3 @@
-//TODO: when there are no corssing words crossing out words need to be changed
 const numRows = 7
 const numCols = 7
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'
@@ -28,6 +27,7 @@ const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 const descByLengthOfElementInArray = (a1) => a1.sort((el1, el2) => el2.length - el1.length)
 const haveSameLetter = (w1, w2, el) => w1.includes(el) && w2.includes(el)
+const arrayhHasDuplicate = (a1) => new Set(a1).size !== a1.length 
 descByLengthOfElementInArray(words)
 
 let text = ''
@@ -118,11 +118,11 @@ function checkAnswer (clickedTiles) {
         text += document.getElementById(clickedTiles[j]).innerHTML
       }
       //if we check a word that is being crossed out we remove the latter that is being shared from another
+      console.log('twoarrays',(answers[0]),answers[1])
       text === wordsAfterCrossingShuffle[0] ? document.getElementById(crossArray[pairOfWords][1]).id = crossArray[pairOfWords][1].replace(crossArray[pairOfWords][2],'') : false
-      text === wordsAfterCrossingShuffle[1] ? document.getElementById(crossArray[pairOfWords][0]).id = crossArray[pairOfWords][0].replace(crossArray[pairOfWords][2],'') : false
+      text === wordsAfterCrossingShuffle[1] ? document.getElementById(crossArray[pairOfWords][0]).id = crossArray[pairOfWords][0].replace(crossArray[pairOfWords][2],'') : false  
       document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')      
       text = ''
-
 
       answers.splice(i, 1)
       // when there are no more answers show alert
@@ -189,6 +189,7 @@ function drawSquaresForWords () {
   }
 }
 
+
 function drawLettersForsquares () {
   const splitWords = wordsAfterCrossingShuffle.map(function (x) {
     return x.split('')
@@ -198,6 +199,7 @@ function drawLettersForsquares () {
   const merged2 = [].concat.apply([], splitWords)
   console.log('merged2', merged2)
   console.log('merged', merged)
+  console.log('arrayhasDuplicate',arrayhHasDuplicate([].concat.apply([], answers)))
   // for drawn answers write letters from array merged2
   for (let i = 0; i < merged.length; i++) {
     const tileId = merged[i].toString()
