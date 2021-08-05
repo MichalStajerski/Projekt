@@ -117,7 +117,7 @@ function checkAnswer (clickedTiles) {
         // i place the text together so i can get the id for board to cross out
         text += document.getElementById(clickedTiles[j]).innerHTML
       }
-      // if we check a word that is being crossed out we remove the latter that is being shared from another
+      // if we check a word that is being crossed with another we remove the letter that is being shared between them from id
       console.log('twoarrays', (answers[0]), answers[1])
       text === wordsAfterCrossingShuffle[0] ? document.getElementById(crossArray[pairOfWords][1]).id = crossArray[pairOfWords][1].replace(crossArray[pairOfWords][2], '') : false
       text === wordsAfterCrossingShuffle[1] ? document.getElementById(crossArray[pairOfWords][0]).id = crossArray[pairOfWords][0].replace(crossArray[pairOfWords][2], '') : false
