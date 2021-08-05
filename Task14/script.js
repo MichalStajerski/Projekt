@@ -40,6 +40,7 @@ let canCross = true
  * @type int[]
  */
 const clickedTiles = []
+let pairOfWords = 0
 let temp = []
 let toRemove = 0
 
@@ -74,10 +75,10 @@ function drawBoard () {
   const titleForBoard = document.createElement('div')
   titleForBoard.innerHTML = 'Search for words:'
   board.appendChild(titleForBoard)
-  for (let i = 0; i < words.length; i++) {
+  for (let i = 0; i < wordsAfterCrossingShuffle.length; i++) {
     const searchedAnswer = document.createElement('div')
-    searchedAnswer.id = words[i]
-    searchedAnswer.innerHTML = words[i]
+    searchedAnswer.id = wordsAfterCrossingShuffle[i]
+    searchedAnswer.innerHTML = wordsAfterCrossingShuffle[i]
     board.appendChild(searchedAnswer)
   }
 }
@@ -122,9 +123,12 @@ function checkAnswer (clickedTiles) {
       }
       //need to change crossing put words, implemented taht logic previously when words were drawn in a way that they never crossed 
       //so it worked back then
+      console.log('wordsAfterShuffle',wordsAfterCrossingShuffle)
+      text === wordsAfterCrossingShuffle[0] ? document.getElementById(crossArray[pairOfWords][1]).id = crossArray[pairOfWords][1].replace(crossArray[pairOfWords][2],'') : false
+      text === wordsAfterCrossingShuffle[1] ? document.getElementById(crossArray[pairOfWords][0]).id = crossArray[pairOfWords][0].replace(crossArray[pairOfWords][2],'') : false
+      document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')      
+      text = ''
 
-      // document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
-      //text = ''
 
       answers.splice(i, 1)
       // when there are no more answers show alert
@@ -167,7 +171,7 @@ function drawSquaresForWords () {
   if (canCross === true && crossArray[0] !== undefined) {
     console.log(crossArray)
     const startSquare = randomArrayElement(arrayForDraw)
-    let pairOfWords = getRandomIntInclusive(0,crossArray.length-1)
+    pairOfWords = getRandomIntInclusive(0,crossArray.length-1)
     wordsAfterCrossingShuffle.push(crossArray[pairOfWords][0],crossArray[pairOfWords][1])
     words.remove(crossArray[pairOfWords][0])
     words.remove(crossArray[pairOfWords][1])
