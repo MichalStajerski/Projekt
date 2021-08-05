@@ -12,6 +12,7 @@ const colors = {
   success: 'green'
 }
 const words = ['dog', 'cat', 'ape', 'dice']
+let wordsAfterCrossingShuffle = []
 const takenSquares = []
 const answers = []
 const crossArray = []
@@ -32,9 +33,11 @@ const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 const descByLengthOfElementInArray = (a1) => a1.sort((el1, el2) => el2.length - el1.length)
 const haveSameLetter = (w1, w2, el) => w1.includes(el) && w2.includes(el)
 descByLengthOfElementInArray(words)
-const splitWords = words.map(function (x) {
-  return x.split('')
-})
+// const splitWords = words.map(function (x) {
+//   return x.split('')
+// })
+// console.log('splitwords',splitWords)
+
 let text = ''
 let canCross = true
 /**
@@ -168,43 +171,42 @@ Array.prototype.remove = function () {
 function drawSquaresForWords () {
   //returns table with values
   actionForCrossSearch()
-  //here i don't reduce to array instead of array of arrays for now beacuse later maybe we will have a set of words with common char
-  //instead of one find  
-  //returns undefined when there are no mathces
   if (canCross === true && crossArray[0] !== undefined) {
-    // const direction = getRandomIntInclusive(0,1)
     console.log(crossArray)
     const startSquare = randomArrayElement(arrayForDraw)
     let pairOfWords = getRandomIntInclusive(0,crossArray.length-1)
     console.log('word1 & word2: ',crossArray[pairOfWords][0],crossArray[pairOfWords][1])
-    // console.log('cross8',cross[0][8])
+    wordsAfterCrossingShuffle.push(crossArray[pairOfWords][0],crossArray[pairOfWords][1])
     const firstWord = words.indexOf(crossArray[pairOfWords][0])
     indexesOfWords.splice(firstWord,1)
     words.remove(crossArray[pairOfWords][0])
     words.remove(crossArray[pairOfWords][1])
     horizontalDrawCross(startSquare, crossArray[pairOfWords][7], 0,pairOfWords)
-    //console.log('an place', answers[pairOfWords][crossArray[pairOfWords][3]])
     canCross = false
   }
   console.log('words',words)
   console.log('indexesOfWords',indexesOfWords)
   const numWords = words.length
-  //value of i is either 2 when tjere are 2 matches for crossing words so we exclude them or 0 when every words has qnique letters
-  // for (let i = 0; i < numWords; i++) {
-  //   const wordLength = words[i].length
-  //   // using array instead of getRandom so we won't draw squares that are already taken
-  //   const startSquare = randomArrayElement(arrayForDraw)
-  //   const direction = getRandomIntInclusive(0, 1)
-  //   // vertical allignment of word
-  //   if (!direction) {
-  //     verticalDraw(startSquare, wordLength, i)
-  //   } else { // horizontal allignment of word
-  //     horizontalDraw(startSquare, wordLength, i)
-  //   }
-  // }
+  for (let i = 0; i < numWords; i++) {
+    const wordLength = words[i].length
+    wordsAfterCrossingShuffle.push(words[i])
+    // using array instead of getRandom so we won't draw squares that are already taken
+    const startSquare = randomArrayElement(arrayForDraw)
+    const direction = getRandomIntInclusive(0, 1)
+    // vertical allignment of word
+    if (!direction) {
+      verticalDraw(startSquare, wordLength, i)
+    } else { // horizontal allignment of word
+      horizontalDraw(startSquare, wordLength, i)
+    }
+  }
 }
 
 function drawLettersForsquares () {
+  const splitWords = wordsAfterCrossingShuffle.map(function (x) {
+    return x.split('')
+  })
+ 
   const merged = [].concat.apply([], answers)
   const merged2 = [].concat.apply([], splitWords)
   console.log('merged2', merged2)
@@ -213,7 +215,7 @@ function drawLettersForsquares () {
   for (let i = 0; i < merged.length; i++) {
     const tileId = merged[i].toString()
     const tile = document.getElementById(tileId)
-    tile.innerHTML = 'answer'
+    tile.innerHTML = merged2[i]
   }
   // else draw random letters for others squares
   for (let i = 0; i < numRows * numCols; i++) {
