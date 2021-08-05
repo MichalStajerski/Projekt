@@ -33,10 +33,6 @@ const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 const descByLengthOfElementInArray = (a1) => a1.sort((el1, el2) => el2.length - el1.length)
 const haveSameLetter = (w1, w2, el) => w1.includes(el) && w2.includes(el)
 descByLengthOfElementInArray(words)
-// const splitWords = words.map(function (x) {
-//   return x.split('')
-// })
-// console.log('splitwords',splitWords)
 
 let text = ''
 let canCross = true
@@ -46,10 +42,7 @@ let canCross = true
 const clickedTiles = []
 let temp = []
 let toRemove = 0
-let indexesOfWords = []
-for(let i =0;i<words.length;i++){
-  indexesOfWords.push(i)
-}
+
 window.onload = function () {
   drawSquaresForWords()
   createLayout()
@@ -175,17 +168,13 @@ function drawSquaresForWords () {
     console.log(crossArray)
     const startSquare = randomArrayElement(arrayForDraw)
     let pairOfWords = getRandomIntInclusive(0,crossArray.length-1)
-    console.log('word1 & word2: ',crossArray[pairOfWords][0],crossArray[pairOfWords][1])
     wordsAfterCrossingShuffle.push(crossArray[pairOfWords][0],crossArray[pairOfWords][1])
-    const firstWord = words.indexOf(crossArray[pairOfWords][0])
-    indexesOfWords.splice(firstWord,1)
     words.remove(crossArray[pairOfWords][0])
     words.remove(crossArray[pairOfWords][1])
     horizontalDrawCross(startSquare, crossArray[pairOfWords][7], 0,pairOfWords)
     canCross = false
   }
   console.log('words',words)
-  console.log('indexesOfWords',indexesOfWords)
   const numWords = words.length
   for (let i = 0; i < numWords; i++) {
     const wordLength = words[i].length
@@ -286,7 +275,6 @@ function verticalDraw (startSquare, wordLength, i) {
     temp.push(startSquare + j)
   }
   answers.push(temp)
-  //answers.splice(i, 0, temp)
   temp = []
 
   answers[i].sort(function (a, b) {
@@ -310,22 +298,13 @@ function horizontalDrawCross (startSquare, wordLength, i,pairOfWords) {
     temp.push(startSquare + (numRows * j))
   }
   console.log('takenSquares',takenSquares)
-  //answers.splice(i, 0, temp)
   answers[i] = temp
   temp = []
 
   answers[i].sort(function (a, b) {
     return a - b
   })
-  console.log(answers)
-  console.log('square',answers[i][crossArray[i][3]] - crossArray[i][4])
-  console.log('square without sub',crossArray[i][3])
-  console.log('final square',answers[i][crossArray[pairOfWords][3]])
-  console.log('word length', crossArray[pairOfWords][8])
-  const secondWord = words.indexOf(crossArray[pairOfWords][1])
-  indexesOfWords.splice(secondWord,1)
   verticalDraw(answers[i][crossArray[pairOfWords][3]] - crossArray[pairOfWords][4], crossArray[pairOfWords][8],1 )
-
 }
 
 //function returns words with common char, this char, indexes at which char is existing in said words,indexes at which words are placed in words array
