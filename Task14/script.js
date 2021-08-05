@@ -1,8 +1,4 @@
-//DONE: drawing squares for words including an option of crossing works
-//TODO: now that word crossing works the words aren't always being crossed out when they checked since previously 
-//we were building up the id of div from letters in checked tlies now after one word is crossed out we miss the needed letter for 
-//the other one in case they are crossing
-//after fixing draing need to change also the way letters are being drawn for tiles with answers   
+//TODO: when there are no corssing words crossing out words need to be changed
 const numRows = 7
 const numCols = 7
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'
@@ -121,9 +117,7 @@ function checkAnswer (clickedTiles) {
         // i place the text together so i can get the id for board to cross out
         text += document.getElementById(clickedTiles[j]).innerHTML
       }
-      //need to change crossing put words, implemented taht logic previously when words were drawn in a way that they never crossed 
-      //so it worked back then
-      console.log('wordsAfterShuffle',wordsAfterCrossingShuffle)
+      //if we check a word that is being crossed out we remove the latter that is being shared from another
       text === wordsAfterCrossingShuffle[0] ? document.getElementById(crossArray[pairOfWords][1]).id = crossArray[pairOfWords][1].replace(crossArray[pairOfWords][2],'') : false
       text === wordsAfterCrossingShuffle[1] ? document.getElementById(crossArray[pairOfWords][0]).id = crossArray[pairOfWords][0].replace(crossArray[pairOfWords][2],'') : false
       document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')      
@@ -270,6 +264,7 @@ function verticalDraw (startSquare, wordLength, i) {
   } if (crossArray[0] !== undefined && startSquare != answers[0][crossArray[i][3]] - crossArray[i][4]) {
     arrayForDraw.remove(answers[0][crossArray[i][3]] - crossArray[i][4])
     takenSquares.push(answers[0][crossArray[i][3]] - crossArray[i][4])
+    //now remove the shared square for future draws
     arrayForDraw.remove(toRemove)
     takenSquares.push(toRemove)
   }
@@ -293,10 +288,11 @@ function horizontalDrawCross (startSquare, wordLength, i,pairOfWords) {
     }
   }
   for (let j = 0; j < wordLength; j++) {
+    //do not place a square that is being shared by two words so upon checking on conditions in verticalDraw it can pass
     if (j != crossArray[pairOfWords][3]) {
       arrayForDraw.remove(startSquare + (numRows * j))
       takenSquares.push(startSquare + (numRows * j))
-
+      //save the shared square to variable and remove it after finding squares for two words, so it does won't be used in other draws
     }else toRemove = startSquare + (numRows * j)
     
     temp.push(startSquare + (numRows * j))
@@ -308,12 +304,12 @@ function horizontalDrawCross (startSquare, wordLength, i,pairOfWords) {
   answers[i].sort(function (a, b) {
     return a - b
   })
+  //answers[i][crossArray[pairOfWords][3]] - crossArray[pairOfWords][4] positions us on a right square for crossing
   verticalDraw(answers[i][crossArray[pairOfWords][3]] - crossArray[pairOfWords][4], crossArray[pairOfWords][8],1 )
 }
 
 //function returns words with common char, this char, indexes at which char is existing in said words,indexes at which words are placed in words array
 //and finally lenghth of two words
-//function always returns one pair of words so crossed words will be the same for now unelss we change letters so it finds other matches
 function actionForCrossSearch () {
   for (let i = 0; i < words.length; i++) {
     for (let j = 0; j < words.length; j++) {
