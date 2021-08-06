@@ -1,0 +1,2 @@
+Ćwiczenie na zdaniach - Wyrazy w zdaniach lub w tekście sa dragowalne i uczeń może je przenosić w odpowiednie miejsca tekstu/zdania 
+tak aby miało ono sens. Po skończonej pracy uczeń ją zatwierdza a program ocenia poprawność wykonania. Nieprawidłowe miejsca podświetalają się
