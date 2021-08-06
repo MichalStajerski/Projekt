@@ -1,8 +1,15 @@
 let dragindex = 0
 const dropindex = 0
 let clone = ''
-const answer = 'Dzis jest bardzo pochmurny dzien'
-const words = answer.split(' ')
+const answers = [
+    'Dzis jest bardzo pochmurny dzien',
+    'Prosze Panstwa Pan Pawel bedzie skakal',
+    'Jest tu jakis cwaniak',
+    'Najlepsze kasztany sa na placu Pigal w Paryzu',
+    'Ryszard ty draniu oddaj rower',
+]
+let drawnAnswer = getRandomIntInclusive(0,4)
+const words =  answers[drawnAnswer].split(' ')
 const order = []
 console.log('words', words)
 
@@ -65,7 +72,7 @@ function createLayout (array) {
     word.draggable = 'true'
     word.setAttribute('ondragstart', 'drag(event)')
     word.setAttribute('ondrop', 'drop(event)')
-    word.setAttribute('ondrAGOVER', 'allowDrop(event)')
+    word.setAttribute('ondragover', 'allowDrop(event)')
     container.appendChild(word)
   }
 }
@@ -76,7 +83,7 @@ function checkAnswer (divIdsOrder) {
     joinedWords += ' ' + document.getElementById(divIdsOrder[i]).innerHTML
   }
   joinedWords = joinedWords.trim()
-  if (joinedWords === answer) {
+  if (joinedWords === answers[drawnAnswer]) {
     setTimeout(() => {
       alert('Correct')
     }, 100)
@@ -94,6 +101,12 @@ function findElementID () {
   }
   console.log(divIdsOrder)
   checkAnswer(divIdsOrder)
+}
+
+function getRandomIntInclusive (min, max) {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 window.onload = function () {
