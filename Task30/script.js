@@ -1,7 +1,7 @@
 let dragindex=0
 let dropindex=0
 let clone=""
-const answer = 'Ala ma czarnego kota'
+const answer = 'Dzis jest bardzo pochmurny dzien'
 const words = answer.split(' ')
 let order = []
 console.log('words',words)
@@ -20,8 +20,11 @@ function drop(e){
             dragindex=i
         }
     }
-    document.getElementById('parent').replaceChild(document.getElementById(data),e.target)
-    document.getElementById('parent').insertBefore(clone,document.getElementById('parent').childNodes[dragindex])
+    if(document.getElementById(data)!==e.target){
+        document.getElementById('parent').replaceChild(document.getElementById(data),e.target)
+        document.getElementById('parent').insertBefore(clone,document.getElementById('parent').childNodes[dragindex])
+        findElementID()
+    }
 }
 
 function allowDrop(e){
@@ -52,7 +55,7 @@ function shuffleArray(array) {
     }
 }
 
-function createLayout(array,event){
+function createLayout(array){
     // const numWords = array.length
     const container = document.getElementById('parent')
     for(let i = 0;i<array.length;i++){
@@ -66,8 +69,36 @@ function createLayout(array,event){
         container.appendChild(word)
     }
 }
+
+function checkAnswer(divIdsOrder){
+    let joinedWords = ''
+    for(let i = 0 ; i<divIdsOrder.length;i++){
+        joinedWords += ' '+document.getElementById(divIdsOrder[i]).innerHTML 
+    }
+    joinedWords = joinedWords.trim()
+    if(joinedWords === answer){
+        setTimeout(()=>{
+            alert("Correct")
+        },100)
+    }
+    divIdsOrder = []
+}
+
+function findElementID() {
+    let wordOrder = document.getElementById('parent').children
+    let divIdsOrder = []
+    
+    // Loop through all the child elements inside the parent DIV.
+    for (i = 0; i <= wordOrder.length - 1; i++) {
+        divIdsOrder.push(wordOrder[i].id)
+    }
+    console.log(divIdsOrder)
+    checkAnswer(divIdsOrder)
+}
+
 window.onload = function(){
     createLayout(words)
     drawOrderOfWords()
     insertWordIntoDiv(order)
+    
 }
