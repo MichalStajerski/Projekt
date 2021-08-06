@@ -1,16 +1,20 @@
+//TODO: now that word crossing works the words aren't being crossed out when share char since previously 
+//we were building up the id of div from letters in checked tlies now after one word is srossed out we miss the needed letter for 
+//the other one
+//currently one word can only cross with different one, a scenario where one word would be crossing for example with three words would nedd 
+//implmentation
+//afeter that implement the changes to electron version of this app   
 const numRows = 7
 const numCols = 7
+const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 const colors = {
   selected: 'blue',
   normal: '#ddd',
   success: 'green'
 }
-
-// reads pur answers from JSON file whose path we provide
 const fs = require('fs')
 const rawdata = fs.readFileSync('C:/Users/m9185/Desktop/string-to-json-online.json')
 const wordsSet = JSON.parse(rawdata)
-
 // maps our answer to array words
 const words = wordsSet.words.map(function (x) {
   return x
@@ -24,14 +28,22 @@ for (let i = 0; i < numCols * numRows - 1; i++) {
   arrayForDraw.push(i)
 }
 
+let v = Array(alphabet).map(function (x) {
+  return (x.split(''))
+})
+//reduces to array of elements instead of array of arrays
+v = [].concat.apply([], v)
+
 const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 const descByLengthOfElementInArray = (a1) => a1.sort((el1, el2) => el2.length - el1.length)
+const haveSameLetter = (w1, w2, el) => w1.includes(el) && w2.includes(el)
 descByLengthOfElementInArray(words)
 const splitWords = words.map(function (x) {
   return x.split('')
 })
 let text = ''
+let canCross = true
 /**
  * @type int[]
  */
@@ -114,9 +126,12 @@ function checkAnswer (clickedTiles) {
         // i place the text together so i can get the id for board to cross out
         text += document.getElementById(clickedTiles[j]).innerHTML
       }
-      document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
-      text = ''
-      // delete alert after good answer
+      //need to change crossing put words, implemented taht logic previously when words were drawn in a way that they never crossed 
+      //so it worked back then
+
+      // document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
+      //text = ''
+
       answers.splice(i, 1)
       // when there are no more answers show alert
       if (!answers.length) {
@@ -153,8 +168,23 @@ Array.prototype.remove = function () {
   return this
 }
 function drawSquaresForWords () {
+  //returns table with values
+  crossArray = [actionForCrossSearch()]
+  //here i don't reduce to array instead of array of arrays for now beacuse later maybe we will have a set of words with common char
+  //instead of one find  
+  //returns undefined when there are no mathces
+  if (canCross === true && crossArray[0] !== undefined) {
+    // const direction = getRandomIntInclusive(0,1)
+    console.log(crossArray)
+    const startSquare = randomArrayElement(arrayForDraw)
+    // console.log('cross8',cross[0][8])
+    horizontalDrawCross(startSquare, crossArray[0][7], 0)
+    console.log('an place', answers[0][crossArray[0][3]])
+    canCross = false
+  }
   const numWords = words.length
-  for (let i = 0; i < numWords; i++) {
+  //value of i is either 2 when tjere are 2 matches for crossing words so we exclude them or 0 when every words has qnique letters
+  for (let i = canCross === false ? 2 : 0; i < numWords; i++) {
     const wordLength = words[i].length
     // using array instead of getRandom so we won't draw squares that are already taken
     const startSquare = randomArrayElement(arrayForDraw)
@@ -177,16 +207,14 @@ function drawLettersForsquares () {
   for (let i = 0; i < merged.length; i++) {
     const tileId = merged[i].toString()
     const tile = document.getElementById(tileId)
-    const content = document.createTextNode(merged2[i])
-    tile.appendChild(content)
+    tile.innerHTML = (merged2[i])
   }
   // else draw random letters for others squares
   for (let i = 0; i < numRows * numCols; i++) {
     if (!merged.includes(i)) {
       tileId = i.toString()
       const tile = document.getElementById(tileId)
-      content = document.createTextNode(randomCharacter())
-      tile.appendChild(content)
+      tile.innerHTML = (randomCharacter())
     }
   }
 }
@@ -208,7 +236,7 @@ function conditionsVertical (startSquare, wordLength, modulo) {
 // checks squares up and down in comparison with takenSquares array
 function conditionsHorizontal (startSquare, wordLength, numRows) {
   for (let i = 0; i < wordLength; i++) {
-    if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i)) ||startSquare + (wordLength - 1) * numRows > 48 ) {
+    if (takenSquares.includes(startSquare + (numRows * i)) || takenSquares.includes(startSquare - (numRows * i)) || startSquare + (wordLength - 1) * numRows > 48) {
       return true
     }
   }
@@ -229,7 +257,7 @@ function horizontalDraw (startSquare, wordLength, i) {
   temp = []
 
   answers[i].sort(function (a, b) {
-  return a - b
+    return a - b
   })
 }
 
@@ -237,7 +265,10 @@ function verticalDraw (startSquare, wordLength, i) {
   for (let i = 1; i < wordLength; i++) {
     while (conditionsVertical(startSquare, wordLength, numRows)) {
       startSquare = randomArrayElement(arrayForDraw)
-    }
+    }//moving our second word vertically so the letters match correctly
+  } if (crossArray[0] !== undefined && startSquare != answers[0][crossArray[0][3]] - crossArray[0][4]) {
+    arrayForDraw.remove(answers[0][crossArray[0][3]] - crossArray[0][4])
+    takenSquares.push(answers[0][crossArray[0][3]] - crossArray[0][4])
   }
   for (let j = 0; j < wordLength; j++) {
     arrayForDraw.remove(startSquare + j)
@@ -250,4 +281,44 @@ function verticalDraw (startSquare, wordLength, i) {
   answers[i].sort(function (a, b) {
     return a - b
   })
+}
+//excess of code, another function probably isn't needed, need to simplify this/just use horiontal
+function horizontalDrawCross (startSquare, wordLength, i) {
+  for (let i = 1; i < wordLength; i++) {
+    while (conditionsHorizontal(startSquare, wordLength, numCols)) {
+      startSquare = randomArrayElement(arrayForDraw)
+    }
+  }
+  for (let j = 0; j < wordLength; j++) {
+    if (j != crossArray[0][3]) {
+      arrayForDraw.remove(startSquare + (numRows * j))
+      takenSquares.push(startSquare + (numRows * j))
+    }
+    temp.push(startSquare + (numRows * j))
+  }
+  answers.splice(i, 0, temp)
+  temp = []
+
+  answers[i].sort(function (a, b) {
+    return a - b
+  })
+  verticalDraw(answers[0][crossArray[0][3]] - crossArray[0][4], crossArray[0][8], 1)
+}
+
+//function returns words with common char, this char, indexes at which char is existing in said words,indexes at which words are placed in words array
+//and finally lenghth of two words
+//function always returns one pair of words so crossed words will be the same for now unelss we change letters so it finds other matches
+function actionForCrossSearch () {
+  for (let i = 0; i < words.length; i++) {
+    for (let j = 0; j < words.length; j++) {
+      if (j !== i) {
+        for (let k = 0; k < v.length; k++) {
+          if (haveSameLetter(words[i], words[j], v[k])) {
+            console.log('indexy words', i, j)
+            return [words[i], words[j], v[k], words[i].indexOf(v[k]), words[j].indexOf(v[k]), i, j, words[i].length, words[j].length]
+          }
+        }
+      }
+    }
+  }
 }
