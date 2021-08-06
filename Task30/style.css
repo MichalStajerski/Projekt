@@ -6,3 +6,10 @@
     padding: 10px;
     border: 1px solid #aaaaaa;
   }
+    
+    #parent >div
+        {
+    float:left;
+    clear:none;
+    margin-left:10px;
+        }

@@ -1,14 +1,10 @@
 <link rel="stylesheet" href="style.css" type="text/css">
 <p>Task 30</p>
-
-<div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)">
-  <p ondragstart="dragStart(event)" draggable="true" id="dragtarget1">word1</p>
-</div>
-
-<div class="droptarget" ondrop="drop(event)" ondragover="allowDrop(event)">
-    <p ondragstart="dragStart(event)" draggable="true" id="dragtarget2">word2</p>
-</div>
-        
+<div id="parent">
+    <div id="word1" class="droptarget" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">Word 1</div>
+    <div id="word2" class="droptarget" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">Word 2</div>
+    <div id="word3" class="droptarget" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">Word 3</div>
+    </div>  
 </body>
 
 <script src="script.js" language="javascript"></script>
