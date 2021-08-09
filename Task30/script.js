@@ -109,13 +109,11 @@ function checkAnswer () {
   for(let i = 0;i<divIdsOrder.length;i++ ){
     finalSentence.push(document.getElementById(divIdsOrder[i]).innerHTML)
   }
-  console.log('checkAnswer',finalSentence)
   for(let i =0;i<finalSentence.length;i++){
     if(finalSentence[i]!==words[i]){
       comparison.push(i)
     }
   }
-  console.log('comparison',comparison)
   if(comparison.length!==0){
     for(let i = 0; i< comparison.length;i++){
       document.getElementById(divIdsOrder[comparison[i]]).style.backgroundColor = 'red'
