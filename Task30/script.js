@@ -9,20 +9,7 @@ const answers = [
   'Najlepsze kasztany sa na placu Pigal w Paryzu',
   'Ryszard ty draniu oddaj rower'
 ]
-// var fs = require('fs')
-// fs.readFile('C:/Users/m9185/Desktop/Phrases.json', 'utf8', (err, jsonString) => {
-//   if (err) {
-//       console.log("Error reading file from disk:", err)
 
-//   }
-//   try {
-//       const phrases = JSON.parse(jsonString)
-//       console.log("Phrases are:", phrases)
-// } catch(err) {
-//       console.log('Error parsing JSON string:', err)
-//   }
-// })
-const comparison = (ar1, ar2) => ar1.filter(x => ar2.includes(x))
 const drawnAnswer = getRandomIntInclusive(0, 4)
 const words = answers[drawnAnswer].split(' ')
 const order = []
@@ -57,9 +44,7 @@ function drawOrderOfWords () {
   for (let i = 0; i < words.length; i++) {
     order.push(i)
   }
-  console.log(order)
   shuffleArray(order)
-  console.log(order)
 }
 
 function insertWordIntoDiv (array) {
@@ -96,6 +81,7 @@ function checkAnswer () {
   for (let i = 0; i < divIdsOrder.length; i++) {
     joinedWords += ' ' + document.getElementById(divIdsOrder[i]).innerHTML
   }
+  //deletes the firsr space 
   joinedWords = joinedWords.trim()
   if (joinedWords === answers[drawnAnswer]) {
     setTimeout(() => {
@@ -135,7 +121,7 @@ function findElementID () {
   }
   console.log(divIdsOrder)
 }
-
+//returns us a randolmy chosen number between two that we specify
 function getRandomIntInclusive (min, max) {
   min = Math.ceil(min)
   max = Math.floor(max)
