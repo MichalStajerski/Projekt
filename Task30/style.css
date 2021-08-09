@@ -4,7 +4,7 @@
 #parent{
     text-align: center;
     margin: 0 auto;
-    width: 900px;
+    min-width: 900px;
     height: 150px;
 }
 .droptarget {
