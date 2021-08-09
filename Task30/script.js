@@ -1,5 +1,6 @@
 let dragindex = 0
 const dropindex = 0
+let divIdsOrder = []
 let clone = ''
 const answers = [
     'Dzis jest bardzo pochmurny dzien',
@@ -89,7 +90,7 @@ function createLayout (array) {
   }
 }
 
-function checkAnswer (divIdsOrder) {
+function checkAnswer () {
   let joinedWords = ''
   for (let i = 0; i < divIdsOrder.length; i++) {
     joinedWords += ' ' + document.getElementById(divIdsOrder[i]).innerHTML
@@ -105,14 +106,13 @@ function checkAnswer (divIdsOrder) {
 
 function findElementID () {
   const wordOrder = document.getElementById('parent').children
-  const divIdsOrder = []
-
+  divIdsOrder = []
   // Loop through all the child elements inside the parent div.
   for (i = 0; i <= wordOrder.length - 1; i++) {
     divIdsOrder.push(wordOrder[i].id)
   }
   console.log(divIdsOrder)
-  checkAnswer(divIdsOrder)
+  //checkAnswer(divIdsOrder)
 }
 
 function getRandomIntInclusive (min, max) {
