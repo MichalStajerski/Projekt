@@ -109,7 +109,8 @@ function checkAnswer () {
   const finalSentence = []
   const comparison = []
   for (let i = 0; i < divIdsOrder.length; i++) {
-    finalSentence.push(document.getElementById(divIdsOrder[i]).innerHTML)
+    finalSentence.push(document.getElementById(divIdsOrder[i]).innerHTML) 
+    document.getElementById(divIdsOrder[i]).draggable = false;
   }
   for (let i = 0; i < finalSentence.length; i++) {
     if (finalSentence[i] !== words[i]) {
@@ -122,6 +123,7 @@ function checkAnswer () {
     }
   }
   divIdsOrder = []
+  document.getElementById('btnCheck').disabled = true
 }
 
 function findElementID () {
