@@ -8,6 +8,19 @@ const answers = [
     'Najlepsze kasztany sa na placu Pigal w Paryzu',
     'Ryszard ty draniu oddaj rower',
 ]
+// var fs = require('fs')
+// fs.readFile('C:/Users/m9185/Desktop/Phrases.json', 'utf8', (err, jsonString) => {
+//   if (err) {
+//       console.log("Error reading file from disk:", err)
+      
+//   }
+//   try {
+//       const phrases = JSON.parse(jsonString)
+//       console.log("Phrases are:", phrases) 
+// } catch(err) {
+//       console.log('Error parsing JSON string:', err)
+//   }
+// })
 let drawnAnswer = getRandomIntInclusive(0,4)
 const words =  answers[drawnAnswer].split(' ')
 const order = []
@@ -50,6 +63,7 @@ function drawOrderOfWords () {
 function insertWordIntoDiv (array) {
   for (let i = 0; i < array.length; i++) {
     document.getElementById('word' + i).innerHTML = words[array[i]]
+    document.getElementById('word' + i).style.color = 'white'
   }
 }
 
@@ -63,7 +77,6 @@ function shuffleArray (array) {
 }
 
 function createLayout (array) {
-  // const numWords = array.length
   const container = document.getElementById('parent')
   for (let i = 0; i < array.length; i++) {
     const word = document.createElement('div')
@@ -95,7 +108,7 @@ function findElementID () {
   const wordOrder = document.getElementById('parent').children
   const divIdsOrder = []
 
-  // Loop through all the child elements inside the parent DIV.
+  // Loop through all the child elements inside the parent div.
   for (i = 0; i <= wordOrder.length - 1; i++) {
     divIdsOrder.push(wordOrder[i].id)
   }
