@@ -3,28 +3,28 @@ const dropindex = 0
 let divIdsOrder = []
 let clone = ''
 const answers = [
-    'Dzis jest bardzo pochmurny dzien',
-    'Prosze Panstwa Pan Pawel bedzie skakal',
-    'Jest tu jakis cwaniak',
-    'Najlepsze kasztany sa na placu Pigal w Paryzu',
-    'Ryszard ty draniu oddaj rower',
+  'Dzis jest bardzo pochmurny dzien',
+  'Prosze Panstwa Pan Pawel bedzie skakal',
+  'Jest tu jakis cwaniak',
+  'Najlepsze kasztany sa na placu Pigal w Paryzu',
+  'Ryszard ty draniu oddaj rower'
 ]
 // var fs = require('fs')
 // fs.readFile('C:/Users/m9185/Desktop/Phrases.json', 'utf8', (err, jsonString) => {
 //   if (err) {
 //       console.log("Error reading file from disk:", err)
-      
+
 //   }
 //   try {
 //       const phrases = JSON.parse(jsonString)
-//       console.log("Phrases are:", phrases) 
+//       console.log("Phrases are:", phrases)
 // } catch(err) {
 //       console.log('Error parsing JSON string:', err)
 //   }
 // })
-const comparison = (ar1,ar2) => ar1.filter(x=>ar2.includes(x))
-let drawnAnswer = getRandomIntInclusive(0,4)
-const words =  answers[drawnAnswer].split(' ')
+const comparison = (ar1, ar2) => ar1.filter(x => ar2.includes(x))
+const drawnAnswer = getRandomIntInclusive(0, 4)
+const words = answers[drawnAnswer].split(' ')
 const order = []
 console.log('words', words)
 
@@ -101,21 +101,23 @@ function checkAnswer () {
     setTimeout(() => {
       alert('Correct')
     }, 100)
-  }else setTimeout(()=>{
-    alert('Wrong answer')
-  },100)
-  let finalSentence = []
-  let comparison = []
-  for(let i = 0;i<divIdsOrder.length;i++ ){
+  } else {
+    setTimeout(() => {
+      alert('Wrong answer')
+    }, 100)
+  }
+  const finalSentence = []
+  const comparison = []
+  for (let i = 0; i < divIdsOrder.length; i++) {
     finalSentence.push(document.getElementById(divIdsOrder[i]).innerHTML)
   }
-  for(let i =0;i<finalSentence.length;i++){
-    if(finalSentence[i]!==words[i]){
+  for (let i = 0; i < finalSentence.length; i++) {
+    if (finalSentence[i] !== words[i]) {
       comparison.push(i)
     }
   }
-  if(comparison.length!==0){
-    for(let i = 0; i< comparison.length;i++){
+  if (comparison.length !== 0) {
+    for (let i = 0; i < comparison.length; i++) {
       document.getElementById(divIdsOrder[comparison[i]]).style.backgroundColor = 'red'
     }
   }
@@ -133,9 +135,9 @@ function findElementID () {
 }
 
 function getRandomIntInclusive (min, max) {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min + 1)) + min
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 window.onload = function () {
