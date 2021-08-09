@@ -22,6 +22,7 @@ const answers = [
 //       console.log('Error parsing JSON string:', err)
 //   }
 // })
+const comparison = (ar1,ar2) => ar1.filter(x=>ar2.includes(x))
 let drawnAnswer = getRandomIntInclusive(0,4)
 const words =  answers[drawnAnswer].split(' ')
 const order = []
@@ -100,6 +101,25 @@ function checkAnswer () {
     setTimeout(() => {
       alert('Correct')
     }, 100)
+  }else setTimeout(()=>{
+    alert('Wrong answer')
+  },100)
+  let finalSentence = []
+  let comparison = []
+  for(let i = 0;i<divIdsOrder.length;i++ ){
+    finalSentence.push(document.getElementById(divIdsOrder[i]).innerHTML)
+  }
+  console.log('checkAnswer',finalSentence)
+  for(let i =0;i<finalSentence.length;i++){
+    if(finalSentence[i]!==words[i]){
+      comparison.push(i)
+    }
+  }
+  console.log('comparison',comparison)
+  if(comparison.length!==0){
+    for(let i = 0; i< comparison.length;i++){
+      document.getElementById(divIdsOrder[comparison[i]]).style.backgroundColor = 'red'
+    }
   }
   divIdsOrder = []
 }
@@ -112,7 +132,6 @@ function findElementID () {
     divIdsOrder.push(wordOrder[i].id)
   }
   console.log(divIdsOrder)
-  //checkAnswer(divIdsOrder)
 }
 
 function getRandomIntInclusive (min, max) {
