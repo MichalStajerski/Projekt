@@ -63,7 +63,6 @@ function drawOrderOfWords () {
 function insertWordIntoDiv (array) {
   for (let i = 0; i < array.length; i++) {
     document.getElementById('word' + i).innerHTML = words[array[i]]
-    document.getElementById('word' + i).style.color = 'white'
   }
 }
 
