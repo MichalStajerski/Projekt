@@ -1,1 +1,1 @@
-Cwiczenie typu dragdrop - ukladanie rozsypanego obrazka po zobaczeniu go i zapamietaniu
+Cwiczenie typu dragdrop - ukladanie rozsypanego obrazka po zobaczeniu go i zapamietaniu z wymieszanych kawalkow puzzli
