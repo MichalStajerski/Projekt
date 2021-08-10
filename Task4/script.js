@@ -125,8 +125,41 @@ function checkPieceClicked () {
   return null
 }
 
+function updatePuzzle (e) {
+  currentDropPiece = null
+  if (e.layerX || e.layerY == 0) {
+    mouse.x = e.layerX - canvas.offsetLeft
+    mouse.y = e.layerY - canvas.offsetTop
+  } else if (e.offsetX || e.offsetY == 0) {
+    mouse.x = e.offsetX - canvas.offsetLeft
+    mouse.y = e.offsetY - canvas.offsetTop
+  }
+  context.clearRect(0, 0, puzzleWidth, puzzleHeight)
+  for (i = 0; i < pieces.length; i++) {
+    const piece = pieces[i]
+    if (piece == currentPiece) {
+      continue
+    }
+    context.drawImage(img, piece.sx, piece.sy, pieceWidth, pieceHeight, piece.xPos, piece.yPos, pieceWidth, pieceHeight)
+    context.strokeRect(piece.xPos, piece.yPos, pieceWidth, pieceHeight)
+    if (currentDropPiece == null) {
+      if (mouse.x > piece.xPos && mouse.x < (piece.xPos + pieceWidth) && mouse.y > piece.yPos && mouse.y < (piece.yPos + pieceHeight)) {
+        currentDropPiece = piece
+        context.save()
+        context.globalAlpha = 0.3 // makes the puzzle piece that we are about to drop our currently dragged piece upon less transparent
+        context.fillRect(currentDropPiece.xPos, currentDropPiece.yPos, pieceWidth, pieceHeight)
+        context.restore()
+      }
+    }
+  }
+  context.save()
+  context.drawImage(img, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight)
+  context.restore()
+  context.strokeRect(mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight)
+}
+
 window.onload = function () {
   img = new Image()
   img.addEventListener('load', onImage, false)
-  img.src = 'C:/Users/m9185/Projekt/Task4/images/zamek-sulkowskich.jpg'
+  img.src = './images/zamek-sulkowskich.jpg'
 }
