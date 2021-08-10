@@ -1,3 +1,12 @@
+body {
+    background: rgb(125,99,12);
+    background: linear-gradient(309deg, rgba(125,99,12,0.9447129193474265) 46%, rgba(23,41,121,0.7990546560421043) 47%);
+}
+.container{
+    text-align: center;
+    position: absolute;
+
+}
 .title{
     text-align: center;
 }
