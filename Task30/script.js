@@ -81,7 +81,7 @@ function checkAnswer () {
   for (let i = 0; i < divIdsOrder.length; i++) {
     joinedWords += ' ' + document.getElementById(divIdsOrder[i]).innerHTML
   }
-  //deletes the firsr space 
+  //deletes the first space 
   joinedWords = joinedWords.trim()
   if (joinedWords === answers[drawnAnswer]) {
     setTimeout(() => {
@@ -115,7 +115,7 @@ function checkAnswer () {
 function findElementID () {
   const wordOrder = document.getElementById('parent').children
   divIdsOrder = []
-  // Loop through all the child elements inside the parent div.
+  // Loop through all the child elements inside the parent div
   for (i = 0; i <= wordOrder.length - 1; i++) {
     divIdsOrder.push(wordOrder[i].id)
   }
