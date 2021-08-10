@@ -113,8 +113,8 @@ function shuffleArray (array) {//randomly shuffles our array
 
 }
 
-checkPieceClicked(){
-    
+function checkPieceClicked(){
+
 }
 
 window.onload =function(){
