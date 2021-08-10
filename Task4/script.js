@@ -34,11 +34,11 @@ function initPuzzle () {
   currentPiece = null // current piece that we drag
   currentDropPiece = null // current piece that is about to get drop down on
   context.drawImage(img, 0, 0, puzzleWidth, puzzleHeight, 0, 0, puzzleWidth, puzzleHeight)
-  createTitle()
+  createPuzzlePiece()
   buildPieces()
 }
 
-function createTitle () {
+function createPuzzlePiece () {
   context.fillStyle = '#000000'
   context.fillRect(100, puzzleHeight - 40, puzzleWidth - 200, 40)
   context.fillStyle = '#FFFFFF'
@@ -66,11 +66,10 @@ function buildPieces () {
 function shufflePuzzle () {
   shuffleArray(pieces)
   context.clearRect(0, 0, puzzleWidth, puzzleHeight) // sets the pixels in rect to transparent black
-  let piece
   let xPos = 0
   let yPos = 0
   for (let i = 0; i < pieces.length; i++) {
-    piece = pieces[i] // takes every puzzle piece from puzzle
+    let piece = pieces[i] // takes every puzzle piece from puzzle
     piece.xPos = xPos
     piece.yPos = yPos
     context.drawImage(img, piece.sx, piece.sy, pieceWidth, pieceHeight, xPos, yPos, pieceWidth, pieceHeight)
@@ -122,9 +121,61 @@ function checkPieceClicked () {
       return piece
     }
   }
-  return null
+  return null // in case we dont get any piece 
 }
 
+function updatePuzzle (e) {
+    currentDropPiece = null
+    if (e.layerX || e.layerY == 0) {
+      mouse.x = e.layerX - canvas.offsetLeft
+      mouse.y = e.layerY - canvas.offsetTop
+    } else if (e.offsetX || e.offsetY == 0) {
+      mouse.x = e.offsetX - canvas.offsetLeft
+      mouse.y = e.offsetY - canvas.offsetTop
+    }
+    context.clearRect(0, 0, puzzleWidth, puzzleHeight)
+    for (i = 0; i < pieces.length; i++) {
+      const piece = pieces[i]
+      if (piece == currentPiece) {
+        continue
+      }
+      context.drawImage(img, piece.sx, piece.sy, pieceWidth, pieceHeight, piece.xPos, piece.yPos, pieceWidth, pieceHeight)
+      context.strokeRect(piece.xPos, piece.yPos, pieceWidth, pieceHeight)
+      if (currentDropPiece == null) {
+        if (mouse.x > piece.xPos && mouse.x < (piece.xPos + pieceWidth) && mouse.y > piece.yPos && mouse.y < (piece.yPos + pieceHeight)) {
+          currentDropPiece = piece
+          context.save()
+          context.globalAlpha = 0.3 // makes the puzzle piece that we are about to drop our currently dragged piece upon less transparent
+          context.fillRect(currentDropPiece.xPos, currentDropPiece.yPos, pieceWidth, pieceHeight)
+          context.restore()
+        }
+      }
+    }
+    context.save()
+    context.drawImage(img, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight)
+    context.restore()
+    context.strokeRect(mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight)
+}
+//TODO finish function for dropping puzzle piece then write algorithm for checking if the puzzle is completed
+//center canvas - but not through css since the clicking on puzzle pices wont move  
+//for now the puzzle is being made after clicks, need to change so that user can see photo for a set period of time
+//then photo disapears and he gets puzzle pieces that need to be reshuffled so we receive the original image
+//might as well add a set of pictures and a method to draw them from images folder
+function dropPuzzlePice(){
+
+}
+function checkAnwer(){
+
+}
+let a = 3
+let b = 7
+a = a ^ b
+console.log('a1',a)
+b = a ^ b
+console.log('b',b)
+a = a ^ b
+console.log('a2',a)
+  
 window.onload = function () {
   img = new Image()
   img.addEventListener('load', onImage, false)
