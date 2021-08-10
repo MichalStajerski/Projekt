@@ -113,6 +113,10 @@ function shuffleArray (array) {//randomly shuffles our array
 
 }
 
+checkPieceClicked(){
+    
+}
+
 window.onload =function(){
     img = new Image()
     img.addEventListener('load',onImage,false)
