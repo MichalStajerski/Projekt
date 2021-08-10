@@ -1,4 +1,4 @@
-const puzzleDifficulty = 3 //image will be divided in puzzleDifficulty*puzzleDifficulty
+const puzzleDifficulty = 5 //image will be divided in puzzleDifficulty*puzzleDifficulty
 var canvas
 var context
 var img
@@ -12,7 +12,7 @@ var currentDropPiece
 var mouse
 
 
-function onImage(e){
+function onImage(){
     pieceWidth = Math.floor(img.width /puzzleDifficulty)
     pieceHeight = Math.floor(img.height /puzzleDifficulty)
     puzzleWidth = pieceWidth *puzzleDifficulty
@@ -81,6 +81,7 @@ function shufflePuzzle(){
             yPos +=pieceHeight
         }
     }
+    document.onmousedown = onPuzzleClick
 }
 function shuffleArray (array) {
     for (let i = 0; i < array.length; i++) {
@@ -89,6 +90,27 @@ function shuffleArray (array) {
       array[i] = array[j]
       array[j] = temp
     }
+}
+
+  function onPuzzleClick(e){
+    if(e.layerX || e.layerY == 0 ){//e.layerX returns the current coordiante of the place where event happened, our mouse position
+      mouse.x =e.layerX - canvas.offsetLeft //offsetLeft read-only property returns the number of pixels that the upper left corner of the current element is offset to the left within the HTMLElement.offsetParent node
+      mouse.y =e.layerY - canvas.offsetTop
+    } 
+    else if(e.offsetX || e.offsetX == 0){// offsetX read-only property of the MouseEvent interface provides the offset in the X coordinate of the mouse pointer between that event and the padding edge of the target node
+        mouse.x = e.offsetX - canvas.offsetLeft
+        mouse.y = e.layerY - canvas.offsetTop
+    }
+  mouse.y += 100
+  console.log('mouse.x,mouse.y',mouse.x,mouse.y)
+  currentPiece = checkPieceClicked()
+  if(currentPiece !=null){
+    context.clearRect(currentPiece.xPos,currentPiece.yPos,pieceWidth,pieceHeight)
+    context.save()
+    context.drawImage(img, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight)
+    context.restore();
+  }
+
 }
 
 window.onload =function(){
