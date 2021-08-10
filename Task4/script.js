@@ -1,4 +1,4 @@
-const puzzleDifficulty = 5 //image will be divided in puzzleDifficulty*puzzleDifficulty
+const puzzleDifficulty = 3 //image will be divided in puzzleDifficulty*puzzleDifficulty
 var canvas
 var context
 var img
@@ -23,7 +23,7 @@ function onImage(e){
 
 function setCanvas(){
     canvas = document.getElementById('canvas')
-    coontext =canvas.getContext('2d')
+    context =canvas.getContext('2d')
     canvas.width = puzzleWidth
     canvas.height = puzzleHeight
     canvas.style.border = '1px solid black'
@@ -34,8 +34,35 @@ function initPuzzle(){
     currentPiece = null
     currentDropPiece = null
     context.drawImage(img,0,0,puzzleWidth,puzzleHeight,0,0,puzzleWidth,puzzleHeight)
+    createTitle()
+    buildPieces()
 }
 
+function createTitle(){
+    context.fillStyle = '#000000'
+    context.fillRect(100,puzzleHeight-40,puzzleWidth-200,40)
+    context.fillStyle ='#FFFFFF'
+    context.textAlign = 'center'
+    context.textBaseline = 'middle'
+}
+
+function buildPieces(){
+    let piece
+    let xPos = 0
+    let yPos = 0
+    for(let i =0; i< puzzleDifficulty*puzzleDifficulty;i++){
+        piece = {}
+        piece.sx = xPos
+        piece.sy = yPos
+        pieces.push(piece)
+        xPos += pieceWidth
+        if(xPos >=puzzleWidth){
+            xPos = 0
+            yPos += pieceHeight
+        }
+    }
+    
+}
 
 window.onload =function(){
     img = new Image()
