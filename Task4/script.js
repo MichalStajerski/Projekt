@@ -70,20 +70,20 @@ function shufflePuzzle(){
     let xPos = 0
     let yPos = 0
     for(let i = 0;i <pieces.length;i++){
-        piece = pieces[i]
+        piece = pieces[i] //takes every puzzle piece from puzzle
         piece.xPos = xPos
         piece.yPos = yPos
         context.drawImage(img,piece.sx,piece.sy,pieceWidth,pieceHeight,xPos,yPos,pieceWidth,pieceHeight)
         context.strokeRect(xPos,yPos,pieceWidth,pieceHeight)
         xPos += pieceWidth
-        if(xPos >= puzzleWidth){
+        if(xPos >= puzzleWidth){//sets to new row when we reach the end of an x axis of our canvas
             xPos = 0
             yPos +=pieceHeight
         }
     }
     document.onmousedown = onPuzzleClick
 }
-function shuffleArray (array) {
+function shuffleArray (array) {//randomly shuffles our array
     for (let i = 0; i < array.length; i++) {
       const j = Math.floor(Math.random() * (i + 1))
       const temp = array[i]
@@ -101,7 +101,7 @@ function shuffleArray (array) {
         mouse.x = e.offsetX - canvas.offsetLeft
         mouse.y = e.layerY - canvas.offsetTop
     }
-  mouse.y += 100
+  mouse.y += 100 // added it cause without it often not the tiles that were clicked on got dragged but different one 
   console.log('mouse.x,mouse.y',mouse.x,mouse.y)
   currentPiece = checkPieceClicked()
   if(currentPiece !=null){
