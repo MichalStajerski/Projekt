@@ -29,10 +29,10 @@ function setCanvas(){
     canvas.style.border = '1px solid black'
 }
 function initPuzzle(){
-    pieces = []
-    mouse = {x:0, y:0}
-    currentPiece = null
-    currentDropPiece = null
+    pieces = [] //array that holds our pieces
+    mouse = {x:0, y:0} //holds the current positions of axes of mouse
+    currentPiece = null //current piece that we drag 
+    currentDropPiece = null //current piece that is about to get drop down on
     context.drawImage(img,0,0,puzzleWidth,puzzleHeight,0,0,puzzleWidth,puzzleHeight)
     createTitle()
     buildPieces()
@@ -61,7 +61,34 @@ function buildPieces(){
             yPos += pieceHeight
         }
     }
-    
+    document.onmousedown = shufflePuzzle
+}
+function shufflePuzzle(){
+    shuffleArray(pieces)
+    context.clearRect(0,0,puzzleWidth,puzzleHeight) //sets the pixels in rect to transparent black
+    var piece
+    let xPos = 0
+    let yPos = 0
+    for(let i = 0;i <pieces.length;i++){
+        piece = pieces[i]
+        piece.xPos = xPos
+        piece.yPos = yPos
+        context.drawImage(img,piece.sx,piece.sy,pieceWidth,pieceHeight,xPos,yPos,pieceWidth,pieceHeight)
+        context.strokeRect(xPos,yPos,pieceWidth,pieceHeight)
+        xPos += pieceWidth
+        if(xPos >= puzzleWidth){
+            xPos = 0
+            yPos +=pieceHeight
+        }
+    }
+}
+function shuffleArray (array) {
+    for (let i = 0; i < array.length; i++) {
+      const j = Math.floor(Math.random() * (i + 1))
+      const temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
 }
 
 window.onload =function(){
