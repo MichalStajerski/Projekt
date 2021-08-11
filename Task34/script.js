@@ -8,8 +8,7 @@ const colors = {
     wrong : 'red'
 }
 let clickedsquares = []
-let answers  = ['c2','c1','c3']
-const checkAnswer = (el1, el2) => el1.length === el2.length && el1.any(el => el2.includes(el))
+let answers  = ['c2','c1']
 
 function createlayout(){
     const layout = document.getElementById('layout')
@@ -50,12 +49,18 @@ function fillSignsForLayout(){
 createlayout()
 fillSignsForLayout()
 
-function checkAnswers(){
+function checkAnswers(square){
     for(let i = 0; i < clickedsquares.length;i++){
-        if(answers.includes(clickedsquares[i])){
-            document.getElementById(clickedsquares[i]).style.backgroundColor = colors.correct
+        if(answers.includes(square.id)){
+            square.style.backgroundColor = colors.correct
+            let an = answers.indexOf(square.id)
+            answers.splice(an,1)
         }
     }
+    if(!answers.length) setTimeout(()=>{
+        alert('Victory')
+    },500)
+    console.log('answers',answers)
 }
 
 function squareClicked(square){
@@ -71,7 +76,7 @@ function squareClicked(square){
         clickedsquares.splice(index, 1)
     }
     console.log('clickedSquares',clickedsquares)
-    checkAnswers()
+    checkAnswers(square)
 }
 
 function drawAnswers(){
