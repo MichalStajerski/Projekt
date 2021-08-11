@@ -1,5 +1,5 @@
-const numLeters = 6
-const numNumbers = 6
+const numLeters = 3
+const numNumbers = 3
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 const colors = {
     default : 'lightgrey',
@@ -13,15 +13,17 @@ const checkAnswer = (el1, el2) => el1.length === el2.length && el1.any(el => el2
 
 function createlayout(){
     const layout = document.getElementById('layout')
-    for (let colIndex = 0; colIndex <= numLeters; colIndex++) {
+    for (let colIndex = 0; colIndex <= (numLeters+1); colIndex++) {
         const col = document.createElement('div')
-        col.className = 'col'+(colIndex+1)
-        for (let rowIndex = 1; rowIndex <= numNumbers+1; rowIndex++) {
-          const square = document.createElement('div')
-          square.id= alphabet[colIndex]+rowIndex
-          console.log(square.id)
-          square.className = 'square'
-          square.onclick = () => squareClicked(square)
+        col.className = 'col'+colIndex
+        for (let rowIndex = 0; rowIndex <= (numNumbers+1); rowIndex++) {
+            const square = document.createElement('div')
+            if(rowIndex > 0  && rowIndex <=numNumbers&& colIndex>0&& colIndex <= numLeters){
+                square.id= alphabet[colIndex-1]+rowIndex
+                console.log(square.id)
+                square.onclick = () => squareClicked(square)
+            }
+          square.className = 'square'      
           square.style.backgroundColor = colors.default
           col.appendChild(square)
         }
@@ -29,7 +31,9 @@ function createlayout(){
     }
 }
 function fillSignsForLayout(){
-    
+    for(let i =0;i<numNumbers;i++){
+        document.getElementById()
+    }
 }
 
 
