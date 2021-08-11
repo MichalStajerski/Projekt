@@ -95,10 +95,11 @@ function shuffleArray (array) { // randomly shuffles our array
 }
 
 function onPuzzleClick (e) {
-  if (e.layerX || e.layerY == 0) { // e.layerX returns the current coordiante of the place where event happened, our mouse position
-    mouse.x = e.layerX - canvas.offsetLeft // offsetLeft read-only property returns the number of pixels that the upper left corner of the current element is offset to the left within the HTMLElement.offsetParent node
+  // returns the current coordiantes of the place where event happened, our mouse position
+  if (e.layerX || e.layerY == 0) { 
+    mouse.x = e.layerX - canvas.offsetLeft 
     mouse.y = e.layerY - canvas.offsetTop
-  } else if (e.offsetX || e.offsetY == 0) { // offsetX read-only property of the MouseEvent interface provides the offset in the X coordinate of the mouse pointer between that event and the padding edge of the target node
+  } else if (e.offsetX || e.offsetY == 0) { 
     mouse.x = e.offsetX - canvas.offsetLeft
     mouse.y = e.layerY - canvas.offsetTop
   }
@@ -107,9 +108,8 @@ function onPuzzleClick (e) {
   currentPiece = checkPieceClicked()
   if (currentPiece != null) {
     context.clearRect(currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight)
-    context.save()
+    context.save() // we use save so we dont draw over any graphics - beacuse we see see piece under draged one
     context.drawImage(img, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight)
-    context.restore()
     document.onmousemove = updatePuzzle
     document.onmouseup = pieceDropped
   }
@@ -151,10 +151,11 @@ function updatePuzzle (e) {
           context.save()
           context.globalAlpha = 0.3 // makes the puzzle piece that we are about to drop our currently dragged piece upon less transparent
           context.fillRect(currentDropPiece.xPos, currentDropPiece.yPos, pieceWidth, pieceHeight)
-          context.restore()
+          context.restore()// we are done with using alpha property and restore them to what they were
         }
       }
     }
+    //redraw the dragged piece
     context.save()
     context.drawImage(img, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight)
     context.restore()
