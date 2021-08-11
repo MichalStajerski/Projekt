@@ -8,6 +8,7 @@ const colors = {
 }
 let clickedsquares = []
 let answers  = ['c2','c1']
+let canMarkSquare = true
 
 function createLayout(){
     const layout = document.getElementById('layout')
@@ -60,25 +61,28 @@ function checkAnswers(square){
         }
     }
     if(!answers.length && !clickedsquares.length )setTimeout(()=>{
+        canMarkSquare =false
         alert('Victory')
     },500)
     console.log('answers',answers)
 }
 
 function squareClicked(square){
-    if (square.style.backgroundColor !== colors.selected) {
-        square.style.backgroundColor = colors.selected
-        // adds answer
-        clickedsquares.push(square.id)
-    } else {
-        // unclicks to usual color
-        square.style.backgroundColor = colors.default
-        // removes answerd by value
-        const index = clickedsquares.indexOf(square.id)
-        clickedsquares.splice(index, 1)
+    if(canMarkSquare!=false){
+        if (square.style.backgroundColor !== colors.selected) {
+            square.style.backgroundColor = colors.selected
+            // adds answer
+            clickedsquares.push(square.id)
+        } else {
+            // unclicks to usual color
+            square.style.backgroundColor = colors.default
+            // removes answerd by value
+            const index = clickedsquares.indexOf(square.id)
+            clickedsquares.splice(index, 1)
+        }
+        console.log('clickedSquares',clickedsquares)
+        checkAnswers(square)
     }
-    console.log('clickedSquares',clickedsquares)
-    checkAnswers(square)
 }
 
 function drawAnswers(){
