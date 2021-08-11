@@ -47,11 +47,10 @@ function createPuzzlePiece () {
 }
 
 function buildPieces () {
-  let piece
   let xPos = 0
   let yPos = 0
   for (let i = 0; i < puzzleDifficulty * puzzleDifficulty; i++) {
-    piece = {}
+    let piece = {}
     piece.sx = xPos
     piece.sy = yPos
     pieces.push(piece)
@@ -196,7 +195,7 @@ function checkAnswer(){
   }
 }
 
-window.onload = function () {
+window.onload = () => {
   img = new Image()
   img.addEventListener('load', onImage, false)
   img.src = './images/zamek-sulkowskich.jpg'
