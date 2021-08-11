@@ -15,29 +15,40 @@ function createlayout(){
     const layout = document.getElementById('layout')
     for (let colIndex = 0; colIndex <= (numLeters+1); colIndex++) {
         const col = document.createElement('div')
-        col.className = 'col'+colIndex
+        col.id = 'col'+colIndex
         for (let rowIndex = 0; rowIndex <= (numNumbers+1); rowIndex++) {
             const square = document.createElement('div')
             if(rowIndex > 0  && rowIndex <=numNumbers&& colIndex>0&& colIndex <= numLeters){
                 square.id= alphabet[colIndex-1]+rowIndex
                 console.log(square.id)
                 square.onclick = () => squareClicked(square)
+            }else{
+                square.id = 'square'+rowIndex
             }
           square.className = 'square'      
           square.style.backgroundColor = colors.default
           col.appendChild(square)
         }
         layout.appendChild(col)
+        
     }
+    console.log('next',document.getElementById('col1').children[0])
 }
 function fillSignsForLayout(){
-    for(let i =0;i<numNumbers;i++){
-        document.getElementById()
+    for(let i =1;i<numNumbers+1;i++){
+        document.getElementById('col0').children[i].innerHTML = i
+        document.getElementById('col'+(numNumbers+1)).children[i].innerHTML = i
+    }
+    for(let i = 1; i<numLeters+1;i++){
+        document.getElementById('col'+i).children[0].innerHTML = alphabet[i-1]
+        document.getElementById('col'+i).children[numNumbers+1].innerHTML =alphabet[i-1]
+        
     }
 }
 
 
 createlayout()
+fillSignsForLayout()
 
 function checkAnswers(){
     for(let i = 0; i < clickedsquares.length;i++){
