@@ -40,7 +40,7 @@ let pairOfWords = 0
 let temp = []
 let toRemove = 0
 
-window.onload = function () {
+window.onload = () => {
   drawSquaresForWords()
   createLayout()
   console.log('asnwers', answers)
@@ -118,9 +118,13 @@ function checkAnswer (clickedTiles) {
         text += document.getElementById(clickedTiles[j]).innerHTML
       }
       // if we check a word that is being crossed with another we remove the letter that is being shared between them from id
-      console.log('twoarrays', (answers[0]), answers[1])
-      text === wordsAfterCrossingShuffle[0] ? document.getElementById(crossArray[pairOfWords][1]).id = crossArray[pairOfWords][1].replace(crossArray[pairOfWords][2], '') : false
-      text === wordsAfterCrossingShuffle[1] ? document.getElementById(crossArray[pairOfWords][0]).id = crossArray[pairOfWords][0].replace(crossArray[pairOfWords][2], '') : false
+      console.log('canCross before ',canCross)
+      console.log('xddd',arrayhHasDuplicate([].concat.apply([], answers)))
+      if(canCross ===true){
+        text === wordsAfterCrossingShuffle[0] ? document.getElementById(crossArray[pairOfWords][1]).id = crossArray[pairOfWords][1].replace(crossArray[pairOfWords][2], '') : false
+        text === wordsAfterCrossingShuffle[1] ? document.getElementById(crossArray[pairOfWords][0]).id = crossArray[pairOfWords][0].replace(crossArray[pairOfWords][2], '') : false
+      }
+     
       document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
       text = ''
 
@@ -170,7 +174,6 @@ function drawSquaresForWords () {
     words.remove(crossArray[pairOfWords][0])
     words.remove(crossArray[pairOfWords][1])
     horizontalDrawCross(startSquare, crossArray[pairOfWords][7], 0, pairOfWords)
-    canCross = false
   }
   console.log('words', words)
   const numWords = words.length
@@ -286,6 +289,7 @@ function horizontalDrawCross (startSquare, wordLength, i, pairOfWords) {
   for (let i = 1; i < wordLength; i++) {
     while (conditionsHorizontal(startSquare, wordLength, numCols)) {
       startSquare = randomArrayElement(arrayForDraw)
+      canCross === false
     }
   }
   for (let j = 0; j < wordLength; j++) {
