@@ -5,7 +5,6 @@ const colors = {
     default : 'lightgrey',
     selected : 'orange',
     correct : 'green',
-    wrong : 'red'
 }
 let clickedsquares = []
 let answers  = ['c2','c1']
@@ -53,11 +52,15 @@ function checkAnswers(square){
     for(let i = 0; i < clickedsquares.length;i++){
         if(answers.includes(square.id)){
             square.style.backgroundColor = colors.correct
-            let an = answers.indexOf(square.id)
-            answers.splice(an,1)
+            let answersDelte = answers.indexOf(square.id)
+            let clickedSquaresDelete = clickedsquares.indexOf(square.id)
+            answers.splice(answersDelte,1)
+            clickedsquares.splice(clickedSquaresDelete,1)
+            square.onclick = () => null
+            console.log('clickedsquares',clickedsquares)
         }
     }
-    if(!answers.length) setTimeout(()=>{
+    if(!answers.length && !clickedsquares.length )setTimeout(()=>{
         alert('Victory')
     },500)
     console.log('answers',answers)
