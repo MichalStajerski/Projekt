@@ -1,5 +1,5 @@
-const numLeters = 4
-const numNumbers = 4
+const numLeters = 6
+const numNumbers = 6
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 const colors = {
     default : 'lightgrey',
@@ -7,11 +7,10 @@ const colors = {
     correct : 'green',
     wrong : 'red'
 }
-
-let letter = alphabet[4]
 let clickedsquares = []
+let answers  = ['c2','c1','c3']
+const checkAnswer = (el1, el2) => el1.length === el2.length && el1.any(el => el2.includes(el))
 
-console.log('letter',letter)
 function createlayout(){
     const layout = document.getElementById('layout')
     for (let colIndex = 0; colIndex <= numLeters; colIndex++) {
@@ -29,8 +28,20 @@ function createlayout(){
         layout.appendChild(col)
     }
 }
+function fillSignsForLayout(){
+    
+}
+
+
 createlayout()
 
+function checkAnswers(){
+    for(let i = 0; i < clickedsquares.length;i++){
+        if(answers.includes(clickedsquares[i])){
+            document.getElementById(clickedsquares[i]).style.backgroundColor = colors.correct
+        }
+    }
+}
 
 function squareClicked(square){
     if (square.style.backgroundColor !== colors.selected) {
@@ -44,4 +55,16 @@ function squareClicked(square){
         const index = clickedsquares.indexOf(square.id)
         clickedsquares.splice(index, 1)
     }
+    console.log('clickedSquares',clickedsquares)
+    checkAnswers()
+}
+
+function drawAnswers(){
+
+}
+
+function getRandomIntInclusive (min, max) {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min + 1)) + min
 }
