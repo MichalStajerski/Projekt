@@ -122,7 +122,6 @@ function drawAnswers (numAnswers) {
         console.log('vertical draw')
         // in columns
         // need to make sure not more than 5 answers are being drawn
-
         while (number + length  > numNumbers || takenSquares.includes(letter+number)) { // prevents from getting drawing answers that are byond numNumbers
           number = getRandomIntInclusive(1, Math.floor(numNumbers / 2))
           letter = alphabet[getRandomIntInclusive(0, numLeters - 1)]
