@@ -1,5 +1,6 @@
-const numLeters = 3
-const numNumbers = 3
+const numLeters = 7
+const numNumbers = 7
+let numAnswers = 5
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 const colors = {
   default: 'lightgrey',
@@ -7,7 +8,7 @@ const colors = {
   correct: 'green'
 }
 const clickedsquares = []
-const answers = ['c2', 'c1']
+const answers = []
 let canMarkSquare = true
 const w = window.innerWidth
 const h = window.innerHeight
@@ -26,7 +27,6 @@ function createLayout () {
       } else {
         square.id = 'square' + rowIndex
       }
-      console.log('squareid',square.id)
       square.className = 'square'
       square.style.backgroundColor = colors.default
       col.appendChild(square)
@@ -44,7 +44,6 @@ function createLayout () {
   }
   
   fillSignsForLayout()
-  console.log('next', document.getElementById('col1').children[0])
 }
 function fillSignsForLayout () {
   for (let i = 1; i < numNumbers + 1; i++) {
@@ -96,13 +95,42 @@ function squareClicked (square) {
     checkAnswers(square)
   }
 }
-
-function drawAnswers () {
+ 
+function drawAnswers (numAnswers) {
   //first we need to decide number of coordinates to find
   //that number is related to the difficulty lvl so i assume its a fixed number accrding to each lvl 
   //so i wont imlpement here any algorithm to deduce that number based on the surface of the board we are given
-
-
+  
+  while(numAnswers != 0){
+    let decider = getRandomIntInclusive(0,1)
+    switch(decider){
+      case 0: //one sqaure as an answer 
+      let letter = alphabet[getRandomIntInclusive(0,numLeters-1)]
+      let number = getRandomIntInclusive(1,numNumbers)
+      answers.push(letter+number)
+      console.log('answers after push',answers)
+      numAnswers--
+      break;
+      case 1://inline set of answers
+        console.log('passed')
+        let length = getRandomIntInclusive(1,numAnswers)
+        let startSquareLetter = alphabet[getRandomIntInclusive(0,numLeters-1)]
+        let startSquareNumber  = getRandomIntInclusive(0,numNumbers)
+        while(startSquareNumber+length>numNumbers){
+          startSquareNumber  = getRandomIntInclusive(0,numNumbers)
+        }
+        let startSquare = startSquareLetter+startSquareNumber
+        
+        
+        answers.push(startSquare)
+          for(let i =1;i<=length;i++){
+            answers.push(startSquareLetter+(startSquareNumber+ i))
+          }
+          console.log('length',length)
+          numAnswers -= length
+      break;
+    }
+  } 
 }
 
 function getRandomIntInclusive (min, max) {
@@ -112,5 +140,6 @@ function getRandomIntInclusive (min, max) {
 }
 
 window.onload = () => {
+  drawAnswers(numAnswers)
   createLayout()
 }
