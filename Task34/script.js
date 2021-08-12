@@ -9,6 +9,7 @@ const colors = {
 }
 const clickedsquares = []
 const answers = []
+let takenSquares = []
 let canMarkSquare = true
 const w = window.innerWidth
 const h = window.innerHeight
@@ -108,7 +109,12 @@ function drawAnswers (numAnswers) {
     const length = getRandomIntInclusive(1, numAnswers)
     switch (decider) {
       case 0: // one sqaure as an answer
+        while(takenSquares.includes(letter+number) && number>numNumbers){
+          letter = alphabet[getRandomIntInclusive(0, numLeters - 1)]
+          number = getRandomIntInclusive(1, numNumbers)
+        }
         answers.push(letter + number)
+        takenSquares.push(letter + number)
         console.log('answers after push', answers)
         numAnswers--
         break
@@ -117,24 +123,30 @@ function drawAnswers (numAnswers) {
         // in columns
         // need to make sure not more than 5 answers are being drawn
 
-        while (number + length > numNumbers) { // prevents from getting drawing answers that are byond numNumbers
+        while (number + length  > numNumbers || takenSquares.includes(letter+number)) { // prevents from getting drawing answers that are byond numNumbers
           number = getRandomIntInclusive(1, Math.floor(numNumbers / 2))
+          letter = alphabet[getRandomIntInclusive(0, numLeters - 1)]
         }
 
         answers.push(letter + number)
+        takenSquares.push(letter + number)
         for (let i = 1; i < length; i++) {
           answers.push(letter + (number + i))
+          takenSquares.push(letter + (number+i))
         }
         numAnswers -= length
         break
       case 2:
       // in rows
-        while (alphabet.indexOf(letter) + length > numLeters) { // prevents from getting drawing answers that are byond numLetters
+        while (alphabet.indexOf(letter) + length > numLeters || takenSquares.includes(letter+number)) { // prevents from getting drawing answers that are byond numLetters
           letter = alphabet[getRandomIntInclusive(0, numLeters)]
+          number = getRandomIntInclusive(1, Math.floor(numNumbers / 2))
         }
         answers.push(letter + number)
+        takenSquares.push(letter + number)
         for (let i = alphabet.indexOf(letter) + 1; i < alphabet.indexOf(letter) + length; i++) {
           answers.push(alphabet[i] + number)
+          takenSquares.push(alphabet[i] + number)
         }
         numAnswers -= length
         break
@@ -152,3 +164,6 @@ window.onload = () => {
   drawAnswers(numAnswers)
   createLayout()
 }
+
+//TODO need to make sure we dont draw the square for an answer that was already used
+//change front so the sqaures adjust their size according to number of culmns and rows specified
