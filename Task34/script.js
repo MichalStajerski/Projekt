@@ -1,6 +1,6 @@
 const numLeters = 7
 const numNumbers = 7
-let numAnswers = 5
+const numAnswers = 5
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 const colors = {
   default: 'lightgrey',
@@ -35,14 +35,14 @@ function createLayout () {
   }
   const asnwerBoard = document.getElementById('answerBoard')
 
-  for(let i = 0; i < answers.length; i++){
+  for (let i = 0; i < answers.length; i++) {
     const answer = document.createElement('div')
     answer.id = 'answer'
-    answer.className ='answer'
+    answer.className = 'answer'
     answer.innerHTML = answers[i]
     asnwerBoard.appendChild(answer)
   }
-  
+
   fillSignsForLayout()
 }
 function fillSignsForLayout () {
@@ -95,61 +95,61 @@ function squareClicked (square) {
     checkAnswers(square)
   }
 }
- 
+
 function drawAnswers (numAnswers) {
-  //first we need to decide number of coordinates to find
-  //that number is related to the difficulty lvl so i assume its a fixed number accrding to each lvl 
-  //so i wont imlpement here any algorithm to deduce that number based on the surface of the board we are given
-  
-  while(numAnswers > 0){
-    let decider = getRandomIntInclusive(0,2)
-    let letter = alphabet[getRandomIntInclusive(0,numLeters-1)]
-    let number  = getRandomIntInclusive(1,numNumbers)
-    let length = getRandomIntInclusive(1,numAnswers)
-    switch(decider){
-      case 0: //one sqaure as an answer 
-      answers.push(letter+number)
-      console.log('answers after push',answers)
-      numAnswers--
-      break;
-      case 1://inline set of answers
+  // first we need to decide number of coordinates to find
+  // that number is related to the difficulty lvl so i assume its a fixed number accrding to each lvl
+  // so i wont imlpement here any algorithm to deduce that number based on the surface of the board we are given
+
+  while (numAnswers > 0) {
+    const decider = getRandomIntInclusive(0, 2)
+    let letter = alphabet[getRandomIntInclusive(0, numLeters - 1)]
+    let number = getRandomIntInclusive(1, numNumbers)
+    const length = getRandomIntInclusive(1, numAnswers)
+    switch (decider) {
+      case 0: // one sqaure as an answer
+        answers.push(letter + number)
+        console.log('answers after push', answers)
+        numAnswers--
+        break
+      case 1:// inline set of answers
         console.log('vertical draw')
-        //in columns
-        //need to make sure not more than 5 answers are being drawn
-        
-        while(number+length>numNumbers){//prevents from getting drawing answers that are byond numNumbers
-          number  = getRandomIntInclusive(1,Math.floor(numNumbers/2))
+        // in columns
+        // need to make sure not more than 5 answers are being drawn
+
+        while (number + length > numNumbers) { // prevents from getting drawing answers that are byond numNumbers
+          number = getRandomIntInclusive(1, Math.floor(numNumbers / 2))
         }
 
-        answers.push(letter+number)
-          for(let i =1;i<length;i++){
-            answers.push(letter+(number+ i))
-          }
-          console.log('length',length)
-          numAnswers -= length
-          console.log(numAnswers)
-      break;
-      case 2:
-      //in rows
-      console.log('horizontal draw')
-      console.log('letter',letter)
-      console.log('alphabet index of',alphabet.indexOf(letter))
-      while(alphabet.indexOf(letter)+length>numLeters){//prevents from getting drawing answers that are byond numLetters
-        letter  = alphabet[getRandomIntInclusive(0,numLeters)]
-      }
-      console.log('letter',letter)
-      console.log('number',number)
-      answers.push(letter+number)
-      for(let i =alphabet.indexOf(letter)+1;i<length+1;i++){
-          answers.push(alphabet[i]+ number)
+        answers.push(letter + number)
+        for (let i = 1; i < length; i++) {
+          answers.push(letter + (number + i))
         }
-        console.log('length',length)
+        console.log('length', length)
         numAnswers -= length
-        console.log('numAns',numAnswers)
         console.log(numAnswers)
-      break;
+        break
+      case 2:
+      // in rows
+        console.log('horizontal draw')
+        console.log('letter', letter)
+        console.log('alphabet index of', alphabet.indexOf(letter))
+        while (alphabet.indexOf(letter) + length > numLeters) { // prevents from getting drawing answers that are byond numLetters
+          letter = alphabet[getRandomIntInclusive(0, numLeters)]
+        }
+        console.log('letter', letter)
+        console.log('number', number)
+        answers.push(letter + number)
+        for (let i = alphabet.indexOf(letter) + 1; i < length + 1; i++) {
+          answers.push(alphabet[i] + number)
+        }
+        console.log('length', length)
+        numAnswers -= length
+        console.log('numAns', numAnswers)
+        console.log(numAnswers)
+        break
     }
-  } 
+  }
 }
 
 function getRandomIntInclusive (min, max) {
