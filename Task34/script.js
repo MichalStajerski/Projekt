@@ -101,38 +101,52 @@ function drawAnswers (numAnswers) {
   //that number is related to the difficulty lvl so i assume its a fixed number accrding to each lvl 
   //so i wont imlpement here any algorithm to deduce that number based on the surface of the board we are given
   
-
-  //conditions here are similar to task14 so maybe can be reimplemnted in that or similar way until better solution comes up  
   while(numAnswers > 0){
-    let decider = getRandomIntInclusive(0,1)
+    let decider = getRandomIntInclusive(0,2)
+    let letter = alphabet[getRandomIntInclusive(0,numLeters-1)]
+    let number  = getRandomIntInclusive(1,numNumbers)
+    let length = getRandomIntInclusive(1,numAnswers)
     switch(decider){
       case 0: //one sqaure as an answer 
-      let letter = alphabet[getRandomIntInclusive(0,numLeters-1)]
-      let number = getRandomIntInclusive(1,numNumbers)
       answers.push(letter+number)
       console.log('answers after push',answers)
       numAnswers--
       break;
       case 1://inline set of answers
-        console.log('passed')
+        console.log('vertical draw')
         //in columns
         //need to make sure not more than 5 answers are being drawn
-        let length = getRandomIntInclusive(1,numAnswers)
-        let startSquareLetter = alphabet[getRandomIntInclusive(0,numLeters-1)]
-        let startSquareNumber  = getRandomIntInclusive(0,numNumbers)
-        while(startSquareNumber+length>numNumbers){//prevents from getting drawing answers that are byond numNumbers
-          startSquareNumber  = getRandomIntInclusive(0,Math.floor(numNumbers/2))
+        
+        while(number+length>numNumbers){//prevents from getting drawing answers that are byond numNumbers
+          number  = getRandomIntInclusive(1,Math.floor(numNumbers/2))
         }
-        let startSquare = startSquareLetter+startSquareNumber
-        
-        
-        answers.push(startSquare)
+
+        answers.push(letter+number)
           for(let i =1;i<length;i++){
-            answers.push(startSquareLetter+(startSquareNumber+ i))
+            answers.push(letter+(number+ i))
           }
           console.log('length',length)
           numAnswers -= length
           console.log(numAnswers)
+      break;
+      case 2:
+      //in rows
+      console.log('horizontal draw')
+      console.log('letter',letter)
+      console.log('alphabet index of',alphabet.indexOf(letter))
+      while(alphabet.indexOf(letter)+length>numLeters){//prevents from getting drawing answers that are byond numLetters
+        letter  = alphabet[getRandomIntInclusive(0,numLeters)]
+      }
+      console.log('letter',letter)
+      console.log('number',number)
+      answers.push(letter+number)
+      for(let i =alphabet.indexOf(letter)+1;i<length+1;i++){
+          answers.push(alphabet[i]+ number)
+        }
+        console.log('length',length)
+        numAnswers -= length
+        console.log('numAns',numAnswers)
+        console.log(numAnswers)
       break;
     }
   } 
