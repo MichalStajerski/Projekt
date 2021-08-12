@@ -125,28 +125,18 @@ function drawAnswers (numAnswers) {
         for (let i = 1; i < length; i++) {
           answers.push(letter + (number + i))
         }
-        console.log('length', length)
         numAnswers -= length
-        console.log(numAnswers)
         break
       case 2:
       // in rows
-        console.log('horizontal draw')
-        console.log('letter', letter)
-        console.log('alphabet index of', alphabet.indexOf(letter))
         while (alphabet.indexOf(letter) + length > numLeters) { // prevents from getting drawing answers that are byond numLetters
           letter = alphabet[getRandomIntInclusive(0, numLeters)]
         }
-        console.log('letter', letter)
-        console.log('number', number)
         answers.push(letter + number)
         for (let i = alphabet.indexOf(letter) + 1; i < alphabet.indexOf(letter)+length ; i++) {
           answers.push(alphabet[i] + number)
         }
-        console.log('length', length)
         numAnswers -= length
-        console.log('numAns', numAnswers)
-        console.log(numAnswers)
         break
     }
   }
