@@ -102,7 +102,7 @@ function drawAnswers (numAnswers) {
   // so i wont imlpement here any algorithm to deduce that number based on the surface of the board we are given
 
   while (numAnswers > 0) {
-    const decider = getRandomIntInclusive(0, 2)
+    const decider = getRandomIntInclusive(1, 1)
     let letter = alphabet[getRandomIntInclusive(0, numLeters - 1)]
     let number = getRandomIntInclusive(1, numNumbers)
     const length = getRandomIntInclusive(1, numAnswers)
@@ -140,7 +140,7 @@ function drawAnswers (numAnswers) {
         console.log('letter', letter)
         console.log('number', number)
         answers.push(letter + number)
-        for (let i = alphabet.indexOf(letter) + 1; i < length + 1; i++) {
+        for (let i = alphabet.indexOf(letter) + 1; i < alphabet.indexOf(letter)+length ; i++) {
           answers.push(alphabet[i] + number)
         }
         console.log('length', length)
