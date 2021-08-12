@@ -165,5 +165,6 @@ window.onload = () => {
   createLayout()
 }
 
-//TODO need to make sure we dont draw the square for an answer that was already used
-//change front so the sqaures adjust their size according to number of culmns and rows specified
+//TODO change front so the sqaures adjust their size according to resizing wile changing their number
+//in case we draw answers that are next to each other vertically or horizontally present them in format as shown 
+//C2-C4 or 7D - 7H respectively for each
