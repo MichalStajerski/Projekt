@@ -101,7 +101,9 @@ function drawAnswers (numAnswers) {
   //that number is related to the difficulty lvl so i assume its a fixed number accrding to each lvl 
   //so i wont imlpement here any algorithm to deduce that number based on the surface of the board we are given
   
-  while(numAnswers != 0){
+
+  //conditions here are similar to task14 so maybe can be reimplemnted in that or similar way until better solution comes up  
+  while(numAnswers > 0){
     let decider = getRandomIntInclusive(0,1)
     switch(decider){
       case 0: //one sqaure as an answer 
@@ -113,21 +115,24 @@ function drawAnswers (numAnswers) {
       break;
       case 1://inline set of answers
         console.log('passed')
+        //in columns
+        //need to make sure not more than 5 answers are being drawn
         let length = getRandomIntInclusive(1,numAnswers)
         let startSquareLetter = alphabet[getRandomIntInclusive(0,numLeters-1)]
         let startSquareNumber  = getRandomIntInclusive(0,numNumbers)
-        while(startSquareNumber+length>numNumbers){
-          startSquareNumber  = getRandomIntInclusive(0,numNumbers)
+        while(startSquareNumber+length>numNumbers){//prevents from getting drawing answers that are byond numNumbers
+          startSquareNumber  = getRandomIntInclusive(0,Math.floor(numNumbers/2))
         }
         let startSquare = startSquareLetter+startSquareNumber
         
         
         answers.push(startSquare)
-          for(let i =1;i<=length;i++){
+          for(let i =1;i<length;i++){
             answers.push(startSquareLetter+(startSquareNumber+ i))
           }
           console.log('length',length)
           numAnswers -= length
+          console.log(numAnswers)
       break;
     }
   } 
