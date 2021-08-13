@@ -161,10 +161,11 @@ window.onload = () => {
   createLayout()
   //based on the number of letters and words we deduct the size of squaers so they always fit - we choose the larger number
   var elements = document.getElementsByClassName("square");
-  let size = 0
+  //we determine the largest number between the two and continue with calculating the size value based on that naumber
   let largerElement = numNumbers > numLeters ? numNumbers : numLeters
-
-  size = 837/(1.1*largerElement)
+  let divident =  largerElement === numNumbers ? 837 : 1707
+  let divider = largerElement === numNumbers ? 1.3 : 2.2
+  const size = divident/(divider*largerElement)
 
   console.log('size',size)
   for (var i = 0; i < elements.length; i++) {
@@ -179,6 +180,6 @@ window.onload = () => {
   }
 }
 
-//TODO change front so the sqaures adjust their size according to resizing wile changing their number
+//TODO 
 //in case we draw answers that are next to each other vertically or horizontally present them in format as shown 
 //C2-C4 or 7D - 7H respectively for each
