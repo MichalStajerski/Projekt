@@ -156,9 +156,22 @@ function getRandomIntInclusive (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-window.onload = () => {
+window.onload = () => {   
   drawAnswers(numAnswers)
   createLayout()
+  //based on the number of letters and words we deduct the size of squaers so they always fit - we choose the larger number
+  var elements = document.getElementsByClassName("square");
+  let largerElement = numAnswers > numLeters ? numAnswers : numLeters
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].style.width=(80+"px");
+    elements[i].style.height=(80+"px");
+  }
+
+  var elements = document.getElementsByClassName("squareNoHover");
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].style.width=(80+"px");
+    elements[i].style.height=(80+"px");
+  }
 }
 
 //TODO change front so the sqaures adjust their size according to resizing wile changing their number
