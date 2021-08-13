@@ -1,6 +1,6 @@
-const numLeters = 7
-const numNumbers = 7
-const numAnswers = 5
+const numLeters = 15
+const numNumbers = 13
+const numAnswers = 9
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 const colors = {
   default: 'lightgrey',
@@ -161,16 +161,21 @@ window.onload = () => {
   createLayout()
   //based on the number of letters and words we deduct the size of squaers so they always fit - we choose the larger number
   var elements = document.getElementsByClassName("square");
-  let largerElement = numAnswers > numLeters ? numAnswers : numLeters
+  let size = 0
+  let largerElement = numNumbers > numLeters ? numNumbers : numLeters
+
+  size = 837/(1.1*largerElement)
+
+  console.log('size',size)
   for (var i = 0; i < elements.length; i++) {
-    elements[i].style.width=(80+"px");
-    elements[i].style.height=(80+"px");
+    elements[i].style.width=(size+"px");
+    elements[i].style.height=(size+"px");
   }
 
   var elements = document.getElementsByClassName("squareNoHover");
   for (var i = 0; i < elements.length; i++) {
-    elements[i].style.width=(80+"px");
-    elements[i].style.height=(80+"px");
+    elements[i].style.width=(size+"px");
+    elements[i].style.height=(size+"px");
   }
 }
 
