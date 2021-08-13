@@ -25,10 +25,12 @@ function createLayout () {
       if (rowIndex > 0 && rowIndex <= numNumbers && colIndex > 0 && colIndex <= numLeters) {
         square.id = alphabet[colIndex - 1] + rowIndex
         square.onclick = () => squareClicked(square)
+        square.className = 'square'
       } else {
         square.id = 'square' + rowIndex
+        square.className = 'squareNoHover'
       }
-      square.className = 'square'
+ 
       square.style.backgroundColor = colors.default
       col.appendChild(square)
     }
@@ -61,12 +63,10 @@ function checkAnswers (square) {
   for (let i = 0; i < clickedsquares.length; i++) {
     if (answers.includes(square.id)) {
       square.style.backgroundColor = colors.correct
-      const answersDelte = answers.indexOf(square.id)
-      const clickedSquaresDelete = clickedsquares.indexOf(square.id)
       // and it deletes the asnwer so only the remaining correct ones remain
-      answers.splice(answersDelte, 1)
-      clickedsquares.splice(clickedSquaresDelete, 1)
-      square.onclick = () => null // if correct we can'y uncheck the answe
+      answers.splice(answers.indexOf(square.id), 1)
+      clickedsquares.splice(clickedsquares.indexOf(square.id), 1)
+      square.onclick = () => null // if correct we can't uncheck the answer
       console.log('clickedsquares', clickedsquares)
     }
   }
@@ -74,6 +74,7 @@ function checkAnswers (square) {
     setTimeout(() => {
       canMarkSquare = false
       alert('Victory')
+      document.location.reload(true)
     }, 500)
   }
   console.log('answers', answers)
@@ -89,8 +90,7 @@ function squareClicked (square) {
       // unclicks to usual color
       square.style.backgroundColor = colors.default
       // removes answerd by value
-      const index = clickedsquares.indexOf(square.id)
-      clickedsquares.splice(index, 1)
+      clickedsquares.splice(clickedsquares.indexOf(square.id), 1)
     }
     console.log('clickedSquares', clickedsquares)
     checkAnswers(square)
@@ -115,12 +115,9 @@ function drawAnswers (numAnswers) {
         }
         answers.push(letter + number)
         takenSquares.push(letter + number)
-        console.log('answers after push', answers)
         numAnswers--
         break
-      case 1:// inline set of answers
-        console.log('vertical draw')
-        // in columns
+      case 1:// inline set of answers in columns
         // need to make sure not more than 5 answers are being drawn
         while (number + length  > numNumbers || takenSquares.includes(letter+number)) { // prevents from getting drawing answers that are byond numNumbers
           number = getRandomIntInclusive(1, Math.floor(numNumbers / 2))
