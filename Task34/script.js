@@ -1,6 +1,6 @@
 const numLeters = 15
 const numNumbers = 13
-const numAnswers = 9
+const numAnswers = 12
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 const colors = {
   default: 'lightgrey',
@@ -9,6 +9,7 @@ const colors = {
 }
 const clickedsquares = []
 const answers = []
+const answersForRead = []
 let takenSquares = []
 let canMarkSquare = true
 const w = window.innerWidth
@@ -38,11 +39,11 @@ function createLayout () {
   }
   const asnwerBoard = document.getElementById('answerBoard')
 
-  for (let i = 0; i < answers.length; i++) {
+  for (let i = 0; i < answersForRead.length; i++) {
     const answer = document.createElement('div')
     answer.id = 'answer'
     answer.className = 'answer'
-    answer.innerHTML = answers[i]
+    answer.innerHTML = answersForRead[i]
     asnwerBoard.appendChild(answer)
   }
 
@@ -114,6 +115,7 @@ function drawAnswers (numAnswers) {
           number = getRandomIntInclusive(1, numNumbers)
         }
         answers.push(letter + number)
+        answersForRead.push(letter+number)
         takenSquares.push(letter + number)
         numAnswers--
         break
@@ -123,18 +125,20 @@ function drawAnswers (numAnswers) {
           number = getRandomIntInclusive(1, Math.floor(numNumbers / 2))
           letter = alphabet[getRandomIntInclusive(0, numLeters - 1)]
         }
-
         answers.push(letter + number)
         takenSquares.push(letter + number)
         for (let i = 1; i < length; i++) {
           answers.push(letter + (number + i))
           takenSquares.push(letter + (number+i))
+          if(i === length-1){
+            answersForRead.push(letter+number+'=>'+letter+(number+i))
+          }
         }
         numAnswers -= length
         break
       case 2:
       // in rows
-        while (alphabet.indexOf(letter) + length > numLeters || takenSquares.includes(letter+number)) { // prevents from getting drawing answers that are byond numLetters
+        while (alphabet.indexOf(letter) + length > numLeters || takenSquares.includes(letter+number)) { // prevents from getting drawing answers that are beyond numLetters
           letter = alphabet[getRandomIntInclusive(0, numLeters)]
           number = getRandomIntInclusive(1, Math.floor(numNumbers / 2))
         }
@@ -143,6 +147,9 @@ function drawAnswers (numAnswers) {
         for (let i = alphabet.indexOf(letter) + 1; i < alphabet.indexOf(letter) + length; i++) {
           answers.push(alphabet[i] + number)
           takenSquares.push(alphabet[i] + number)
+          if(i === alphabet.indexOf(letter) + length-1){
+            answersForRead.push(letter+number+'=>'+alphabet[i] + number)
+          }
         }
         numAnswers -= length
         break
@@ -163,6 +170,7 @@ window.onload = () => {
   var elements = document.getElementsByClassName("square");
   //we determine the largest number between the two and continue with calculating the size value based on that naumber
   let largerElement = numNumbers > numLeters ? numNumbers : numLeters
+  //based on the largerElement we set divident accrding to height or width of window, same goes for divider
   let divident =  largerElement === numNumbers ? 837 : 1707
   let divider = largerElement === numNumbers ? 1.3 : 2.2
   const size = divident/(divider*largerElement)
