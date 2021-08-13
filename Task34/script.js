@@ -25,13 +25,12 @@ function createLayout () {
       const square = document.createElement('div')
       if (rowIndex > 0 && rowIndex <= numNumbers && colIndex > 0 && colIndex <= numLeters) {
         square.id = alphabet[colIndex - 1] + rowIndex
-        square.onclick = () => squareClicked(square)
+        square.onclick = () => squareClicked(square)  
         square.className = 'square'
       } else {
         square.id = 'square' + rowIndex
         square.className = 'squareNoHover'
       }
- 
       square.style.backgroundColor = colors.default
       col.appendChild(square)
     }
@@ -187,7 +186,3 @@ window.onload = () => {
     elements[i].style.height=(size+"px");
   }
 }
-
-//TODO 
-//in case we draw answers that are next to each other vertically or horizontally present them in format as shown 
-//C2-C4 or 7D - 7H respectively for each
