@@ -67,7 +67,7 @@ function buildPieces () {
  
 }
 function shufflePuzzle () {
-//   shuffleArray(pieces)
+  //shuffleArray(pieces)
   context.clearRect(0, 0, puzzleWidth, puzzleHeight) // sets the pixels in rect to transparent black
   let xPos = 0
   let yPos = 0
@@ -75,15 +75,18 @@ function shufflePuzzle () {
     let piece = pieces[i] // takes every puzzle piece from puzzle
     piece.xPos = xPos
     piece.yPos = yPos
-    context.drawImage(img, piece.sx, piece.sy, pieceWidth, pieceHeight, xPos, yPos, pieceWidth, pieceHeight)
-    context.strokeRect(xPos, yPos, pieceWidth, pieceHeight)
+    context.translate(piece.xPos+pieceWidth,piece.yPos)
+    context.rotate(90*Math.PI/180)
+    context.drawImage(img, xPos, yPos, pieceWidth, pieceHeight, -xPos/1000, -yPos/1000,pieceWidth,pieceWidth)
+    context.rotate(-(90*Math.PI/180))
+    context.translate(-(piece.xPos+pieceWidth),-(piece.yPos))
     xPos += pieceWidth
     if (xPos >= puzzleWidth) { // sets to new row when we reach the end of an x axis of our canvas
       xPos = 0
       yPos += pieceHeight
     }
   }
-  document.onmousedown = onPuzzleClick
+  // /document.onmousedown = onPuzzleClick
 }
 function shuffleArray (array) { // randomly shuffles our array
   for (let i = 0; i < array.length; i++) {
@@ -107,7 +110,7 @@ function onPuzzleClick (e) {
   console.log('mouse.x,mouse.y', mouse.x, mouse.y)
   currentPiece = checkPieceClicked()
   if (currentPiece != null) {
-      context.rotate(currentPiece,90*Math.PI/180)
+      context.rotate(90*Math.PI/180)
     // context.clearRect(currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight)
     // context.save() // we use save so we dont draw over any graphics - beacuse we see see piece under draged one
     // context.drawImage(img, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight)
