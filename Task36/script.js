@@ -11,6 +11,7 @@ let pieceHeight
 let currentPiece // current piece that we are draggin
 let currentDropPiece // piece that the currently dgraged piece will be droped upon
 let mouse // will store coordiantes of the cursor when clicked it performs action
+let clickCounter = 0
 
 function onImage () {
   pieceWidth = Math.floor(img.width / puzzleDifficulty)
@@ -86,7 +87,7 @@ function shufflePuzzle () {
       yPos += pieceHeight
     }
   }
-  // /document.onmousedown = onPuzzleClick
+  document.onmousedown = onPuzzleClick
 }
 function shuffleArray (array) { // randomly shuffles our array
   for (let i = 0; i < array.length; i++) {
@@ -98,6 +99,8 @@ function shuffleArray (array) { // randomly shuffles our array
 }
 
 function onPuzzleClick (e) {
+  clickCounter++
+  console.log('ckickCounter',clickCounter)
   // returns the current coordiantes of the place where event happened, our mouse position
   if (e.layerX || e.layerY == 0) { 
     mouse.x = e.layerX - canvas.offsetLeft 
@@ -109,13 +112,13 @@ function onPuzzleClick (e) {
   mouse.y += 89 // added it cause without it often not the tiles that were clicked on got dragged but different one
   console.log('mouse.x,mouse.y', mouse.x, mouse.y)
   currentPiece = checkPieceClicked()
+  console.log('currentPiece',currentPiece)
   if (currentPiece != null) {
-      context.rotate(90*Math.PI/180)
-    // context.clearRect(currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight)
-    // context.save() // we use save so we dont draw over any graphics - beacuse we see see piece under draged one
-    // context.drawImage(img, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight)
-    //document.onmousemove = updatePuzzle
-    //document.onmouseup = pieceDropped
+    context.translate(currentPiece.xPos+pieceWidth,currentPiece.yPos+pieceHeight)
+    context.rotate(180*Math.PI/180)
+    context.drawImage(img, currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight, -currentPiece.xPos/1000, -currentPiece.yPos/1000,pieceWidth,pieceWidth)
+    context.rotate(-(180*Math.PI/180))
+    context.translate(-(currentPiece.xPos+pieceWidth),-(currentPiece.yPos+pieceHeight))
   }
 }
 
@@ -123,7 +126,7 @@ function checkPieceClicked () {
   // checks upon our clicked piece and returns it to us
   for (let i = 0; i < pieces.length; i++) {
     const piece = pieces[i]
-    console.log(piece)
+    console.log('129',piece)
     // adding constraints so we get in the end the correct puzzle piece chosen
     if (mouse.x > piece.xPos && mouse.x < (piece.xPos + pieceWidth) && mouse.y > piece.yPos && mouse.y < (piece.yPos + pieceHeight)) {
       return piece
