@@ -27,6 +27,9 @@ function setCanvas () {
   canvas.width = puzzleWidth
   canvas.height = puzzleHeight
   canvas.style.border = '1px solid black'
+  canvasRight = document.getElementById('canvasRight')
+  contextRight = canvasRight.getContext('2d')
+  drawStar(3,75, 100, 5, 30, 15)
 }
 function initPuzzle () {
   pieces = [] // array that holds our pieces
@@ -78,15 +81,30 @@ function shufflePuzzle () {
     piece.angle = angle
     piece.pieceClicked = pieceClicked
 
-    context.drawImage(img, piece.sx, piece.sy, pieceWidth, pieceHeight, xPos, yPos, pieceWidth, pieceHeight)
-    context.strokeRect(xPos, yPos, pieceWidth, pieceHeight)
+    // context.drawImage(img, piece.sx, piece.sy, pieceWidth, pieceHeight, xPos, yPos, pieceWidth, pieceHeight)
+    // context.strokeRect(xPos, yPos, pieceWidth, pieceHeight)
 
-    // context.translate(piece.xPos + pieceWidth, piece.yPos)
-    // context.rotate(90 * Math.PI / 180)
-    // context.drawImage(img, xPos, yPos, pieceWidth, pieceHeight, -(pieceWidth/100), -(pieceHeight/1000), pieceWidth, pieceWidth)
-    // context.rotate(-(90 * Math.PI / 180))
-    // context.translate(-(piece.xPos + pieceWidth), -(piece.yPos))
-    // angle = 90 
+    context.save()
+    context.translate(xPos+63, yPos+63.3)
+    context.rotate((angle) * Math.PI / 180)
+    context.drawImage(img, xPos, yPos, pieceWidth, pieceHeight, -(pieceWidth/2), -(pieceHeight/2), pieceWidth, pieceWidth)
+    context.translate(-(xPos), -(yPos))
+    context.restore()
+    let angleDecider = getRandomIntInclusive(1,4)
+    switch(angleDecider){
+      case 1:
+        angle = 0
+      break
+      case 2:
+        angle = 90
+      break
+      case 3:
+        angle = 180
+      break
+      case 4:
+        angle = 270
+      break
+    }
     xPos += pieceWidth
     if (xPos >= puzzleWidth) { // sets to new row when we reach the end of an x axis of our canvas
       xPos = 0
@@ -113,7 +131,7 @@ function onPuzzleClick (e) {
   console.log('currentPiece', currentPiece)
   if (currentPiece != null) {
     context.save()
-    context.translate(currentPiece.xPos+62, currentPiece.yPos+62)
+    context.translate(currentPiece.xPos+63, currentPiece.yPos+63.3)
     context.rotate((currentPiece.angle+90) * Math.PI / 180)
     context.drawImage(img, currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight, -(pieceWidth/2), -(pieceHeight/2), pieceWidth, pieceWidth)
     context.translate(-(currentPiece.xPos), -(currentPiece.yPos))
@@ -123,6 +141,7 @@ function onPuzzleClick (e) {
       currentPiece.angle = 0
     }
   }
+  // checkAnswer()
 }
 
 function checkPieceClicked () {
@@ -136,6 +155,49 @@ function checkPieceClicked () {
     }
   }
   return null // in case we dont get any piece
+}
+
+function getRandomIntInclusive (min, max) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+function drawStar(starNum,cx, cy, spikes, outerRadius, innerRadius) {
+  for(let i =0; i<starNum;i++){
+    var rot = Math.PI / 2 * 3
+    var x = cx+starNum*75
+    var y = cy
+    var step = Math.PI / spikes;
+  
+    contextRight.strokeSyle = "#000";
+    contextRight.beginPath();
+    contextRight.moveTo(cx, cy - outerRadius)
+    for (i = 0; i < spikes; i++) {
+      x = cx + Math.cos(rot) * outerRadius;
+      y = cy + Math.sin(rot) * outerRadius;
+      contextRight.lineTo(x, y)
+      rot += step
+  
+      x = cx + Math.cos(rot) * innerRadius;
+      y = cy + Math.sin(rot) * innerRadius;
+      contextRight.lineTo(x, y)
+      rot += step
+    }
+    contextRight.lineTo(cx, cy - outerRadius)
+    contextRight.closePath();
+    contextRight.lineWidth = 5;
+    contextRight.strokeStyle = 'blue';
+    contextRight.stroke();
+    contextRight.fillStyle = 'skyblue';
+    contextRight.fill();
+  }
+}
+
+
+
+ function checkAnswer(){
+   clickCounter > 10 ? alert('You lost!') : null
 }
 
 window.onload = () => {
