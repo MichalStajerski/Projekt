@@ -27,9 +27,11 @@ function setCanvas () {
   canvas.width = puzzleWidth
   canvas.height = puzzleHeight
   canvas.style.border = '1px solid black'
-  canvasRight = document.getElementById('canvasRight')
+  canvasRight = document.getElementById('scoreBoard')
   contextRight = canvasRight.getContext('2d')
-  drawStar(3,75, 100, 5, 30, 15)
+  drawStar(75, 100, 5, 30, 15)
+  drawStar(150, 100, 5, 30, 15)
+  drawStar(225, 100, 5, 30, 15)
 }
 function initPuzzle () {
   pieces = [] // array that holds our pieces
@@ -80,9 +82,6 @@ function shufflePuzzle () {
     piece.yPos = yPos
     piece.angle = angle
     piece.pieceClicked = pieceClicked
-
-    // context.drawImage(img, piece.sx, piece.sy, pieceWidth, pieceHeight, xPos, yPos, pieceWidth, pieceHeight)
-    // context.strokeRect(xPos, yPos, pieceWidth, pieceHeight)
 
     context.save()
     context.translate(xPos+63, yPos+63.3)
@@ -141,7 +140,7 @@ function onPuzzleClick (e) {
       currentPiece.angle = 0
     }
   }
-  // checkAnswer()
+  checkAnswer()
 }
 
 function checkPieceClicked () {
@@ -151,7 +150,10 @@ function checkPieceClicked () {
     console.log('129', piece)
     // adding constraints so we get in the end the correct puzzle piece chosen
     if (mouse.x > piece.xPos && mouse.x < (piece.xPos + pieceWidth) && mouse.y > piece.yPos && mouse.y < (piece.yPos + pieceHeight)) {
-      return piece
+      //we specify the coordiantes of the tile that is the end and isnt supposed to rotate
+      if(piece.xPos !==375 || piece.yPos !==375){
+        return piece
+      }
     }
   }
   return null // in case we dont get any piece
@@ -163,41 +165,39 @@ function getRandomIntInclusive (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-function drawStar(starNum,cx, cy, spikes, outerRadius, innerRadius) {
-  for(let i =0; i<starNum;i++){
-    var rot = Math.PI / 2 * 3
-    var x = cx+starNum*75
-    var y = cy
-    var step = Math.PI / spikes;
-  
-    contextRight.strokeSyle = "#000";
-    contextRight.beginPath();
-    contextRight.moveTo(cx, cy - outerRadius)
-    for (i = 0; i < spikes; i++) {
-      x = cx + Math.cos(rot) * outerRadius;
-      y = cy + Math.sin(rot) * outerRadius;
-      contextRight.lineTo(x, y)
-      rot += step
-  
-      x = cx + Math.cos(rot) * innerRadius;
-      y = cy + Math.sin(rot) * innerRadius;
-      contextRight.lineTo(x, y)
-      rot += step
-    }
-    contextRight.lineTo(cx, cy - outerRadius)
-    contextRight.closePath();
-    contextRight.lineWidth = 5;
-    contextRight.strokeStyle = 'blue';
-    contextRight.stroke();
-    contextRight.fillStyle = 'skyblue';
-    contextRight.fill();
+function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
+  var rot = Math.PI / 2 * 3
+  var x = cx
+  var y = cy
+  var step = Math.PI / spikes;
+
+  contextRight.strokeSyle = "#000";
+  contextRight.beginPath();
+  contextRight.moveTo(cx, cy - outerRadius)
+  for (i = 0; i < spikes; i++) {
+    x = cx + Math.cos(rot) * outerRadius;
+    y = cy + Math.sin(rot) * outerRadius;
+    contextRight.lineTo(x, y)
+    rot += step
+
+    x = cx + Math.cos(rot) * innerRadius;
+    y = cy + Math.sin(rot) * innerRadius;
+    contextRight.lineTo(x, y)
+    rot += step
   }
+  contextRight.lineTo(cx, cy - outerRadius)
+  contextRight.closePath();
+  contextRight.lineWidth = 5;
+  contextRight.strokeStyle = 'blue';
+  contextRight.stroke();
+  contextRight.fillStyle = 'skyblue';
+  contextRight.fill();
 }
 
-
-
- function checkAnswer(){
+function checkAnswer(){
    clickCounter > 10 ? alert('You lost!') : null
+  //  contextRight.fillStyle = 'yellow'
+  //  contextRight.fill()
 }
 
 window.onload = () => {
