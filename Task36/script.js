@@ -108,6 +108,7 @@ function onPuzzleClick (e) {
   }
   
   console.log('mouse.x,mouse.y', mouse.x, mouse.y)
+  mouse.y += 89 
   currentPiece = checkPieceClicked()
   console.log('currentPiece', currentPiece)
   if (currentPiece != null) {
