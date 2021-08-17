@@ -1,13 +1,13 @@
 const puzzleDifficulty = 6 // image will be divided in puzzleDifficulty*puzzleDifficulty, later can look to change rectangles
 // into actual puzzle shaped figures
-const colors ={
-  success : 'yellow',
-  failure : 'grey'
+const colors = {
+  success: 'yellow',
+  failure: 'grey'
 }
 
-const correctOrder = (ar,ele) => ar.every(el => el==ele )
+const correctOrder = (ar, ele) => ar.every(el => el == ele)
 
-let gameWon = false
+const gameWon = false
 let canvas
 let context
 let img
@@ -78,7 +78,7 @@ function shufflePuzzle () {
   let xPos = 0
   let yPos = 0
   let angle = 0
-  let pieceClicked = 0
+  const pieceClicked = 0
   for (let i = 0; i < pieces.length; i++) {
     const piece = pieces[i] // takes every puzzle piece from puzzle
     piece.xPos = xPos
@@ -87,25 +87,25 @@ function shufflePuzzle () {
     piece.pieceClicked = pieceClicked
 
     context.save()
-    context.translate(xPos+63, yPos+63.3)
+    context.translate(xPos + 63, yPos + 63.3)
     context.rotate((angle) * Math.PI / 180)
-    context.drawImage(img, xPos, yPos, pieceWidth, pieceHeight, -(pieceWidth/2), -(pieceHeight/2), pieceWidth, pieceWidth)
+    context.drawImage(img, xPos, yPos, pieceWidth, pieceHeight, -(pieceWidth / 2), -(pieceHeight / 2), pieceWidth, pieceWidth)
     context.translate(-(xPos), -(yPos))
     context.restore()
-    let angleDecider = getRandomIntInclusive(1,4)
-    switch(angleDecider){
+    const angleDecider = getRandomIntInclusive(1, 4)
+    switch (angleDecider) {
       case 1:
         angle = 0
-      break
+        break
       case 2:
         angle = 90
-      break
+        break
       case 3:
         angle = 180
-      break
+        break
       case 4:
         angle = 270
-      break
+        break
     }
     xPos += pieceWidth
     if (xPos >= puzzleWidth) { // sets to new row when we reach the end of an x axis of our canvas
@@ -126,22 +126,22 @@ function onPuzzleClick (e) {
     mouse.x = e.offsetX - canvas.offsetLeft
     mouse.y = e.layerY - canvas.offsetTop
   }
-  
+
   console.log('mouse.x,mouse.y', mouse.x, mouse.y)
-  mouse.y += 89 
+  mouse.y += 89
   currentPiece = checkPieceClicked()
   console.log('currentPiece', currentPiece)
   if (currentPiece != null) {
     context.save()
-    context.translate(currentPiece.xPos+63, currentPiece.yPos+63.3)
-    context.rotate((currentPiece.angle+90) * Math.PI / 180)
-    context.drawImage(img, currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight, -(pieceWidth/2), -(pieceHeight/2), pieceWidth, pieceWidth)
+    context.translate(currentPiece.xPos + 63, currentPiece.yPos + 63.3)
+    context.rotate((currentPiece.angle + 90) * Math.PI / 180)
+    context.drawImage(img, currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight, -(pieceWidth / 2), -(pieceHeight / 2), pieceWidth, pieceWidth)
     context.translate(-(currentPiece.xPos), -(currentPiece.yPos))
     context.restore()
-    currentPiece.angle +=90
-    if(currentPiece.angle>360){
+    currentPiece.angle += 90
+    if (currentPiece.angle > 360) {
       currentPiece.angle = 90
-    }else if(currentPiece.angle===360){
+    } else if (currentPiece.angle === 360) {
       currentPiece.correct = true
     }
   }
@@ -154,10 +154,10 @@ function checkPieceClicked () {
     const piece = pieces[i]
     // adding constraints so we get in the end the correct puzzle piece chosen
     if (mouse.x > piece.xPos && mouse.x < (piece.xPos + pieceWidth) && mouse.y > piece.yPos && mouse.y < (piece.yPos + pieceHeight)) {
-      //we specify the coordiantes of the tile that is the end and isnt supposed to rotate
-      if(piece.xPos !==375 || piece.yPos !==375){
+      // we specify the coordiantes of the tile that is the end and isnt supposed to rotate
+      if (piece.xPos !== 375 || piece.yPos !== 375) {
         return piece
-      }else{
+      } else {
         piece.correct = true
       }
     }
@@ -171,23 +171,23 @@ function getRandomIntInclusive (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-function drawStar(cx, cy, spikes, outerRadius, innerRadius,color) {
-  var rot = Math.PI / 2 * 3
-  var x = cx
-  var y = cy
-  var step = Math.PI / spikes;
+function drawStar (cx, cy, spikes, outerRadius, innerRadius, color) {
+  let rot = Math.PI / 2 * 3
+  let x = cx
+  let y = cy
+  const step = Math.PI / spikes
 
-  contextRight.strokeSyle = "#000";
-  contextRight.beginPath();
+  contextRight.strokeSyle = '#000'
+  contextRight.beginPath()
   contextRight.moveTo(cx, cy - outerRadius)
   for (i = 0; i < spikes; i++) {
-    x = cx + Math.cos(rot) * outerRadius;
-    y = cy + Math.sin(rot) * outerRadius;
+    x = cx + Math.cos(rot) * outerRadius
+    y = cy + Math.sin(rot) * outerRadius
     contextRight.lineTo(x, y)
     rot += step
 
-    x = cx + Math.cos(rot) * innerRadius;
-    y = cy + Math.sin(rot) * innerRadius;
+    x = cx + Math.cos(rot) * innerRadius
+    y = cy + Math.sin(rot) * innerRadius
     contextRight.lineTo(x, y)
     rot += step
   }
@@ -200,14 +200,13 @@ function drawStar(cx, cy, spikes, outerRadius, innerRadius,color) {
   contextRight.fill()
 }
 
-function checkAnswer(){
- 
-  let starNum = 3
-  if(clickCounter>10){
+function checkAnswer () {
+  const starNum = 3
+  if (clickCounter > 10) {
     canvasRight = document.getElementById('scoreBoard')
     contextRight = canvasRight.getContext('2d')
-    for(let i =1; i<starNum+1;i++){
-      drawStar(75*i, 100, 5, 30, 15,colors.failure)
+    for (let i = 1; i < starNum + 1; i++) {
+      drawStar(75 * i, 100, 5, 30, 15, colors.failure)
     }
     document.onmousedown = null
   }
@@ -219,8 +218,8 @@ window.onload = () => {
   img.src = './images/pipes.png'
 }
 
-//DONE: beacause canvas doesn not allow me to draw stars and then only fill them with according color based on the number moves we made
-//i will change drawing stars after the game is done or lost, then i will just draw only the number of stars that are meant to be filled
-//in case user loses, all stars will be drawn but they will be empty without yellow fill signifying 0 stars achieved
+// DONE: beacause canvas doesn not allow me to draw stars and then only fill them with according color based on the number moves we made
+// i will change drawing stars after the game is done or lost, then i will just draw only the number of stars that are meant to be filled
+// in case user loses, all stars will be drawn but they will be empty without yellow fill signifying 0 stars achieved
 
-//TODO : 
+// TODO :
