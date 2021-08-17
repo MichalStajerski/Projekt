@@ -140,7 +140,7 @@ function onPuzzleClick (e) {
     context.restore()
     currentPiece.angle +=90
     if(currentPiece.angle>360){
-      currentPiece.angle = 0
+      currentPiece.angle = 90
     }else if(currentPiece.angle===360){
       currentPiece.correct = true
     }
