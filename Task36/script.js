@@ -1,5 +1,10 @@
 const puzzleDifficulty = 6 // image will be divided in puzzleDifficulty*puzzleDifficulty, later can look to change rectangles
 // into actual puzzle shaped figures
+const colors ={
+  success : 'yellow',
+  failure : 'blue'
+}
+let gameWon
 let canvas
 let context
 let img
@@ -22,16 +27,17 @@ function onImage () {
 }
 
 function setCanvas () {
+  //let starNum = 3
   canvas = document.getElementById('canvas')
   context = canvas.getContext('2d')
   canvas.width = puzzleWidth
   canvas.height = puzzleHeight
   canvas.style.border = '1px solid black'
-  canvasRight = document.getElementById('scoreBoard')
-  contextRight = canvasRight.getContext('2d')
-  drawStar(75, 100, 5, 30, 15)
-  drawStar(150, 100, 5, 30, 15)
-  drawStar(225, 100, 5, 30, 15)
+  // canvasRight = document.getElementById('scoreBoard')
+  // contextRight = canvasRight.getContext('2d')
+  // for(let i =1; i<starNum+1;i++){
+  //   drawStar(75*i, 100, 5, 30, 15)
+  // }
 }
 function initPuzzle () {
   pieces = [] // array that holds our pieces
@@ -68,7 +74,7 @@ function buildPieces () {
   // show the user image to remember for 2 seconds then present the puzzle
   setTimeout(() => {
     shufflePuzzle()
-  }, 2000)
+  }, 1000)
 }
 function shufflePuzzle () {
   context.clearRect(0, 0, puzzleWidth, puzzleHeight) // sets the pixels in rect to transparent black
@@ -147,7 +153,6 @@ function checkPieceClicked () {
   // checks upon our clicked piece and returns it to us
   for (let i = 0; i < pieces.length; i++) {
     const piece = pieces[i]
-    console.log('129', piece)
     // adding constraints so we get in the end the correct puzzle piece chosen
     if (mouse.x > piece.xPos && mouse.x < (piece.xPos + pieceWidth) && mouse.y > piece.yPos && mouse.y < (piece.yPos + pieceHeight)) {
       //we specify the coordiantes of the tile that is the end and isnt supposed to rotate
@@ -165,7 +170,7 @@ function getRandomIntInclusive (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
+function drawStar(cx, cy, spikes, outerRadius, innerRadius,color) {
   var rot = Math.PI / 2 * 3
   var x = cx
   var y = cy
@@ -186,18 +191,23 @@ function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
     rot += step
   }
   contextRight.lineTo(cx, cy - outerRadius)
-  contextRight.closePath();
-  contextRight.lineWidth = 5;
-  contextRight.strokeStyle = 'blue';
-  contextRight.stroke();
-  contextRight.fillStyle = 'skyblue';
-  contextRight.fill();
+  contextRight.closePath()
+  contextRight.lineWidth = 5
+  contextRight.strokeStyle = 'black'
+  contextRight.stroke()
+  contextRight.fillStyle = color
+  contextRight.fill()
 }
 
 function checkAnswer(){
-   clickCounter > 10 ? alert('You lost!') : null
-  //  contextRight.fillStyle = 'yellow'
-  //  contextRight.fill()
+  let starNum = 3
+  if(clickCounter>10){
+    canvasRight = document.getElementById('scoreBoard')
+    contextRight = canvasRight.getContext('2d')
+    for(let i =1; i<starNum+1;i++){
+      drawStar(75*i, 100, 5, 30, 15,colors.success)
+    }
+  }
 }
 
 window.onload = () => {
@@ -205,3 +215,7 @@ window.onload = () => {
   img.addEventListener('load', onImage, false)
   img.src = './images/pipes.png'
 }
+
+//TODO: beacause canvas doesn not allow me to draw stars and then only fill them with according color based on the number moves we made
+//i will change drawing stars after the game is done or lost, then i will just draw only the number of stars that are meant to be filled
+//in case user loses, all stars will be drawn but they will be empty without yellow fill signifying 0 stars achieved
