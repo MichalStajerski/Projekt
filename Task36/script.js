@@ -2,9 +2,12 @@ const puzzleDifficulty = 6 // image will be divided in puzzleDifficulty*puzzleDi
 // into actual puzzle shaped figures
 const colors ={
   success : 'yellow',
-  failure : 'blue'
+  failure : 'grey'
 }
-let gameWon
+
+const correctOrder = (ar,ele) => ar.every(el => el==ele )
+
+let gameWon = false
 let canvas
 let context
 let img
@@ -27,17 +30,11 @@ function onImage () {
 }
 
 function setCanvas () {
-  //let starNum = 3
   canvas = document.getElementById('canvas')
   context = canvas.getContext('2d')
   canvas.width = puzzleWidth
   canvas.height = puzzleHeight
   canvas.style.border = '1px solid black'
-  // canvasRight = document.getElementById('scoreBoard')
-  // contextRight = canvasRight.getContext('2d')
-  // for(let i =1; i<starNum+1;i++){
-  //   drawStar(75*i, 100, 5, 30, 15)
-  // }
 }
 function initPuzzle () {
   pieces = [] // array that holds our pieces
@@ -141,9 +138,11 @@ function onPuzzleClick (e) {
     context.drawImage(img, currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight, -(pieceWidth/2), -(pieceHeight/2), pieceWidth, pieceWidth)
     context.translate(-(currentPiece.xPos), -(currentPiece.yPos))
     context.restore()
-    currentPiece.angle +=90 
+    currentPiece.angle +=90
     if(currentPiece.angle>360){
       currentPiece.angle = 0
+    }else if(currentPiece.angle===360){
+      currentPiece.correct = true
     }
   }
   checkAnswer()
@@ -158,6 +157,8 @@ function checkPieceClicked () {
       //we specify the coordiantes of the tile that is the end and isnt supposed to rotate
       if(piece.xPos !==375 || piece.yPos !==375){
         return piece
+      }else{
+        piece.correct = true
       }
     }
   }
@@ -200,13 +201,15 @@ function drawStar(cx, cy, spikes, outerRadius, innerRadius,color) {
 }
 
 function checkAnswer(){
+ 
   let starNum = 3
   if(clickCounter>10){
     canvasRight = document.getElementById('scoreBoard')
     contextRight = canvasRight.getContext('2d')
     for(let i =1; i<starNum+1;i++){
-      drawStar(75*i, 100, 5, 30, 15,colors.success)
+      drawStar(75*i, 100, 5, 30, 15,colors.failure)
     }
+    document.onmousedown = null
   }
 }
 
@@ -216,6 +219,8 @@ window.onload = () => {
   img.src = './images/pipes.png'
 }
 
-//TODO: beacause canvas doesn not allow me to draw stars and then only fill them with according color based on the number moves we made
+//DONE: beacause canvas doesn not allow me to draw stars and then only fill them with according color based on the number moves we made
 //i will change drawing stars after the game is done or lost, then i will just draw only the number of stars that are meant to be filled
 //in case user loses, all stars will be drawn but they will be empty without yellow fill signifying 0 stars achieved
+
+//TODO : 
