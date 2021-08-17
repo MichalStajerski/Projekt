@@ -5,9 +5,8 @@ const colors = {
   failure: 'grey'
 }
 
-const correctOrder = (ar, ele) => ar.every(el => el == ele)
-
 const gameWon = false
+let count = 0
 let canvas
 let context
 let img
@@ -141,8 +140,11 @@ function onPuzzleClick (e) {
     currentPiece.angle += 90
     if (currentPiece.angle > 360) {
       currentPiece.angle = 90
+      currentPiece.correct = false
     } else if (currentPiece.angle === 360) {
       currentPiece.correct = true
+    }else if(currentPiece.angle !== 360){
+      currentPiece.correct = false
     }
   }
   checkAnswer()
@@ -201,12 +203,17 @@ function drawStar (cx, cy, spikes, outerRadius, innerRadius, color) {
 }
 
 function checkAnswer () {
+  for(let i = 0;i <pieces.length;i++){
+    pieces[i].correct === true ? count++ : null
+    pieces[i].correct === true ? pieces.slice(i,1) : null
+  }
+  console.log('count',count)
   const starNum = 3
   if (clickCounter > 10) {
     canvasRight = document.getElementById('scoreBoard')
     contextRight = canvasRight.getContext('2d')
     for (let i = 1; i < starNum + 1; i++) {
-      drawStar(75 * i, 100, 5, 30, 15, colors.failure)
+      drawStar(75 * i, 100, 5, 30, 15, colors.success)
     }
     document.onmousedown = null
   }
