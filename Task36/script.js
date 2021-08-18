@@ -140,7 +140,7 @@ function onPuzzleClick (e) {
     clickCounter++
     context.save()
     context.translate(currentPiece.xPos + 63, currentPiece.yPos + 63.3)
-    if(currentPiece.straightPipe === true && currentPiece.angle ===90){
+    if (currentPiece.straightPipe === true && currentPiece.angle === 90) {
       currentPiece.angle = 270
     }
     context.rotate((currentPiece.angle + 90) * Math.PI / 180)
@@ -155,7 +155,7 @@ function onPuzzleClick (e) {
       currentPiece.correct = true
     } else if (currentPiece.angle !== 360) {
       currentPiece.correct = false
-    } else if(currentPiece.straightPipe === true && currentPiece.angle ===90){
+    } else if (currentPiece.straightPipe === true && currentPiece.angle === 90) {
       currentPiece.angle = 270
     }
   }
