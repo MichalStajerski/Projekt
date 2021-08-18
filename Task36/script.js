@@ -240,8 +240,6 @@ window.onload = () => {
   img.src = './images/pipes.png'
 }
 
-// DONE: beacause canvas doesn not allow me to draw stars and then only fill them with according color based on the number moves we made
-// i will change drawing stars after the game is done or lost, then i will just draw only the number of stars that are meant to be filled
-// in case user loses, all stars will be drawn but they will be empty without yellow fill signifying 0 stars achieved
-
-// TODO :
+// TODO : answers are only counted as correct when angle is 0 so when upon initial shuffle we get the pipe in correct position 
+//or 360 so when we get te pipe into correct position upon clicking on it however when it comes to plain straight pipes it shouldn't
+//matter whether theirs angle is 360 or 180 since in both scenarios pipe connect with others correctly
