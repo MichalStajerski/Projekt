@@ -206,11 +206,13 @@ function checkAnswer () {
   for(let i = 0;i <pieces.length;i++){
     pieces[i].angle === 0 ? pieces[i].correct = true : null
     pieces[i].correct === true ? count++ : null
-    //pieces[i].correct === true ? pieces[i].correct=false : null
   }
   console.log('pieces',pieces)
   console.log('count',count)
-  const starNum = 3
+  let starNum = 3
+  clickCounter <= 45 ? starNum = 3 : null
+  clickCounter <= 55 && clickCounter > 45 ? starNum = 2 : null
+  clickCounter > 55 ? starNum = 1 : null
   canvasRight = document.getElementById('scoreBoard')
   contextRight = canvasRight.getContext('2d')
   if(clickCounter>60){
