@@ -6,7 +6,8 @@ const colors = {
 }
 
 const gameWon = false
-let count = 0
+let count 
+let starNum 
 let canvas
 let context
 let img
@@ -209,10 +210,9 @@ function checkAnswer () {
   }
   console.log('pieces',pieces)
   console.log('count',count)
-  let starNum = 3
-  clickCounter <= 45 ? starNum = 3 : null
-  clickCounter <= 55 && clickCounter > 45 ? starNum = 2 : null
-  clickCounter > 55 ? starNum = 1 : null
+  clickCounter <= 50 ? starNum = 3 : null
+  clickCounter <= 65 && clickCounter > 50 ? starNum = 2 : null
+  clickCounter > 65 ? starNum = 1 : null
   canvasRight = document.getElementById('scoreBoard')
   contextRight = canvasRight.getContext('2d')
   if(clickCounter>60){
