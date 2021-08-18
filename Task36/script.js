@@ -211,13 +211,24 @@ function checkAnswer () {
   console.log('pieces',pieces)
   console.log('count',count)
   const starNum = 3
+  canvasRight = document.getElementById('scoreBoard')
+  contextRight = canvasRight.getContext('2d')
+  if(clickCounter>60){
+    for (let i = 1; i < 3 + 1; i++) {
+      drawStar(75 * i, 100, 5, 30, 15, colors.failure)
+    }
+    alert('You lose!')
+    document.onmousedown = null
+  }
   if (count === 35) {
-    canvasRight = document.getElementById('scoreBoard')
-    contextRight = canvasRight.getContext('2d')
+   
     for (let i = 1; i < starNum + 1; i++) {
       drawStar(75 * i, 100, 5, 30, 15, colors.success)
     }
     document.onmousedown = null
+    setTimeout(()=>{
+      alert('You win!')
+    },200)
   }else count = 0
 }
 
