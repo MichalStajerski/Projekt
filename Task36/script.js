@@ -4,7 +4,7 @@ const colors = {
   success: 'yellow',
   failure: 'grey'
 }
-
+const straightPipes = [3,4,8,9,11,13,14,19,24,27,29,29,32,33,34]
 let gameWon = false
 let count 
 let starNum 
@@ -60,6 +60,7 @@ function buildPieces () {
     const piece = {}
     piece.sx = xPos
     piece.sy = yPos
+    piece.index = i
     pieces.push(piece)
     xPos += pieceWidth
     if (xPos >= puzzleWidth) {
@@ -79,6 +80,10 @@ function shufflePuzzle () {
     const piece = pieces[i] // takes every puzzle piece from puzzle
     piece.xPos = xPos
     piece.yPos = yPos
+    piece.index = i
+    if(straightPipes.includes(piece.index)){
+      piece.straightPipe = true
+    }
     //here we can set the end tile not to be rotated if we want
     //in this case i have multiple end tiles but normally it will be just one
     if( i==6  || i==17 || i==21 || i==23 || i==30){
@@ -117,7 +122,6 @@ function shufflePuzzle () {
 }
 document.onmousedown = onPuzzleClick
 function onPuzzleClick (e) {
-  clickCounter++
   console.log('ckickCounter', clickCounter)
   // returns the current coordiantes of the place where event happened, our mouse position
   if (e.layerX || e.layerY == 0) {
@@ -133,6 +137,7 @@ function onPuzzleClick (e) {
   currentPiece = checkPieceClicked()
   console.log('currentPiece', currentPiece)
   if (currentPiece != null) {
+    clickCounter++
     context.save()
     context.translate(currentPiece.xPos + 63, currentPiece.yPos + 63.3)
     context.rotate((currentPiece.angle + 90) * Math.PI / 180)
@@ -147,6 +152,8 @@ function onPuzzleClick (e) {
       currentPiece.correct = true
     }else if(currentPiece.angle !== 360){
       currentPiece.correct = false
+    }else if(currentPiece.straightPipe === true && currentPiece.angle === 180){
+      currentPiece.angle = 360
     }
   }
   checkAnswer()
@@ -208,18 +215,19 @@ function checkAnswer () {
   for(let i = 0;i <pieces.length;i++){
     //angle equals 0 is for the scenario when after shuffle we get correct position of tile
     pieces[i].angle === 0 ? pieces[i].correct = true : null
+    pieces[i].straightPipe === true && pieces[i].angle === 180 ? pieces[i].correct = true : null
     pieces[i].correct === true ? count++ : null
   }
-  console.log(pieces)
+  console.log('pieces',pieces)
   console.log('count',count)
   //we decide the number of stars based on the number of times we clicked
-  clickCounter <= 50 ? starNum = 3 : null
-  clickCounter <= 65 && clickCounter > 50 ? starNum = 2 : null
-  clickCounter > 65 && clickCounter <= 70 ? starNum = 1 : null
+  clickCounter <= 30 ? starNum = 3 : null
+  clickCounter <= 35 && clickCounter > 30 ? starNum = 2 : null
+  clickCounter > 35 && clickCounter <= 45 ? starNum = 1 : null
   canvasRight = document.getElementById('scoreBoard')
   contextRight = canvasRight.getContext('2d')
   //when the number of moves surpasses limit display three grey stars
-  if(clickCounter>60){
+  if(clickCounter>45){
     for (let i = 1; i < 3 + 1; i++) {
       drawStar(75 * i, 100, 5, 30, 15, colors.failure)
     }
