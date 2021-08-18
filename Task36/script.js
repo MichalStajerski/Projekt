@@ -98,7 +98,7 @@ function shufflePuzzle () {
     context.drawImage(img, xPos, yPos, pieceWidth, pieceHeight, -(pieceWidth / 2), -(pieceHeight / 2), pieceWidth, pieceWidth)
     context.translate(-(xPos), -(yPos))
     context.restore()
-    const angleDecider = getRandomIntInclusive(1, 4)
+    const angleDecider = getRandomIntInclusive(2, 4)
     switch (angleDecider) {
       case 1:
         angle = 0
@@ -140,6 +140,9 @@ function onPuzzleClick (e) {
     clickCounter++
     context.save()
     context.translate(currentPiece.xPos + 63, currentPiece.yPos + 63.3)
+    if(currentPiece.straightPipe === true && currentPiece.angle ===90){
+      currentPiece.angle = 270
+    }
     context.rotate((currentPiece.angle + 90) * Math.PI / 180)
     context.drawImage(img, currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight, -(pieceWidth / 2), -(pieceHeight / 2), pieceWidth, pieceWidth)
     context.translate(-(currentPiece.xPos), -(currentPiece.yPos))
@@ -152,6 +155,8 @@ function onPuzzleClick (e) {
       currentPiece.correct = true
     } else if (currentPiece.angle !== 360) {
       currentPiece.correct = false
+    } else if(currentPiece.straightPipe === true && currentPiece.angle ===90){
+      currentPiece.angle = 270
     }
   }
   checkAnswer()
