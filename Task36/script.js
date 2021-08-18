@@ -159,7 +159,7 @@ function checkPieceClicked () {
     // adding constraints so we get in the end the correct puzzle piece chosen
     if (mouse.x > piece.xPos && mouse.x < (piece.xPos + pieceWidth) && mouse.y > piece.yPos && mouse.y < (piece.yPos + pieceHeight)) {
       // we specify the coordiantes of the tile that is the end and isnt supposed to rotate
-      if (piece !== pieces[0]  || piece !== pieces[17] || piece !== pieces[21] || piece !== pieces[23] || piece !== pieces[30]) {
+      if (piece !== pieces[0]  && piece !== pieces[17] && piece !== pieces[21] && piece !== pieces[23] && piece !== pieces[30]) {
         return piece
       } else {
         piece.correct = true
