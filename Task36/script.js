@@ -4,10 +4,10 @@ const colors = {
   success: 'yellow',
   failure: 'grey'
 }
-const straightPipes = [3,4,8,9,11,13,14,19,24,27,29,29,32,33,34]
-let gameWon = false
-let count 
-let starNum 
+const straightPipes = [3, 4, 8, 9, 11, 13, 14, 19, 24, 27, 29, 29, 32, 33, 34]
+const gameWon = false
+let count
+let starNum
 let canvas
 let context
 let img
@@ -81,12 +81,12 @@ function shufflePuzzle () {
     piece.xPos = xPos
     piece.yPos = yPos
     piece.index = i
-    if(straightPipes.includes(piece.index)){
+    if (straightPipes.includes(piece.index)) {
       piece.straightPipe = true
     }
-    //here we can set the end tile not to be rotated if we want
-    //in this case i have multiple end tiles but normally it will be just one
-    if( i==6  || i==17 || i==21 || i==23 || i==30){
+    // here we can set the end tile not to be rotated if we want
+    // in this case i have multiple end tiles but normally it will be just one
+    if (i == 6 || i == 17 || i == 21 || i == 23 || i == 30) {
       angle = 0
     }
     piece.angle = angle
@@ -98,7 +98,7 @@ function shufflePuzzle () {
     context.drawImage(img, xPos, yPos, pieceWidth, pieceHeight, -(pieceWidth / 2), -(pieceHeight / 2), pieceWidth, pieceWidth)
     context.translate(-(xPos), -(yPos))
     context.restore()
-    let angleDecider = getRandomIntInclusive(1, 4)
+    const angleDecider = getRandomIntInclusive(1, 4)
     switch (angleDecider) {
       case 1:
         angle = 0
@@ -150,10 +150,8 @@ function onPuzzleClick (e) {
       currentPiece.correct = false
     } else if (currentPiece.angle === 360) {
       currentPiece.correct = true
-    }else if(currentPiece.angle !== 360){
+    } else if (currentPiece.angle !== 360) {
       currentPiece.correct = false
-    }else if(currentPiece.straightPipe === true && currentPiece.angle === 180){
-      currentPiece.angle = 360
     }
   }
   checkAnswer()
@@ -166,7 +164,7 @@ function checkPieceClicked () {
     // adding constraints so we get in the end the correct puzzle piece chosen
     if (mouse.x > piece.xPos && mouse.x < (piece.xPos + pieceWidth) && mouse.y > piece.yPos && mouse.y < (piece.yPos + pieceHeight)) {
       // we specify the coordiantes of the tile that is the end and isnt supposed to rotate
-      if (piece !== pieces[0]  && piece !== pieces[17] && piece !== pieces[21] && piece !== pieces[23] && piece !== pieces[30]) {
+      if (piece !== pieces[0] && piece !== pieces[17] && piece !== pieces[21] && piece !== pieces[23] && piece !== pieces[30]) {
         return piece
       } else {
         piece.correct = true
@@ -212,22 +210,22 @@ function drawStar (cx, cy, spikes, outerRadius, innerRadius, color) {
 }
 
 function checkAnswer () {
-  for(let i = 0;i <pieces.length;i++){
-    //angle equals 0 is for the scenario when after shuffle we get correct position of tile
+  for (let i = 0; i < pieces.length; i++) {
+    // angle equals 0 is for the scenario when after shuffle we get correct position of tile
     pieces[i].angle === 0 ? pieces[i].correct = true : null
     pieces[i].straightPipe === true && pieces[i].angle === 180 ? pieces[i].correct = true : null
     pieces[i].correct === true ? count++ : null
   }
-  console.log('pieces',pieces)
-  console.log('count',count)
-  //we decide the number of stars based on the number of times we clicked
+  console.log('pieces', pieces)
+  console.log('count', count)
+  // we decide the number of stars based on the number of times we clicked
   clickCounter <= 30 ? starNum = 3 : null
   clickCounter <= 35 && clickCounter > 30 ? starNum = 2 : null
   clickCounter > 35 && clickCounter <= 45 ? starNum = 1 : null
   canvasRight = document.getElementById('scoreBoard')
   contextRight = canvasRight.getContext('2d')
-  //when the number of moves surpasses limit display three grey stars
-  if(clickCounter>45){
+  // when the number of moves surpasses limit display three grey stars
+  if (clickCounter > 45) {
     for (let i = 1; i < 3 + 1; i++) {
       drawStar(75 * i, 100, 5, 30, 15, colors.failure)
     }
@@ -239,10 +237,10 @@ function checkAnswer () {
       drawStar(75 * i, 100, 5, 30, 15, colors.success)
     }
     document.onmousedown = null
-    setTimeout(()=>{
+    setTimeout(() => {
       alert('You win!')
-    },200)
-  }else count = 0
+    }, 200)
+  } else count = 0
 }
 
 window.onload = () => {
@@ -251,12 +249,11 @@ window.onload = () => {
   img.src = './images/pipes.png'
 }
 
-//TODO : answers are only counted as correct when angle is 0 so when upon initial shuffle we get the pipe in correct position 
-//or 360 so when we get te pipe into correct position upon clicking on it however when it comes to plain straight pipes it shouldn't
-//matter whether theirs angle is 360, 0 or 180 since in all scenarios pipe connect with others correctly
+// TODO : answers are only counted as correct when angle is 0 so when upon initial shuffle we get the pipe in correct position
+// or 360 so when we get te pipe into correct position upon clicking on it however when it comes to plain straight pipes it shouldn't
+// matter whether theirs angle is 360, 0 or 180 since in all scenarios pipe connect with others correctly
 
-//since it wasnt specified that the map for tiles must be randomly generated we can pinpoint tiles at which coordinates are plain straight
-//and add to them property straight pipe and for those pipes accept also 180 degree angle as correct
-//we can also specify which elements are the ends so they can't be cklicked in the same manner that i did it with a red tile that was 
-//one of the ends
-
+// since it wasnt specified that the map for tiles must be randomly generated we can pinpoint tiles at which coordinates are plain straight
+// and add to them property straight pipe and for those pipes accept also 180 degree angle as correct
+// we can also specify which elements are the ends so they can't be cklicked in the same manner that i did it with a red tile that was
+// one of the ends
