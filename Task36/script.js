@@ -204,19 +204,21 @@ function drawStar (cx, cy, spikes, outerRadius, innerRadius, color) {
 
 function checkAnswer () {
   for(let i = 0;i <pieces.length;i++){
+    pieces[i].angle === 0 ? pieces[i].correct = true : null
     pieces[i].correct === true ? count++ : null
-    pieces[i].correct === true ? pieces.slice(i,1) : null
+    //pieces[i].correct === true ? pieces[i].correct=false : null
   }
+  console.log('pieces',pieces)
   console.log('count',count)
   const starNum = 3
-  if (clickCounter > 10) {
+  if (count === 35) {
     canvasRight = document.getElementById('scoreBoard')
     contextRight = canvasRight.getContext('2d')
     for (let i = 1; i < starNum + 1; i++) {
       drawStar(75 * i, 100, 5, 30, 15, colors.success)
     }
     document.onmousedown = null
-  }
+  }else count = 0
 }
 
 window.onload = () => {
