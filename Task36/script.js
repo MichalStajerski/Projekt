@@ -255,8 +255,8 @@ function checkAnswer () {
     for (let i = 1; i < starNum + 1; i++) {
       drawStar(75 * i, 100, 5, 30, 15, colors.success)
     }
-    for(let i = 1; i <= remainingStars; i++){
-      drawStar(75 * (starNum+ i), 100, 5, 30, 15, colors.failure)
+    for (let i = 1; i <= remainingStars; i++) {
+      drawStar(75 * (starNum + i), 100, 5, 30, 15, colors.failure)
     }
     document.onmousedown = null
     setTimeout(() => {
@@ -275,5 +275,5 @@ window.onload = () => {
 // divided it into pipes so if we want to have another map we need to provide according image
 // all levels should be made from the same ingridients(pipes,ending pipes etc.) so style of all levels remains the same
 // when shuffling angles at which pipes are placed happens they are drawn in a random manner what results in an unfair gameplay towards
-// user because in one instance piece may need only one click to be placed in right position or is already correctly put from the start 
+// user because in one instance piece may need only one click to be placed in right position or is already correctly put from the start
 // and in onther case maybe it needs more clicks, pipes positions should be hard coded and defined to create fair game experience
