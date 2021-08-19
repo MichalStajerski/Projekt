@@ -245,6 +245,7 @@ function checkAnswer () {
     document.onmousedown = null
   }// upon win draw number of stars that is based on the number of times user clicked
   if (count === 36) {
+    const remainingStars = 3 - starNum
     const body = document.getElementById('body')
     canvasRight = document.createElement('canvas')
     canvasRight.id = 'scoreBoard'
@@ -253,6 +254,9 @@ function checkAnswer () {
     contextRight = canvasRight.getContext('2d')
     for (let i = 1; i < starNum + 1; i++) {
       drawStar(75 * i, 100, 5, 30, 15, colors.success)
+    }
+    for(let i = 1; i <= remainingStars; i++){
+      drawStar(75 * (starNum+ i), 100, 5, 30, 15, colors.failure)
     }
     document.onmousedown = null
     setTimeout(() => {
