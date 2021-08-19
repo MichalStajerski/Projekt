@@ -142,7 +142,7 @@ function onPuzzleClick (e) {
     clickCounter++
     context.save()
     context.translate(currentPiece.xPos + 63, currentPiece.yPos + 63.3)
-    //if it's straight and angle 90 we change it so after adding its 360 not 180 cause at 180 pieces are not alligning with each other perfectly
+    // if it's straight and angle 90 we change it so after adding its 360 not 180 cause at 180 pieces are not alligning with each other perfectly
     if (currentPiece.straightPipe === true && currentPiece.angle === 90) {
       currentPiece.angle = 270
     }
@@ -151,10 +151,10 @@ function onPuzzleClick (e) {
     context.translate(-currentPiece.xPos, -currentPiece.yPos)
     context.restore()
     currentPiece.angle += 90
-    if (currentPiece.angle > 360) {    //if angle surpasses 360 degree set it to 90 so the cicle may start once again
+    if (currentPiece.angle > 360) { // if angle surpasses 360 degree set it to 90 so the cicle may start once again
       currentPiece.angle = 90
       currentPiece.correct = false
-    } else if (currentPiece.angle === 360) {    //at 360 angle count it as a piece in correct position
+    } else if (currentPiece.angle === 360) { // at 360 angle count it as a piece in correct position
       currentPiece.correct = true
     } else if (currentPiece.angle !== 360) {
       currentPiece.correct = false
@@ -229,7 +229,7 @@ function checkAnswer () {
   clickCounter <= 30 ? starNum = 3 : null
   clickCounter <= 35 && clickCounter > 30 ? starNum = 2 : null
   clickCounter > 35 && clickCounter <= 45 ? starNum = 1 : null
-  
+
   // when the number of moves surpasses limit display three grey stars
   if (clickCounter > 45) {
     for (let i = 1; i < 3 + 1; i++) {
@@ -239,12 +239,12 @@ function checkAnswer () {
       alert('You lose!')
     }, 200)
     document.onmousedown = null
-  }//upon win draw number of stars that is based on the number of times user clicked
+  }// upon win draw number of stars that is based on the number of times user clicked
   if (count === 36) {
     const body = document.getElementById('body')
     canvasRight = document.createElement('canvas')
     canvasRight.id = 'scoreBoard'
-    canvasRight.class ='scoreBoard'
+    canvasRight.class = 'scoreBoard'
     body.appendChild(canvasRight)
     contextRight = canvasRight.getContext('2d')
     for (let i = 1; i < starNum + 1; i++) {
@@ -263,6 +263,9 @@ window.onload = () => {
   img.src = './images/pipes.png'
 }
 
-// since it wasn't specified that the map for pipes must be randomly generated and drawn in canvas i used an image as a base and 
+// since it wasn't specified that the map for pipes must be randomly generated and drawn in canvas i used an image as a base and
 // divided it into pipes soif we want to have another map we need to provide accrding image
-// all levels should be madde from same ingridients(pipes,ending pipes etc.) so style of all levels stays the same 
+// all levels should be madde from same ingridients(pipes,ending pipes etc.) so style of all levels stays the same
+// when shuffling od angles at which pipes are places happens the are random what results in an unfair gameplay towards user
+// cause in one instance piece may need only one click to be placed in right position or is already places in that way after shuffle
+// and in onther case maybe it needs more clicks, pipes positions should be hard coded and defined to create fair game experience
