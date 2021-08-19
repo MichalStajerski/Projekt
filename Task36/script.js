@@ -98,18 +98,15 @@ function shufflePuzzle () {
     context.drawImage(img, xPos, yPos, pieceWidth, pieceHeight, -(pieceWidth / 2), -(pieceHeight / 2), pieceWidth, pieceWidth)
     context.translate(-(xPos), -(yPos))
     context.restore()
-    const angleDecider = getRandomIntInclusive(2, 4)
+    const angleDecider = getRandomIntInclusive(1, 3)
     switch (angleDecider) {
       case 1:
-        angle = 0
-        break
-      case 2:
         angle = 90
         break
-      case 3:
+      case 2:
         angle = 180
         break
-      case 4:
+      case 3:
         angle = 270
         break
     }
@@ -145,7 +142,7 @@ function onPuzzleClick (e) {
     }
     context.rotate((currentPiece.angle + 90) * Math.PI / 180)
     context.drawImage(img, currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight, -(pieceWidth / 2), -(pieceHeight / 2), pieceWidth, pieceWidth)
-    context.translate(-(currentPiece.xPos), -(currentPiece.yPos))
+    context.translate(-currentPiece.xPos, -currentPiece.yPos)
     context.restore()
     currentPiece.angle += 90
     if (currentPiece.angle > 360) {
@@ -234,7 +231,9 @@ function checkAnswer () {
     for (let i = 1; i < 3 + 1; i++) {
       drawStar(75 * i, 100, 5, 30, 15, colors.failure)
     }
-    alert('You lose!')
+    setTimeout(() => {
+      alert('You lose!')
+    }, 200)
     document.onmousedown = null
   }
   if (count === 36) {
