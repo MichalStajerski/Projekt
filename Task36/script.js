@@ -89,7 +89,7 @@ function shufflePuzzle () {
     if (i == 0 || i == 17 || i == 21 || i == 23 || i == 30) {
       angle = 360
     }
-    if (piece.straightPipe === true && piece.angle === 180) {
+    if (piece.straightPipe === true && angle === 180) {
       angle = 360
     }
     piece.angle = angle
@@ -135,25 +135,26 @@ function onPuzzleClick (e) {
   }
 
   console.log('mouse.x,mouse.y', mouse.x, mouse.y)
-  mouse.y += 89
+  mouse.y += 89 // added it cause upon clicking mouse wasnt catching the right pipe
   currentPiece = checkPieceClicked()
   console.log('currentPiece', currentPiece)
   if (currentPiece != null) {
     clickCounter++
     context.save()
     context.translate(currentPiece.xPos + 63, currentPiece.yPos + 63.3)
+    //if it's straight and angle 90 we change it so after adding its 360 not 180 cause at 180 pieces are not alligning with each other perfectly
     if (currentPiece.straightPipe === true && currentPiece.angle === 90) {
       currentPiece.angle = 270
     }
     context.rotate((currentPiece.angle + 90) * Math.PI / 180)
     context.drawImage(img, currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight, -(pieceWidth / 2), -(pieceHeight / 2), pieceWidth, pieceWidth)
-    context.translate(-(currentPiece.xPos), -(currentPiece.yPos))
+    context.translate(-currentPiece.xPos, -currentPiece.yPos)
     context.restore()
     currentPiece.angle += 90
-    if (currentPiece.angle > 360) {
+    if (currentPiece.angle > 360) {    //if angle surpasses 360 degree set it to 90 so the cicle may start once again
       currentPiece.angle = 90
       currentPiece.correct = false
-    } else if (currentPiece.angle === 360) {
+    } else if (currentPiece.angle === 360) {    //at 360 angle count it as a piece in correct position
       currentPiece.correct = true
     } else if (currentPiece.angle !== 360) {
       currentPiece.correct = false
@@ -228,8 +229,7 @@ function checkAnswer () {
   clickCounter <= 30 ? starNum = 3 : null
   clickCounter <= 35 && clickCounter > 30 ? starNum = 2 : null
   clickCounter > 35 && clickCounter <= 45 ? starNum = 1 : null
-  canvasRight = document.getElementById('scoreBoard')
-  contextRight = canvasRight.getContext('2d')
+  
   // when the number of moves surpasses limit display three grey stars
   if (clickCounter > 45) {
     for (let i = 1; i < 3 + 1; i++) {
@@ -239,8 +239,10 @@ function checkAnswer () {
       alert('You lose!')
     }, 200)
     document.onmousedown = null
-  }
+  }//upon win draw number of stars that is based on the number of times user clicked
   if (count === 36) {
+    canvasRight = document.getElementById('scoreBoard')
+    contextRight = canvasRight.getContext('2d')
     for (let i = 1; i < starNum + 1; i++) {
       drawStar(75 * i, 100, 5, 30, 15, colors.success)
     }
@@ -257,9 +259,8 @@ window.onload = () => {
   img.src = './images/pipes.png'
 }
 
-// if we want to have another map we need to provide accrding image as a base
+// TODO: if we click on the surface of the second canvas where stars are being displayed it changes the position of some of the pipes
 
-// since it wasnt specified that the map for tiles must be randomly generated we can pinpoint tiles at which coordinates are plain straight
-// and add to them property straight pipe and for those pipes accept also 180 degree angle as correct
-// we can also specify which elements are the ends so they can't be cklicked in the same manner that i did it with a red tile that was
-// one of the ends
+// since it wasn't specified that the map for pipes must be randomly generated and drawn in canvas i used an image as a base and 
+// divided it into pipes soif we want to have another map we need to provide accrding image
+// all levels should be madde from same ingridients(pipes,ending pipes etc.) so style of all levels stays the same 
