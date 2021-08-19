@@ -223,7 +223,6 @@ function checkAnswer () {
     pieces[i].straightPipe === true && pieces[i].angle === 180 ? pieces[i].correct = true : null
     pieces[i].correct === true ? count++ : null
   }
-  console.log('pieces', pieces)
   console.log('count', count)
   // we decide the number of stars based on the number of times we clicked
   clickCounter <= 30 ? starNum = 3 : null
