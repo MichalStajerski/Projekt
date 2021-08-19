@@ -226,6 +226,7 @@ function checkAnswer () {
   clickCounter > 35 && clickCounter <= 45 ? starNum = 1 : null
   canvasRight = document.getElementById('scoreBoard')
   contextRight = canvasRight.getContext('2d')
+  contextRight = null
   // when the number of moves surpasses limit display three grey stars
   if (clickCounter > 45) {
     for (let i = 1; i < 3 + 1; i++) {
@@ -253,9 +254,7 @@ window.onload = () => {
   img.src = './images/pipes.png'
 }
 
-// TODO : answers are only counted as correct when angle is 0 so when upon initial shuffle we get the pipe in correct position
-// or 360 so when we get te pipe into correct position upon clicking on it however when it comes to plain straight pipes it shouldn't
-// matter whether theirs angle is 360, 0 or 180 since in all scenarios pipe connect with others correctly
+// if we want to make next lvls we need to provide new image, that will be divided into tiles
 
 // since it wasnt specified that the map for tiles must be randomly generated we can pinpoint tiles at which coordinates are plain straight
 // and add to them property straight pipe and for those pipes accept also 180 degree angle as correct
