@@ -89,7 +89,7 @@ function shufflePuzzle () {
     if (i == 0 || i == 17 || i == 21 || i == 23 || i == 30) {
       angle = 360
     }
-    if (pieces[i].straightPipe=== true && piece.angle === 180) {
+    if (piece.straightPipe === true && piece.angle === 180) {
       angle = 360
     }
     piece.angle = angle
