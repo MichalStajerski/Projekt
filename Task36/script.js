@@ -98,15 +98,18 @@ function shufflePuzzle () {
     context.drawImage(img, xPos, yPos, pieceWidth, pieceHeight, -(pieceWidth / 2), -(pieceHeight / 2), pieceWidth, pieceWidth)
     context.translate(-(xPos), -(yPos))
     context.restore()
-    const angleDecider = getRandomIntInclusive(1, 3)
+    const angleDecider = getRandomIntInclusive(1, 4)
     switch (angleDecider) {
       case 1:
-        angle = 90
+        angle = 0
         break
       case 2:
-        angle = 180
+        angle = 90
         break
       case 3:
+        angle = 180
+        break
+      case 4:
         angle = 270
         break
     }
@@ -142,7 +145,7 @@ function onPuzzleClick (e) {
     }
     context.rotate((currentPiece.angle + 90) * Math.PI / 180)
     context.drawImage(img, currentPiece.xPos, currentPiece.yPos, pieceWidth, pieceHeight, -(pieceWidth / 2), -(pieceHeight / 2), pieceWidth, pieceWidth)
-    context.translate(-currentPiece.xPos, -currentPiece.yPos)
+    context.translate(-(currentPiece.xPos), -(currentPiece.yPos))
     context.restore()
     currentPiece.angle += 90
     if (currentPiece.angle > 360) {
@@ -152,8 +155,6 @@ function onPuzzleClick (e) {
       currentPiece.correct = true
     } else if (currentPiece.angle !== 360) {
       currentPiece.correct = false
-    } else if (currentPiece.straightPipe === true && currentPiece.angle === 90) {
-      currentPiece.angle = 270
     }
   }
   checkAnswer()
@@ -226,7 +227,6 @@ function checkAnswer () {
   clickCounter > 35 && clickCounter <= 45 ? starNum = 1 : null
   canvasRight = document.getElementById('scoreBoard')
   contextRight = canvasRight.getContext('2d')
-  contextRight = null
   // when the number of moves surpasses limit display three grey stars
   if (clickCounter > 45) {
     for (let i = 1; i < 3 + 1; i++) {
@@ -254,7 +254,7 @@ window.onload = () => {
   img.src = './images/pipes.png'
 }
 
-// if we want to make next lvls we need to provide new image, that will be divided into tiles
+// if we want to have another map we need to provide accrding image as a base
 
 // since it wasnt specified that the map for tiles must be randomly generated we can pinpoint tiles at which coordinates are plain straight
 // and add to them property straight pipe and for those pipes accept also 180 degree angle as correct
