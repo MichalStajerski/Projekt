@@ -86,12 +86,14 @@ function shufflePuzzle () {
     }
     // here we can set the end tile not to be rotated if we want
     // in this case i have multiple end tiles but normally it will be just one
-    if (i == 6 || i == 17 || i == 21 || i == 23 || i == 30) {
-      angle = 0
+    if (i == 0 || i == 17 || i == 21 || i == 23 || i == 30) {
+      angle = 360
+    }
+    if (pieces[i].straightPipe=== true && piece.angle === 180) {
+      angle = 360
     }
     piece.angle = angle
     piece.pieceClicked = pieceClicked
-
     context.save()
     context.translate(xPos + 63, yPos + 63.3)
     context.rotate((angle) * Math.PI / 180)
@@ -101,16 +103,16 @@ function shufflePuzzle () {
     const angleDecider = getRandomIntInclusive(1, 4)
     switch (angleDecider) {
       case 1:
-        angle = 0
-        break
-      case 2:
         angle = 90
         break
-      case 3:
+      case 2:
         angle = 180
         break
-      case 4:
+      case 3:
         angle = 270
+        break
+      case 4:
+        angle = 360
         break
     }
     xPos += pieceWidth
@@ -171,6 +173,7 @@ function checkPieceClicked () {
         return piece
       } else {
         piece.correct = true
+        return null
       }
     }
   }
@@ -215,7 +218,7 @@ function drawStar (cx, cy, spikes, outerRadius, innerRadius, color) {
 function checkAnswer () {
   for (let i = 0; i < pieces.length; i++) {
     // angle equals 0 is for the scenario when after shuffle we get correct position of tile
-    pieces[i].angle === 0 ? pieces[i].correct = true : null
+    pieces[i].angle === 360 ? pieces[i].correct = true : null
     pieces[i].straightPipe === true && pieces[i].angle === 180 ? pieces[i].correct = true : null
     pieces[i].correct === true ? count++ : null
   }
