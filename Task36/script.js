@@ -5,7 +5,6 @@ const colors = {
   failure: 'grey'
 }
 const straightPipes = [3, 4, 8, 9, 11, 13, 14, 19, 24, 27, 29, 29, 32, 33, 34]
-const gameWon = false
 let count
 let starNum
 let canvas
@@ -84,8 +83,8 @@ function shufflePuzzle () {
     if (straightPipes.includes(piece.index)) {
       piece.straightPipe = true
     }
-    // here we can set the end tile not to be rotated if we want
-    // in this case i have multiple end tiles but normally it will be just one
+    // here we can set the end pipe not to be rotated if we want
+    // in this case i have multiple end pipes but normally it will be just one
     if (i == 0 || i == 17 || i == 21 || i == 23 || i == 30) {
       angle = 360
     }
@@ -231,6 +230,12 @@ function checkAnswer () {
 
   // when the number of moves surpasses limit display three grey stars
   if (clickCounter > 45) {
+    const body = document.getElementById('body')
+    canvasRight = document.createElement('canvas')
+    canvasRight.id = 'scoreBoard'
+    canvasRight.class = 'scoreBoard'
+    body.appendChild(canvasRight)
+    contextRight = canvasRight.getContext('2d')
     for (let i = 1; i < 3 + 1; i++) {
       drawStar(75 * i, 100, 5, 30, 15, colors.failure)
     }
