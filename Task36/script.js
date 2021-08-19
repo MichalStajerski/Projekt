@@ -241,7 +241,11 @@ function checkAnswer () {
     document.onmousedown = null
   }//upon win draw number of stars that is based on the number of times user clicked
   if (count === 36) {
-    canvasRight = document.getElementById('scoreBoard')
+    const body = document.getElementById('body')
+    canvasRight = document.createElement('canvas')
+    canvasRight.id = 'scoreBoard'
+    canvasRight.class ='scoreBoard'
+    body.appendChild(canvasRight)
     contextRight = canvasRight.getContext('2d')
     for (let i = 1; i < starNum + 1; i++) {
       drawStar(75 * i, 100, 5, 30, 15, colors.success)
@@ -258,8 +262,6 @@ window.onload = () => {
   img.addEventListener('load', onImage, false)
   img.src = './images/pipes.png'
 }
-
-// TODO: if we click on the surface of the second canvas where stars are being displayed it changes the position of some of the pipes
 
 // since it wasn't specified that the map for pipes must be randomly generated and drawn in canvas i used an image as a base and 
 // divided it into pipes soif we want to have another map we need to provide accrding image
