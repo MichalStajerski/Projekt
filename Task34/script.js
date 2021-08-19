@@ -1,6 +1,6 @@
 const numLeters = 15
 const numNumbers = 13
-const numAnswers = 12
+const numAnswers = 13
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'
 const colors = {
   default: 'lightgrey',
