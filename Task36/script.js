@@ -263,8 +263,8 @@ window.onload = () => {
 }
 
 // since it wasn't specified that the map for pipes must be randomly generated and drawn in canvas i used an image as a base and
-// divided it into pipes soif we want to have another map we need to provide accrding image
-// all levels should be madde from same ingridients(pipes,ending pipes etc.) so style of all levels stays the same
-// when shuffling od angles at which pipes are places happens the are random what results in an unfair gameplay towards user
-// cause in one instance piece may need only one click to be placed in right position or is already places in that way after shuffle
+// divided it into pipes so if we want to have another map we need to provide according image
+// all levels should be made from the same ingridients(pipes,ending pipes etc.) so style of all levels remains the same
+// when shuffling angles at which pipes are placed happens they are drawn in a random manner what results in an unfair gameplay towards
+// user because in one instance piece may need only one click to be placed in right position or is already correctly put from the start 
 // and in onther case maybe it needs more clicks, pipes positions should be hard coded and defined to create fair game experience
