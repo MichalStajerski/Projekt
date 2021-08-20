@@ -133,8 +133,8 @@ function start () {
   setTimeout(function () {
     drawImg()
   }, 3000)
- const button = document.getElementById('btnSpin')
- button.disabled = true
+  const button = document.getElementById('btnSpin')
+  button.disabled = true
 }
 
 function shuffleArray (array) { // randomly shuffles our array
