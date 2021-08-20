@@ -20,21 +20,6 @@
     margin-left:-7px;
     transform: rotate(45deg)
   }
-  .spin-wheel {
-    margin: 0 auto;
-        -webkit-animation: rotate 1s linear infinite;
-            animation: rotate 1s linear infinite;
-  }
-  
-  @keyframes rotate {
-      0% {
-          transform: rotate(0deg);
-      }
-  
-      100% {
-          transform: rotate(360deg);
-      }
-  }
   .button-center {
     text-align: center;
     margin: 0;
@@ -105,7 +90,7 @@
     100% { background-position: 0 0; }
 }
 
-body {
+  body {
     background: linear-gradient(90deg, rgba(29,11,71,1) 17%, rgba(69,6,117,1) 40%, rgba(115,67,16,1) 70%);
     width: 100%;
     height: 100%;

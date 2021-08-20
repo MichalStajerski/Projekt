@@ -11,7 +11,7 @@ const stopAngel = [] // stop angels starting from label index 1(0...label.length
 const slices = label.length
 const sliceDeg = Math.ceil(360 / slices)
 let deg = 60
-let speed = 2
+let speed = 15
 const slowDownRand = 0
 const ctx = document.getElementById('canvas').getContext('2d')
 document.getElementById('canvas').width = 600
@@ -96,9 +96,9 @@ function anim () {
     if (!lock) {
       lock = true
     }
-    // added this so the chosen word isn't always the same
+    // added this so the red cursor wont be always in the same position in the slice
     slowDownPace = rand(0.992, 0.998)
-    speed = speed > 0.4 ? speed *= slowDownPace : 0
+    speed = speed > 0.2 ? speed *= slowDownPace : 0
   }
   // Stop
   if (lock && !speed) {
@@ -130,12 +130,11 @@ function anim () {
 
 function start () {
   anim()
-  const ele = document.getElementById('canvas')
-  ele.classList.add('spin-wheel')
   setTimeout(function () {
-    ele.classList.remove('spin-wheel')
     drawImg()
   }, 3000)
+ const button = document.getElementById('btnSpin')
+ button.disabled = true
 }
 
 function shuffleArray (array) { // randomly shuffles our array
