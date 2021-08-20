@@ -1,10 +1,10 @@
 var color    = ['#ca7','#7ac','#77c','#aac','#a7c','#ac7', "#caa"];
-var label    = ['gxegxołka', 'jaskolka','zaba','sciezka','durszlak'];
+var label    = ['gzegzolka', 'jaskolka','zaba','sciezka','durszlak'];
 var stopAngel = []; // stop angels starting from label index 1(0...label.length)
 var slices = label.length;
 var sliceDeg = 360/slices;
-var deg = 260;
-var speed = 5;
+var deg = 60;
+var speed = 2;
 var slowDownRand = 0;
 var ctx = document.getElementById('canvas').getContext('2d');
 var width = document.getElementById('canvas').width; // size
@@ -90,7 +90,7 @@ function drawImg() {
   // ctx.rotate(360);
 
 function anim() {
-   isStopped = true;
+  isStopped = true;
   deg += speed;
   deg %= 360;
 
@@ -104,21 +104,21 @@ function anim() {
       lock = true;
       slowDownRand = rand(0.994, 0.998);
     } 
-    speed = speed>0.2 ? speed*=slowDownRand : 0;
+    speed = speed>0.4 ? speed*=slowDownRand : 0;
   }
   // Stopped!
   if(lock && !speed){
-    // console.log("deg " + deg);
-    //     console.log("slicedeg " + sliceDeg);
-    // console.log("calc " + Math.floor(((360 - 208 - 90) % 360) / sliceDeg))
-    // var ai = Math.floor(((360 - deg - 90) % 360) / sliceDeg); // deg 2 Array Index
-    // console.log(slices)
-    // ai = (slices+ai)%slices; // Fix negative index
-    // return alert("You got:\n"+ label[ai] ); // Get Array Item from end Degree
-    // ctx.arc(150,150,150,8.85131263511415, 9.748910536139757);
-    //   ctx.fill();
+    console.log("deg " + deg);
+        console.log("slicedeg " + sliceDeg);
+    console.log("calc " + Math.floor(((360 - 208 - 90) % 360) / sliceDeg))
+    var ai = Math.floor(((360 - deg - 90) % 360) / sliceDeg); // deg 2 Array Index
+    console.log(slices)
+    ai = (slices+ai)%slices; // Fix negative index
+    return alert("You got:\n"+ label[ai] ); // Get Array Item from end Degree
+    ctx.arc(150,150,150,8.85131263511415, 9.748910536139757);
+      ctx.fill();
     deg = 208;
-      // drawImg();
+      drawImg();
   }
 
   drawImg();
@@ -126,17 +126,15 @@ function anim() {
 }
 
 function start() {
-  // anim();
+  anim();
   var ele = document.getElementById("canvas");
   ele.classList.add("spin-wheel");
   setTimeout(function() {
     ele.classList.remove("spin-wheel");
-    deg= stopAngel[5];
+    //deg= stopAngel[5];
     drawImg();
   }, 3000);
 
 }
 
 drawImg();
-  
-

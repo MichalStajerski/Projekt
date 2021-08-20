@@ -17,8 +17,8 @@
   }
   .spin-wheel {
     margin: 0 auto;
-        -webkit-animation: rotate 0.5s linear infinite;
-            animation: rotate 0.5s linear infinite;
+        -webkit-animation: rotate 1s linear infinite;
+            animation: rotate 1s linear infinite;
   }
   
   @keyframes rotate {
