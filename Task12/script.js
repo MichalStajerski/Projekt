@@ -1,18 +1,18 @@
 const color = ['#ca7', '#7ac', '#77c', '#8f1340', '#a7c']
 const label = ['gżegżółka', 'jaskółka', 'żaba', 'scieżka', 'durszlak']
-const pieces = label.map(function(x){
+const pieces = label.map(function (x) {
   return label.indexOf(x)
 })
 shuffleArray(label)
 shuffleArray(color)
-console.log('label',label)
-console.log('pieces',pieces)
+console.log('label', label)
+console.log('pieces', pieces)
 const stopAngel = [] // stop angels starting from label index 1(0...label.length)
 const slices = label.length
 const sliceDeg = Math.ceil(360 / slices)
 let deg = 60
 let speed = 2
-let slowDownRand = 0
+const slowDownRand = 0
 const ctx = document.getElementById('canvas').getContext('2d')
 document.getElementById('canvas').width = 600
 document.getElementById('canvas').height = 600
@@ -107,22 +107,22 @@ function anim () {
     console.log('calc ' + Math.floor(((360 - 208 - 90) % 360) / sliceDeg))
     let ai = Math.floor(((360 - deg - 90) % 360) / sliceDeg) // deg 2 Array Index
     ai = (slices + ai) % slices // Fix negative index
-    pieces.splice(label.indexOf(label[ai]),1)
-    console.log('pieces after splice',pieces)
-    console.log('109',label.indexOf(label[ai]))
+    pieces.splice(label.indexOf(label[ai]), 1)
+    console.log('pieces after splice', pieces)
+    console.log('109', label.indexOf(label[ai]))
 
     return setTimeout(() => {
       ctx.clearRect(0, 0, width, width)
       for (let i = 0; i < slices; i++) {
-        if(pieces.includes(i)){
+        if (pieces.includes(i)) {
           drawSlice(i, deg, '#aac')
-        }else{
+        } else {
           drawSlice(label.indexOf(label[ai]), deg, color[i])
         }
         drawText(deg + sliceDeg / 2, label[i])
         deg += sliceDeg
       }
-    }, 200);
+    }, 200)
   }
   drawImg()
   window.requestAnimationFrame(anim)
