@@ -1,5 +1,7 @@
 const color = ['#ca7', '#7ac', '#77c', '#aac', '#a7c']
-const label = ['gzegzolka', 'jaskolka', 'zaba', 'sciezka', 'durszlak']
+const label = ['gżegżółka', 'jaskółka', 'żaba', 'scieżka', 'durszlak']
+shuffleArray(label)
+shuffleArray(color)
 const stopAngel = [] // stop angels starting from label index 1(0...label.length)
 const slices = label.length
 const sliceDeg = 360 / slices
@@ -89,7 +91,9 @@ function anim () {
     if (!lock) {
       lock = true
     }
-    speed = speed > 0.4 ? speed *= 0.997 : 0
+    //added this so the chosen word isn't always the same
+    slowDownPace = rand(0.992, 0.998)
+    speed = speed > 0.4 ? speed *= slowDownPace : 0
   }
   // Stop
   if (lock && !speed) {
@@ -113,6 +117,15 @@ function start () {
     ele.classList.remove('spin-wheel')
     drawImg()
   }, 3000)
+}
+
+function shuffleArray (array) { // randomly shuffles our array
+  for (let i = 0; i < array.length; i++) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const temp = array[i]
+    array[i] = array[j]
+    array[j] = temp
+  }
 }
 
 drawImg()
