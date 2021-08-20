@@ -7,6 +7,8 @@ let deg = 60
 let speed = 2
 let slowDownRand = 0
 const ctx = document.getElementById('canvas').getContext('2d')
+document.getElementById('canvas').width = 600
+document.getElementById('canvas').height = 600
 const width = document.getElementById('canvas').width // size
 const center = width / 2 // center
 // var center = 150;
@@ -53,25 +55,14 @@ function drawSlice (index, deg, color) {
   ctx.fill()
 }
 
-// function drawSliceOut(index, deg, color){
-//   // alert("call")
-//   ctx.beginPath();
-//   console.log(ctx);
-//   ctx.fillStyle = '#6e4d4b';
-//   ctx.moveTo(160, 160);
-//   ctx.arc(150, 150, 150, 0, 360,false);
-//   ctx.lineTo(150, 150);
-//   ctx.fill();
-// }
-
 function drawText (deg, text) {
   ctx.save()
   ctx.translate(center, center)
   ctx.rotate(deg2rad(deg))
   ctx.textAlign = 'right'
   ctx.fillStyle = '#fff'
-  ctx.font = '14px'
-  ctx.fillText(text, 130, 10)
+  ctx.font = '25px serif'
+  ctx.fillText(text, 200, 10)
   ctx.restore()
 }
 
@@ -86,8 +77,6 @@ function drawImg () {
   console.log('Stop Angel ' + stopAngel)
 }
 
-// ctx.rotate(360);
-
 function anim () {
   isStopped = true
   deg += speed
@@ -101,9 +90,8 @@ function anim () {
   if (isStopped) {
     if (!lock) {
       lock = true
-      slowDownRand = rand(0.994, 0.998)
     }
-    speed = speed > 0.4 ? speed *= slowDownRand : 0
+    speed = speed > 0.4 ? speed *= 0.997 : 0
   }
   // Stopped!
   if (lock && !speed) {
