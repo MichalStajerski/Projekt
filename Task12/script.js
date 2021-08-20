@@ -1,4 +1,4 @@
-const color = ['#ca7', '#7ac', '#77c', '#aac', '#a7c', '#ac7', '#caa']
+const color = ['#ca7', '#7ac', '#77c', '#aac', '#a7c']
 const label = ['gzegzolka', 'jaskolka', 'zaba', 'sciezka', 'durszlak']
 const stopAngel = [] // stop angels starting from label index 1(0...label.length)
 const slices = label.length
@@ -11,7 +11,6 @@ document.getElementById('canvas').width = 600
 document.getElementById('canvas').height = 600
 const width = document.getElementById('canvas').width // size
 const center = width / 2 // center
-// var center = 150;
 let isStopped = false
 let lock = false
 
@@ -68,7 +67,6 @@ function drawText (deg, text) {
 
 function drawImg () {
   ctx.clearRect(0, 0, width, width)
-  // drawSliceOut();
   for (let i = 0; i < slices; i++) {
     drawSlice(i, deg, color[i])
     drawText(deg + sliceDeg / 2, label[i])
@@ -82,18 +80,18 @@ function anim () {
   deg += speed
   deg %= 360
 
-  // Increment speed
+  // Speed up
   if (!isStopped && speed < 3) {
     speed = speed + 1 * 0.1
   }
-  // Decrement Speed
+  // Slow down
   if (isStopped) {
     if (!lock) {
       lock = true
     }
     speed = speed > 0.4 ? speed *= 0.997 : 0
   }
-  // Stopped!
+  // Stop
   if (lock && !speed) {
     console.log('deg ' + deg)
     console.log('slicedeg ' + sliceDeg)
@@ -102,12 +100,7 @@ function anim () {
     console.log(slices)
     ai = (slices + ai) % slices // Fix negative index
     return alert('You got:\n' + label[ai]) // Get Array Item from end Degree
-    ctx.arc(150, 150, 150, 8.85131263511415, 9.748910536139757)
-    ctx.fill()
-    deg = 208
-    drawImg()
   }
-
   drawImg()
   window.requestAnimationFrame(anim)
 }
@@ -118,7 +111,6 @@ function start () {
   ele.classList.add('spin-wheel')
   setTimeout(function () {
     ele.classList.remove('spin-wheel')
-    // deg= stopAngel[5];
     drawImg()
   }, 3000)
 }
