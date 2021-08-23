@@ -51,13 +51,10 @@ function drawSlice (index, deg, color) {
     current = sAngel
     stopAngel.push(current)
   }
-  stopAngel.push
   ctx.beginPath()
-  console.log(ctx)
   ctx.fillStyle = color
   ctx.moveTo(center, center)
   ctx.arc(center, center, center, deg2rad(deg), deg2rad(deg + sliceDeg), false)
-  ctx.lineTo(center, center)
   ctx.fill()
 }
 
@@ -107,9 +104,12 @@ function anim () {
     console.log('calc ' + Math.floor(((360 - 208 - 90) % 360) / sliceDeg))
     let ai = Math.floor(((360 - deg - 90) % 360) / sliceDeg) // deg 2 Array Index
     ai = (slices + ai) % slices // Fix negative index
-    pieces.splice(label.indexOf(label[ai]), 1)
-    console.log('pieces after splice', pieces)
+    console.log('pieces before splice', pieces)
     console.log('109', label.indexOf(label[ai]))
+    pieces.splice(label.indexOf(label[ai]), 1)
+    console.log('ai',ai)
+    console.log('pieces after splice', pieces)
+    console.log('sl',slices)
 
     return setTimeout(() => {
       ctx.clearRect(0, 0, width, width)
@@ -117,7 +117,7 @@ function anim () {
         if (pieces.includes(i)) {
           drawSlice(i, deg, '#aac')
         } else {
-          drawSlice(label.indexOf(label[ai]), deg, color[i])
+          drawSlice(i, deg, color[i])
         }
         drawText(deg + sliceDeg / 2, label[i])
         deg += sliceDeg
@@ -144,6 +144,20 @@ function shuffleArray (array) { // randomly shuffles our array
     array[i] = array[j]
     array[j] = temp
   }
+}
+
+let mouse = {x:0,y:0}
+let canvas = document.getElementById('canvas')
+document.onmousedown = sliceClicked
+function sliceClicked(e){
+  if(e.layerX || e.layerY == 0){
+    mouse.x = e.layerX - canvas.offsetLeft
+    mouse.y = e.layerY - canvas.offsetTop
+  }else if(e.offsetX || e.offsetY == 0){
+    mouse.x = e.layerX - canvas.offsetLeft
+    mouse.y = e.layerY - canvas.offsetTop
+  }
+  console.log('mouse.x,mouse.y', mouse.x, mouse.y)
 }
 
 drawImg()
