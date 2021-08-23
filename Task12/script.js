@@ -5,13 +5,12 @@ const pieces = label.map(function (x) {
 })
 const hasSameColor = (color1, color2) => color1 === color2
 const button = document.getElementById('btnSpin')
+const wheel = document.getElementById('wheel')
 const answers = ['word1', 'word3']
 const circles = []
 let drawnOptionClicked = false
 shuffleArray(label)
 shuffleArray(color)
-console.log('label', label)
-console.log('pieces', pieces)
 const stopAngel = [] // stop angels starting from label index 1(0...label.length)
 const slices = label.length
 const sliceDeg = Math.ceil(360 / slices)
@@ -154,9 +153,6 @@ function shuffleArray (array) { // randomly shuffles our array
   }
 }
 
-const mouse = { x: 0, y: 0 }
-const canvas = document.getElementById('canvas')
-
 // changes colors written in rgb to hex notification
 function rgbToHex (r, g, b) {
   if (r > 255 || g > 255 || b > 255) { throw 'Invalid color component' }
@@ -170,21 +166,27 @@ document.onmousedown = sliceClicked
 function sliceClicked (e) {
   console.log('circle', circles)
   console.log('label', label)
-  const pixel = canvas.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data
+  const pixel = ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data
   const colorhex = '#' + ('000000' + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6)
   console.log(colorhex)
   // find a circle with the same colour
   circles.forEach(circle => {
     if (hasSameColor(colorhex, circle.color)) {
-      alert('click on circle: ' + circle.id)
+      alert('clicked on circle: ' + circle.id)
       drawnOptionClicked = true
       if (drawnOptionClicked) {
-        const wheel = document.getElementById('wheel')
         wheel.remove()
         button.remove()
+        answerLayout()
       }
     }
   })
+}
+
+function answerLayout () {
+  const body = document.getElementById('body')
+  const div = document.createElement('div')
+  body.appendChild(div)
 }
 
 drawImg()
