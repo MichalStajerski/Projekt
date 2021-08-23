@@ -170,6 +170,8 @@ function hasSameColor(color, circle) {
 // we will chceck if user clicked on the chosen slice with checking out the color of the pixel upon click
 //if ti matches the one of the drawn slice we can move to the window with options to choose for user related to the word
 //that the wheel of fortune indicated
+//after draw only one splice will remain with it's original colorrest will turn grey 
+//need to allow sliceClicked only after the process of drawing a word is accomplshed
  document.onmousedown = sliceClicked
 function sliceClicked(e){
   console.log('circle',circles)
