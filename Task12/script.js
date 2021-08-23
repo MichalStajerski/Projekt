@@ -120,13 +120,15 @@ function anim () {
           drawSlice(i, deg, 'rgb(192,192,192)')
           circle = {
             id: i,
-            color: 'rgb(192,192,192)'
+            color: 'rgb(192,192,192)',
+            word:label[i]
           }
         } else {
           drawSlice(i, deg, color[i])
           circle = {
             id: i,
-            color: color[i]
+            color: color[i],
+            word:label[i]
           }
         }
         circles.push(circle)
@@ -171,22 +173,30 @@ function hasSameColor (color, circle) {
 // that the wheel of fortune indicated
 // after draw only one splice will remain with it's original colorrest will turn grey
 // need to allow sliceClicked only after the process of drawing a word is accomplshed
+
+function rgbToHex(r, g, b) {
+  if (r > 255 || g > 255 || b > 255)
+      throw "Invalid color component";
+  return ((r << 16) | (g << 8) | b).toString(16);
+}
+
 document.onmousedown = sliceClicked
 function sliceClicked (e) {
   console.log('circle', circles)
 
-  const mousePos = {
+  let mousePos = {
     x: e.clientX - canvas.offsetTop,
     y: e.clientY - canvas.offsetLeft
   }
-  // get pixel under cursor
-  const pixel = ctx.getImageData(mousePos.x, mousePos.y, 1, 1).data
 
-  const color = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`
-  console.log(color)
+  // get pixel under cursor
+  //const pixel = ctx.getImageData(mousePos.x, mousePos.y, 1, 1).data
+  var colorpix = canvas.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data;
+  var hex = "#" + ("000000" + rgbToHex(colorpix[0], colorpix[1], colorpix[2])).slice(-6);
+  console.log(hex)
   // find a circle with the same colour
   circles.forEach(circle => {
-    if (hasSameColor(color, circle)) {
+    if (hasSameColor(colorpix, circle)) {
       alert('click on circle: ' + circle.id)
     }
   })
