@@ -3,7 +3,11 @@ const label = ['gżegżółka', 'jaskółka', 'żaba', 'scieżka', 'durszlak']
 const pieces = label.map(function (x) {
   return label.indexOf(x)
 })
+const hasSameColor = (color1, color2) => color1 === color2
+const button = document.getElementById('btnSpin')
+const answers = ['word1', 'word3']
 const circles = []
+let drawnOptionClicked = false
 shuffleArray(label)
 shuffleArray(color)
 console.log('label', label)
@@ -77,7 +81,7 @@ function drawImg () {
     drawText(deg + sliceDeg / 2, label[i])
     deg += sliceDeg
   }
-  console.log('Stop Angel ' + stopAngel)
+  // console.log('Stop Angel ' + stopAngel)
 }
 
 function anim () {
@@ -113,14 +117,14 @@ function anim () {
           circle = {
             id: i,
             color: 'rgb(192,192,192)',
-            word:label[i]
+            word: label[i]
           }
         } else {
           drawSlice(i, deg, color[i])
           circle = {
             id: i,
             color: color[i],
-            word:label[i]
+            word: label[i]
           }
         }
         circles.push(circle)
@@ -138,7 +142,6 @@ function start () {
   setTimeout(function () {
     drawImg()
   }, 3000)
-  const button = document.getElementById('btnSpin')
   button.disabled = true
 }
 
@@ -154,17 +157,10 @@ function shuffleArray (array) { // randomly shuffles our array
 const mouse = { x: 0, y: 0 }
 const canvas = document.getElementById('canvas')
 
-function hasSameColor (color, circle) {
-  if (circle.color === color) {
-    return true
-  }
-}
-
-//changes colors written in rgb to hex notification
-function rgbToHex(r, g, b) {
-  if (r > 255 || g > 255 || b > 255)
-      throw "Invalid color component";
-  return ((r << 16) | (g << 8) | b).toString(16);
+// changes colors written in rgb to hex notification
+function rgbToHex (r, g, b) {
+  if (r > 255 || g > 255 || b > 255) { throw 'Invalid color component' }
+  return ((r << 16) | (g << 8) | b).toString(16)
 }
 // we will chceck if user clicked on the chosen slice with checking out the color of the pixel upon click
 // if ti matches the one of the drawn slice we can move to the window with options to choose for user related to the word
@@ -173,14 +169,20 @@ function rgbToHex(r, g, b) {
 document.onmousedown = sliceClicked
 function sliceClicked (e) {
   console.log('circle', circles)
-  console.log('label',label)
-  var pixel = canvas.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data;
-  var colorhex = "#" + ("000000" + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6);
+  console.log('label', label)
+  const pixel = canvas.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data
+  const colorhex = '#' + ('000000' + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6)
   console.log(colorhex)
   // find a circle with the same colour
   circles.forEach(circle => {
-    if (hasSameColor(colorhex, circle)) {
+    if (hasSameColor(colorhex, circle.color)) {
       alert('click on circle: ' + circle.id)
+      drawnOptionClicked = true
+      if (drawnOptionClicked) {
+        const wheel = document.getElementById('wheel')
+        wheel.remove()
+        button.remove()
+      }
     }
   })
 }
