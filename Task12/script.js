@@ -3,6 +3,7 @@ const label = ['gżegżółka', 'jaskółka', 'żaba', 'scieżka', 'durszlak']
 const pieces = label.map(function (x) {
   return label.indexOf(x)
 })
+var circles = [];
 shuffleArray(label)
 shuffleArray(color)
 console.log('label', label)
@@ -112,13 +113,23 @@ function anim () {
     console.log('sl',slices)
 
     return setTimeout(() => {
+      let circle
       ctx.clearRect(0, 0, width, width)
       for (let i = 0; i < slices; i++) {
         if (pieces.includes(i)) {
-          drawSlice(i, deg, '#aac')
+          drawSlice(i, deg, 'rgb(192,192,192)')
+          circle = {
+            id: i,
+            color :'rgb(192,192,192)'
+          }
         } else {
           drawSlice(i, deg, color[i])
+          circle = {
+            id: i,
+            color : color[i]
+          }
         }
+        circles.push(circle)
         drawText(deg + sliceDeg / 2, label[i])
         deg += sliceDeg
       }
@@ -148,16 +159,46 @@ function shuffleArray (array) { // randomly shuffles our array
 
 let mouse = {x:0,y:0}
 let canvas = document.getElementById('canvas')
-document.onmousedown = sliceClicked
-function sliceClicked(e){
-  if(e.layerX || e.layerY == 0){
-    mouse.x = e.layerX - canvas.offsetLeft
-    mouse.y = e.layerY - canvas.offsetTop
-  }else if(e.offsetX || e.offsetY == 0){
-    mouse.x = e.layerX - canvas.offsetLeft
-    mouse.y = e.layerY - canvas.offsetTop
+
+function hasSameColor(color, circle) {
+  if(circle.color === color){
+    return true
   }
-  console.log('mouse.x,mouse.y', mouse.x, mouse.y)
+}
+
+
+// we will chceck if user clicked on the chosen slice with checking out the color of the pixel upon click
+//if ti matches the one of the drawn slice we can move to the window with options to choose for user related to the word
+//that the wheel of fortune indicated
+ document.onmousedown = sliceClicked
+function sliceClicked(e){
+  console.log('circle',circles)
+
+  const mousePos = {
+    x: e.clientX - canvas.offsetTop,
+    y: e.clientY - canvas.offsetLeft
+  };
+  // get pixel under cursor
+  const pixel = ctx.getImageData(mousePos.x, mousePos.y, 1, 1).data;
+
+  const color = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
+  console.log(color)
+  // find a circle with the same colour
+  circles.forEach(circle => {
+    if (hasSameColor(color, circle)) {
+      alert('click on circle: ' + circle.id);
+    }
+  });
+
+//   if(e.layerX || e.layerY == 0){
+//     mouse.x = e.layerX - canvas.offsetLeft
+//     mouse.y = e.layerY - canvas.offsetTop
+//   }else if(e.offsetX || e.offsetY == 0){
+//     mouse.x = e.layerX - canvas.offsetLeft
+//     mouse.y = e.layerY - canvas.offsetTop
+//   }
+//   console.log('mouse.x,mouse.y', mouse.x, mouse.y)
+// }
 }
 
 drawImg()
