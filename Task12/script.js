@@ -21,7 +21,7 @@ const ctx = document.getElementById('canvas').getContext('2d')
 document.getElementById('canvas').width = 600
 document.getElementById('canvas').height = 600
 const width = document.getElementById('canvas').width // size
-const center = width / 2 // center
+const center = width / 2 // center, since both height and width are the same
 let isStopped = false
 let lock = false
 
@@ -73,6 +73,7 @@ function drawText (deg, text) {
   ctx.restore()
 }
 
+//creates our wheel by drawing slices and implementing text into them
 function drawImg () {
   ctx.clearRect(0, 0, width, width)
   for (let i = 0; i < slices; i++) {
@@ -80,7 +81,6 @@ function drawImg () {
     drawText(deg + sliceDeg / 2, label[i])
     deg += sliceDeg
   }
-  // console.log('Stop Angel ' + stopAngel)
 }
 
 function anim () {
@@ -133,6 +133,7 @@ function anim () {
     }, 200)
   }
   drawImg()
+  //allows animation to diplay
   window.requestAnimationFrame(anim)
 }
 
