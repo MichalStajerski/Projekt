@@ -121,14 +121,14 @@ function anim () {
           circle = {
             id: i,
             color: 'rgb(192,192,192)',
-            word:label[i]
+            word: label[i]
           }
         } else {
           drawSlice(i, deg, color[i])
           circle = {
             id: i,
             color: color[i],
-            word:label[i]
+            word: label[i]
           }
         }
         circles.push(circle)
@@ -168,31 +168,22 @@ function hasSameColor (color, circle) {
   }
 }
 
+// changes colors written in rgb to hex notification
+function rgbToHex (r, g, b) {
+  if (r > 255 || g > 255 || b > 255) { throw 'Invalid color component' }
+  return ((r << 16) | (g << 8) | b).toString(16)
+}
 // we will chceck if user clicked on the chosen slice with checking out the color of the pixel upon click
 // if ti matches the one of the drawn slice we can move to the window with options to choose for user related to the word
 // that the wheel of fortune indicated
 // after draw only one splice will remain with it's original colorrest will turn grey
 // need to allow sliceClicked only after the process of drawing a word is accomplshed
-
-function rgbToHex(r, g, b) {
-  if (r > 255 || g > 255 || b > 255)
-      throw "Invalid color component";
-  return ((r << 16) | (g << 8) | b).toString(16);
-}
-
 document.onmousedown = sliceClicked
 function sliceClicked (e) {
   console.log('circle', circles)
 
-  let mousePos = {
-    x: e.clientX - canvas.offsetTop,
-    y: e.clientY - canvas.offsetLeft
-  }
-
-  // get pixel under cursor
-  //const pixel = ctx.getImageData(mousePos.x, mousePos.y, 1, 1).data
-  var colorpix = canvas.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data;
-  var hex = "#" + ("000000" + rgbToHex(colorpix[0], colorpix[1], colorpix[2])).slice(-6);
+  const pixel = canvas.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data
+  const hex = '#' + ('000000' + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6)
   console.log(hex)
   // find a circle with the same colour
   circles.forEach(circle => {
@@ -200,16 +191,6 @@ function sliceClicked (e) {
       alert('click on circle: ' + circle.id)
     }
   })
-
-//   if(e.layerX || e.layerY == 0){
-//     mouse.x = e.layerX - canvas.offsetLeft
-//     mouse.y = e.layerY - canvas.offsetTop
-//   }else if(e.offsetX || e.offsetY == 0){
-//     mouse.x = e.layerX - canvas.offsetLeft
-//     mouse.y = e.layerY - canvas.offsetTop
-//   }
-//   console.log('mouse.x,mouse.y', mouse.x, mouse.y)
-// }
 }
 
 drawImg()
