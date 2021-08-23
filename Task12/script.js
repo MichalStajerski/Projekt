@@ -3,7 +3,7 @@ const label = ['gżegżółka', 'jaskółka', 'żaba', 'scieżka', 'durszlak']
 const pieces = label.map(function (x) {
   return label.indexOf(x)
 })
-var circles = [];
+const circles = []
 shuffleArray(label)
 shuffleArray(color)
 console.log('label', label)
@@ -108,9 +108,9 @@ function anim () {
     console.log('pieces before splice', pieces)
     console.log('109', label.indexOf(label[ai]))
     pieces.splice(label.indexOf(label[ai]), 1)
-    console.log('ai',ai)
+    console.log('ai', ai)
     console.log('pieces after splice', pieces)
-    console.log('sl',slices)
+    console.log('sl', slices)
 
     return setTimeout(() => {
       let circle
@@ -120,13 +120,13 @@ function anim () {
           drawSlice(i, deg, 'rgb(192,192,192)')
           circle = {
             id: i,
-            color :'rgb(192,192,192)'
+            color: 'rgb(192,192,192)'
           }
         } else {
           drawSlice(i, deg, color[i])
           circle = {
             id: i,
-            color : color[i]
+            color: color[i]
           }
         }
         circles.push(circle)
@@ -157,40 +157,39 @@ function shuffleArray (array) { // randomly shuffles our array
   }
 }
 
-let mouse = {x:0,y:0}
-let canvas = document.getElementById('canvas')
+const mouse = { x: 0, y: 0 }
+const canvas = document.getElementById('canvas')
 
-function hasSameColor(color, circle) {
-  if(circle.color === color){
+function hasSameColor (color, circle) {
+  if (circle.color === color) {
     return true
   }
 }
 
-
 // we will chceck if user clicked on the chosen slice with checking out the color of the pixel upon click
-//if ti matches the one of the drawn slice we can move to the window with options to choose for user related to the word
-//that the wheel of fortune indicated
-//after draw only one splice will remain with it's original colorrest will turn grey 
-//need to allow sliceClicked only after the process of drawing a word is accomplshed
- document.onmousedown = sliceClicked
-function sliceClicked(e){
-  console.log('circle',circles)
+// if ti matches the one of the drawn slice we can move to the window with options to choose for user related to the word
+// that the wheel of fortune indicated
+// after draw only one splice will remain with it's original colorrest will turn grey
+// need to allow sliceClicked only after the process of drawing a word is accomplshed
+document.onmousedown = sliceClicked
+function sliceClicked (e) {
+  console.log('circle', circles)
 
   const mousePos = {
     x: e.clientX - canvas.offsetTop,
     y: e.clientY - canvas.offsetLeft
-  };
+  }
   // get pixel under cursor
-  const pixel = ctx.getImageData(mousePos.x, mousePos.y, 1, 1).data;
+  const pixel = ctx.getImageData(mousePos.x, mousePos.y, 1, 1).data
 
-  const color = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
+  const color = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`
   console.log(color)
   // find a circle with the same colour
   circles.forEach(circle => {
     if (hasSameColor(color, circle)) {
-      alert('click on circle: ' + circle.id);
+      alert('click on circle: ' + circle.id)
     }
-  });
+  })
 
 //   if(e.layerX || e.layerY == 0){
 //     mouse.x = e.layerX - canvas.offsetLeft
