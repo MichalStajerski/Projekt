@@ -1,4 +1,4 @@
-const color = ['#ca7', '#7ac', '#77c', '#8f1340', '#a7c']
+const color = ['#aa77cc', '#ccaa77', '#7777cc', '#77aacc', '#8f1340']
 const label = ['gżegżółka', 'jaskółka', 'żaba', 'scieżka', 'durszlak']
 const pieces = label.map(function (x) {
   return label.indexOf(x)
@@ -100,17 +100,9 @@ function anim () {
   }
   // Stop
   if (lock && !speed) {
-    console.log('deg ' + deg)
-    console.log('slicedeg ' + sliceDeg)
-    console.log('calc ' + Math.floor(((360 - 208 - 90) % 360) / sliceDeg))
     let ai = Math.floor(((360 - deg - 90) % 360) / sliceDeg) // deg 2 Array Index
     ai = (slices + ai) % slices // Fix negative index
-    console.log('pieces before splice', pieces)
-    console.log('109', label.indexOf(label[ai]))
     pieces.splice(label.indexOf(label[ai]), 1)
-    console.log('ai', ai)
-    console.log('pieces after splice', pieces)
-    console.log('sl', slices)
 
     return setTimeout(() => {
       let circle
@@ -121,14 +113,14 @@ function anim () {
           circle = {
             id: i,
             color: 'rgb(192,192,192)',
-            word: label[i]
+            word:label[i]
           }
         } else {
           drawSlice(i, deg, color[i])
           circle = {
             id: i,
             color: color[i],
-            word: label[i]
+            word:label[i]
           }
         }
         circles.push(circle)
@@ -168,26 +160,26 @@ function hasSameColor (color, circle) {
   }
 }
 
-// changes colors written in rgb to hex notification
-function rgbToHex (r, g, b) {
-  if (r > 255 || g > 255 || b > 255) { throw 'Invalid color component' }
-  return ((r << 16) | (g << 8) | b).toString(16)
+//changes colors written in rgb to hex notification
+function rgbToHex(r, g, b) {
+  if (r > 255 || g > 255 || b > 255)
+      throw "Invalid color component";
+  return ((r << 16) | (g << 8) | b).toString(16);
 }
 // we will chceck if user clicked on the chosen slice with checking out the color of the pixel upon click
 // if ti matches the one of the drawn slice we can move to the window with options to choose for user related to the word
 // that the wheel of fortune indicated
 // after draw only one splice will remain with it's original colorrest will turn grey
-// need to allow sliceClicked only after the process of drawing a word is accomplshed
 document.onmousedown = sliceClicked
 function sliceClicked (e) {
   console.log('circle', circles)
-
-  const pixel = canvas.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data
-  const hex = '#' + ('000000' + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6)
-  console.log(hex)
+  console.log('label',label)
+  var pixel = canvas.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data;
+  var colorhex = "#" + ("000000" + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6);
+  console.log(colorhex)
   // find a circle with the same colour
   circles.forEach(circle => {
-    if (hasSameColor(colorpix, circle)) {
+    if (hasSameColor(colorhex, circle)) {
       alert('click on circle: ' + circle.id)
     }
   })
