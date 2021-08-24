@@ -175,7 +175,7 @@ function sliceClicked (e) {
   // find a circle with the same colour
   circles.forEach(circle => {
     if (hasSameColor(colorhex, circle.color)) {
-      alert('clicked on circle: ' + circle.id)
+      alert('clicked on circle: ' + circle.word)
       drawnOptionClicked = true
       if (drawnOptionClicked) {
         wheel.remove()
@@ -194,26 +194,46 @@ function answerLayout () {
     box.className = 'box'
     box.innerHTML = 'answer'+i
     box.id = 'answer'+i
-    box.onclick = () => boxClicked(box)
+    box.onclick = () => boxClicked(box)//add on clikc funtion to div
     body.appendChild(box)
   }
 }
 
 function boxClicked(box){
-  if(!box.style.borderColor){
+  if(!box.style.borderColor){//if the answer is not checked mark it's border in blue color
     box.style.borderColor = 'blue'
-    pickedAnswers.push(box.id)
+    pickedAnswers.push(box.id)//add answer
     console.log(pickedAnswers)
   }else{
-    box.style.borderColor = null
-    pickedAnswers.splice(pickedAnswers.indexOf(box.id),1)
+    box.style.borderColor = null//upon reclicking the same answer revert it back to original state
+    pickedAnswers.splice(pickedAnswers.indexOf(box.id),1)//remove the answer
     console.log(pickedAnswers)
   }
   checkAnswers()
 }
 function checkAnswers(){
-  if(arraysAreEqual(answers,pickedAnswers)){
+  const boxNum = document.querySelectorAll('.box').length;
+  console.log('len',len)
+  if(arraysAreEqual(answers,pickedAnswers)){//all correct answers
+    answers.forEach(answer => {
+      document.getElementById(answer).style.borderColor = 'green'
+    });
+    for(let i = 1; i  < boxNum+1; i++){
+      document.getElementById('answer'+i).onclick = null
+    }
+    setTimeout(() => {
     alert('Correct answers')
+    }, 300);
+  }else{//the mix of bad answers and good ones
+    pickedAnswers.forEach(answer => {
+      if(answers.includes(answer)){//in case it's a good answer
+        document.getElementById(answer).style.borderColor = 'green'
+        document.getElementById(answer).onclick = null
+      }else{
+        document.getElementById(answer).style.borderColor = 'red'
+        document.getElementById(answer).onclick = null
+      }
+    });
   }
 }
 drawImg()
