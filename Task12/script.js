@@ -183,8 +183,8 @@ function sliceClicked (e) {
       drawnOptionClicked = true
       if (drawnOptionClicked) {
         wheel.remove()
-        button.remove()
-        answerLayout()
+        button.remove()//clearing window from html objects that already exist there
+        answerLayout()//creating new layout 
         document.onmousedown = null
       }
     }
@@ -203,6 +203,12 @@ function answerLayout () {
     box.onclick = () => boxClicked(box)// add on clikc funtion to div
     container.appendChild(box)
   }
+  const button = document.createElement('button')
+  button.id = 'btnCheckAnswers'
+  button.className ='glow-on-hover button-center'
+  button.innerHTML = 'Submit Answers' 
+  button.onclick = () => checkAnswers()//adding a button for checking answers
+  body.appendChild(button)
   body.appendChild(container)
 }
 
@@ -216,17 +222,22 @@ function boxClicked (box) {
     pickedAnswers.splice(pickedAnswers.indexOf(box.id), 1)// remove the answer
     console.log(pickedAnswers)
   }
-  checkAnswers()
 }
 function checkAnswers () {
   const boxNum = document.querySelectorAll('.box').length
+  if(!pickedAnswers.length){
+    setTimeout(() => {
+      alert('No answers were chosen')
+    }, 300);
+  }else{
+    for (let i = 1; i < boxNum + 1; i++) {
+      document.getElementById('answer' + i).onclick = null
+    }
+  }
   if (arraysAreEqual(answers, pickedAnswers)) { // all correct answers
     answers.forEach(answer => {
       document.getElementById(answer).style.borderColor = 'green'
     })
-    for (let i = 1; i < boxNum + 1; i++) {
-      document.getElementById('answer' + i).onclick = null
-    }
     setTimeout(() => {
       alert('Correct answers')
     }, 300)

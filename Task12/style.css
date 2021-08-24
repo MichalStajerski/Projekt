@@ -123,6 +123,5 @@ body {
 }
 
 .container {
-  margin: 0 auto;
-  display: inline-block;
+text-align: center;
 }
