@@ -133,7 +133,7 @@ function anim () {
     }, 200)
   }
   drawImg()
-  //allows animation to diplay
+  //allows animation to diplay in a flunet manner
   window.requestAnimationFrame(anim)
 }
 
@@ -179,6 +179,7 @@ function sliceClicked (e) {
         wheel.remove()
         button.remove()
         answerLayout()
+        document.onmousedown = null
       }
     }
   })
@@ -186,8 +187,23 @@ function sliceClicked (e) {
 
 function answerLayout () {
   const body = document.getElementById('body')
-  const div = document.createElement('div')
-  body.appendChild(div)
+  for(let i = 0; i < 3; i++){
+    const box = document.createElement('div')
+    box.className = 'box'
+    box.innerHTML = 'answer'+i
+    box.id = 'answer'+i
+    box.onclick = () => boxClicked(box)
+    body.appendChild(box)
+  }
+}
+
+function boxClicked(box){
+  if(!box.style.borderColor){
+    box.style.borderColor = 'blue'
+    console.log('s')
+  }else{
+    box.style.borderColor = null
+  }
 }
 
 drawImg()
