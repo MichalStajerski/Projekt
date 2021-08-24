@@ -119,6 +119,7 @@ body {
   transition: transform .2s;
   margin: 0 auto;
 }
+
 .box:hover {
   transform: scale(1.1); 
 }

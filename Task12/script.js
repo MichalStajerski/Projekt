@@ -118,7 +118,7 @@ function anim () {
       ctx.clearRect(0, 0, width, width)
       for (let i = 0; i < slices; i++) {
         if (pieces.includes(i)) {
-          drawSlice(i, deg, 'rgb(192,192,192)')//grey color of the slices that weren't drawn 
+          drawSlice(i, deg, 'rgb(192,192,192)')// grey color of the slices that weren't drawn
           circle = {
             id: i,
             color: 'rgb(192,192,192)',
@@ -173,8 +173,8 @@ document.onmousedown = sliceClicked
 function sliceClicked (e) {
   console.log('circle', circles)
   console.log('label', label)
-  const pixel = ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data //get the information about the pixel we clicked on
-  const colorhex = '#' + ('000000' + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6)//converts the data of pixel into hex notification of color
+  const pixel = ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data // get the information about the pixel we clicked on
+  const colorhex = '#' + ('000000' + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6)// converts the data of pixel into hex notification of color
   console.log(colorhex)
   // find a circle with the same colour
   circles.forEach(circle => {
@@ -191,7 +191,7 @@ function sliceClicked (e) {
   })
 }
 
-function answerLayout () {//creates layout for choosing corrext answers related to the drawn answer
+function answerLayout () { // creates layout for choosing corrext answers related to the drawn answer
   const body = document.getElementById('body')
   const container = document.createElement('div')
   container.className = 'container'
@@ -199,6 +199,8 @@ function answerLayout () {//creates layout for choosing corrext answers related 
     const box = document.createElement('div')
     box.className = 'box'
     box.innerHTML = 'answer' + ans[i]
+    // i just implemented the way of presenting answers and presenting them, didn't look for specific ortographic rules to match the words
+    // or the word family of given word
     box.id = 'answer' + ans[i]
     box.onclick = () => boxClicked(box)// add on clikc funtion to div
     container.appendChild(box)
@@ -208,7 +210,7 @@ function answerLayout () {//creates layout for choosing corrext answers related 
   button.className = 'glow-on-hover button-center'
   button.innerHTML = 'Submit Answers'
   button.onclick = () => checkAnswers()// adding a button for checking answers
-  body.append(button,container)
+  body.append(button, container)
 }
 
 function boxClicked (box) {
@@ -244,15 +246,21 @@ function checkAnswers () {
     pickedAnswers.forEach(answer => {
       if (answers.includes(answer)) { // in case it's a good answer
         document.getElementById(answer).style.borderColor = 'green'
-        document.getElementById(answer).onclick = null//disable option for further cliking after button click
+        document.getElementById(answer).onclick = null// disable option for further cliking after button click
       } else {
         document.getElementById(answer).style.borderColor = 'red'
-        document.getElementById(answer).onclick = null//disable option for further cliking after button click 
+        document.getElementById(answer).onclick = null// disable option for further cliking after button click
       }
     })
+    setTimeout(() => {
+      alert('Wrong! Try again.')
+    }, 300)
   }
   setTimeout(() => {
     window.location.reload()
   }, 1500)
 }
 drawImg()
+
+// don't know if it is needed to implement reading set of answers or one answer to each drawn words from a json file since it wasn't
+// stated in the task
