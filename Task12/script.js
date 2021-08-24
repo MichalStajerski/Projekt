@@ -3,16 +3,16 @@ const label = ['gżegżółka', 'jaskółka', 'żaba', 'scieżka', 'durszlak']
 const pieces = label.map(function (x) {
   return label.indexOf(x)
 })
-const ans = label.map(function(x){
-  return label.indexOf(x)+1
+const ans = label.map(function (x) {
+  return label.indexOf(x) + 1
 })
 const hasSameColor = (color1, color2) => color1 === color2
-const arraysAreEqual = (a1,a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
+const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const button = document.getElementById('btnSpin')
 const wheel = document.getElementById('wheel')
 const answers = ['answer1', 'answer3']
 const circles = []
-let pickedAnswers = []
+const pickedAnswers = []
 let drawnOptionClicked = false
 shuffleArray(label)
 shuffleArray(color)
@@ -79,7 +79,7 @@ function drawText (deg, text) {
   ctx.restore()
 }
 
-//creates our wheel by drawing slices and implementing text into them
+// creates our wheel by drawing slices and implementing text into them
 function drawImg () {
   ctx.clearRect(0, 0, width, width)
   for (let i = 0; i < slices; i++) {
@@ -139,7 +139,7 @@ function anim () {
     }, 200)
   }
   drawImg()
-  //allows animation to diplay in a flunet manner
+  // allows animation to diplay in a flunet manner
   window.requestAnimationFrame(anim)
 }
 
@@ -193,50 +193,50 @@ function sliceClicked (e) {
 
 function answerLayout () {
   const body = document.getElementById('body')
-  for(let i = 0; i < ans.length; i++){//using ans always draws answers in random order
+  for (let i = 0; i < ans.length; i++) { // using ans always draws answers in random order
     const box = document.createElement('div')
     box.className = 'box'
-    box.innerHTML = 'answer'+ans[i]
-    box.id = 'answer'+ans[i]
-    box.onclick = () => boxClicked(box)//add on clikc funtion to div
+    box.innerHTML = 'answer' + ans[i]
+    box.id = 'answer' + ans[i]
+    box.onclick = () => boxClicked(box)// add on clikc funtion to div
     body.appendChild(box)
   }
 }
 
-function boxClicked(box){
-  if(!box.style.borderColor){//if the answer is not checked mark it's border in blue color
+function boxClicked (box) {
+  if (!box.style.borderColor) { // if the answer is not checked mark it's border in blue color
     box.style.borderColor = 'blue'
-    pickedAnswers.push(box.id)//add answer
+    pickedAnswers.push(box.id)// add answer
     console.log(pickedAnswers)
-  }else{
-    box.style.borderColor = null//upon reclicking the same answer revert it back to original state
-    pickedAnswers.splice(pickedAnswers.indexOf(box.id),1)//remove the answer
+  } else {
+    box.style.borderColor = null// upon reclicking the same answer revert it back to original state
+    pickedAnswers.splice(pickedAnswers.indexOf(box.id), 1)// remove the answer
     console.log(pickedAnswers)
   }
   checkAnswers()
 }
-function checkAnswers(){
-  const boxNum = document.querySelectorAll('.box').length;
-  if(arraysAreEqual(answers,pickedAnswers)){//all correct answers
+function checkAnswers () {
+  const boxNum = document.querySelectorAll('.box').length
+  if (arraysAreEqual(answers, pickedAnswers)) { // all correct answers
     answers.forEach(answer => {
       document.getElementById(answer).style.borderColor = 'green'
-    });
-    for(let i = 1; i  < boxNum+1; i++){
-      document.getElementById('answer'+i).onclick = null
+    })
+    for (let i = 1; i < boxNum + 1; i++) {
+      document.getElementById('answer' + i).onclick = null
     }
     setTimeout(() => {
-    alert('Correct answers')
-    }, 300);
-  }else{//the mix of bad answers and good ones
+      alert('Correct answers')
+    }, 300)
+  } else { // the mix of bad answers and good ones
     pickedAnswers.forEach(answer => {
-      if(answers.includes(answer)){//in case it's a good answer
+      if (answers.includes(answer)) { // in case it's a good answer
         document.getElementById(answer).style.borderColor = 'green'
         document.getElementById(answer).onclick = null
-      }else{
+      } else {
         document.getElementById(answer).style.borderColor = 'red'
         document.getElementById(answer).onclick = null
       }
-    });
+    })
   }
 }
 drawImg()
