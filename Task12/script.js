@@ -118,14 +118,14 @@ function anim () {
       ctx.clearRect(0, 0, width, width)
       for (let i = 0; i < slices; i++) {
         if (pieces.includes(i)) {
-          drawSlice(i, deg, 'rgb(192,192,192)')
+          drawSlice(i, deg, 'rgb(192,192,192)')//grey color of the slices that weren't drawn 
           circle = {
             id: i,
             color: 'rgb(192,192,192)',
             word: label[i]
           }
         } else {
-          drawSlice(i, deg, color[i])
+          drawSlice(i, deg, color[i])// draw slice using it's original color
           circle = {
             id: i,
             color: color[i],
@@ -173,25 +173,25 @@ document.onmousedown = sliceClicked
 function sliceClicked (e) {
   console.log('circle', circles)
   console.log('label', label)
-  const pixel = ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data
-  const colorhex = '#' + ('000000' + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6)
+  const pixel = ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data //get the information about the pixel we clicked on
+  const colorhex = '#' + ('000000' + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6)//converts the data of pixel into hex notification of color
   console.log(colorhex)
   // find a circle with the same colour
   circles.forEach(circle => {
     if (hasSameColor(colorhex, circle.color)) {
-      //alert('clicked on circle: ' + circle.word)
+      // alert('clicked on circle: ' + circle.word)
       drawnOptionClicked = true
       if (drawnOptionClicked) {
         wheel.remove()
-        button.remove()//clearing window from html objects that already exist there
-        answerLayout()//creating new layout 
+        button.remove()// clearing window from html objects that already exist there
+        answerLayout()// creating new layout
         document.onmousedown = null
       }
     }
   })
 }
 
-function answerLayout () {
+function answerLayout () {//creates layout for choosing corrext answers related to the drawn answer
   const body = document.getElementById('body')
   const container = document.createElement('div')
   container.className = 'container'
@@ -205,11 +205,10 @@ function answerLayout () {
   }
   const button = document.createElement('button')
   button.id = 'btnCheckAnswers'
-  button.className ='glow-on-hover button-center'
-  button.innerHTML = 'Submit Answers' 
-  button.onclick = () => checkAnswers()//adding a button for checking answers
-  body.appendChild(button)
-  body.appendChild(container)
+  button.className = 'glow-on-hover button-center'
+  button.innerHTML = 'Submit Answers'
+  button.onclick = () => checkAnswers()// adding a button for checking answers
+  body.append(button,container)
 }
 
 function boxClicked (box) {
@@ -225,11 +224,11 @@ function boxClicked (box) {
 }
 function checkAnswers () {
   const boxNum = document.querySelectorAll('.box').length
-  if(!pickedAnswers.length){
+  if (!pickedAnswers.length) {
     setTimeout(() => {
       alert('No answers were chosen')
-    }, 300);
-  }else{
+    }, 300)
+  } else {
     for (let i = 1; i < boxNum + 1; i++) {
       document.getElementById('answer' + i).onclick = null
     }
@@ -245,15 +244,15 @@ function checkAnswers () {
     pickedAnswers.forEach(answer => {
       if (answers.includes(answer)) { // in case it's a good answer
         document.getElementById(answer).style.borderColor = 'green'
-        document.getElementById(answer).onclick = null
+        document.getElementById(answer).onclick = null//disable option for further cliking after button click
       } else {
         document.getElementById(answer).style.borderColor = 'red'
-        document.getElementById(answer).onclick = null
+        document.getElementById(answer).onclick = null//disable option for further cliking after button click 
       }
     })
   }
   setTimeout(() => {
     window.location.reload()
-  }, 1500);
+  }, 1500)
 }
 drawImg()
