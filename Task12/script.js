@@ -17,7 +17,7 @@ let drawnOptionClicked = false
 shuffleArray(label)
 shuffleArray(color)
 shuffleArray(shuffledAnswers)
-const stopAngel = [] // stop angels starting from label index 1(0...label.length)
+const stopAngle = [] // stop Angles starting from label index 1(0...label.length)
 const slices = label.length
 const sliceDeg = Math.ceil(360 / slices)
 let deg = 60
@@ -42,24 +42,24 @@ function oddEven (num) {
 function deg2rad (deg) { return deg * Math.PI / 180 }
 
 function drawSlice (index, deg, color) {
-  let sAngel
-  let current = (index <= 0) ? deg : stopAngel[index - 1]
+  let sAngle
+  let current = (index <= 0) ? deg : stopAngle[index - 1]
   if (oddEven(index)) {
     if (current <= 0) {
-      sAngel = Math.abs(Math.floor(260 + sliceDeg + 10))
+      sAngle = Math.abs(Math.floor(260 + sliceDeg + 10))
     } else {
-      sAngel = Math.abs(Math.floor(current - sliceDeg + 10))
+      sAngle = Math.abs(Math.floor(current - sliceDeg + 10))
     }
-    current = sAngel
-    stopAngel.push(current)
+    current = sAngle
+    stopAngle.push(current)
   } else {
     if (current <= 0) {
-      sAngel = Math.abs(Math.floor(260 + sliceDeg - 10))
+      sAngle = Math.abs(Math.floor(260 + sliceDeg - 10))
     } else {
-      sAngel = Math.abs(Math.floor(current - sliceDeg - 10))
+      sAngle = Math.abs(Math.floor(current - sliceDeg - 10))
     }
-    current = sAngel
-    stopAngel.push(current)
+    current = sAngle
+    stopAngle.push(current)
   }
   ctx.beginPath()
   ctx.fillStyle = color
