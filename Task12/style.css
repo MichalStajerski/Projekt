@@ -124,5 +124,8 @@ body {
 }
 
 .container {
-  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 760;;
+  min-height: 150;
 }
