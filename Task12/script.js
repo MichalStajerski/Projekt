@@ -3,11 +3,11 @@ const label = ['gżegżółka', 'jaskółka', 'żaba', 'scieżka', 'durszlak']
 const pieces = label.map(function (x) {
   return label.indexOf(x)
 })
-const ans = label.map(function (x) {
+const shuffledAnswers = label.map(function (x) {
   return label.indexOf(x) + 1
 })
-const hasSameColor = (color1, color2) => color1 === color2
-const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
+const hasSameColor = (color1, color2) => color1 === color2 // checks if two colors are the same
+const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))// arrow function for checking our answers
 const button = document.getElementById('btnSpin')
 const wheel = document.getElementById('wheel')
 const answers = ['answer1', 'answer3']
@@ -16,7 +16,7 @@ const pickedAnswers = []
 let drawnOptionClicked = false
 shuffleArray(label)
 shuffleArray(color)
-shuffleArray(ans)
+shuffleArray(shuffledAnswers)
 const stopAngel = [] // stop angels starting from label index 1(0...label.length)
 const slices = label.length
 const sliceDeg = Math.ceil(360 / slices)
@@ -179,7 +179,6 @@ function sliceClicked (e) {
   // find a circle with the same colour
   circles.forEach(circle => {
     if (hasSameColor(colorhex, circle.color)) {
-      // alert('clicked on circle: ' + circle.word)
       drawnOptionClicked = true
       if (drawnOptionClicked) {
         wheel.remove()
@@ -195,13 +194,13 @@ function answerLayout () { // creates layout for choosing corrext answers relate
   const body = document.getElementById('body')
   const container = document.createElement('div')
   container.className = 'container'
-  for (let i = 0; i < ans.length; i++) { // using ans always draws answers in random order
+  for (let i = 0; i < shuffledAnswers.length; i++) { // using ans always draws answers in random order
     const box = document.createElement('div')
     box.className = 'box'
-    box.innerHTML = 'answer' + ans[i]
+    box.innerHTML = 'answer' + shuffledAnswers[i]
     // i just implemented the way of presenting answers and presenting them, didn't look for specific ortographic rules to match the words
     // or the word family of given word
-    box.id = 'answer' + ans[i]
+    box.id = 'answer' + shuffledAnswers[i]
     box.onclick = () => boxClicked(box)// add on clikc funtion to div
     container.appendChild(box)
   }
@@ -234,6 +233,12 @@ function checkAnswers () {
     for (let i = 1; i < boxNum + 1; i++) {
       document.getElementById('answer' + i).onclick = null
     }
+    setTimeout(() => {
+      alert('Wrong! Try again.')
+    }, 300)
+    setTimeout(() => {
+      window.location.reload()
+    }, 1500)
   }
   if (arraysAreEqual(answers, pickedAnswers)) { // all correct answers
     answers.forEach(answer => {
@@ -252,13 +257,7 @@ function checkAnswers () {
         document.getElementById(answer).onclick = null// disable option for further cliking after button click
       }
     })
-    setTimeout(() => {
-      alert('Wrong! Try again.')
-    }, 300)
   }
-  setTimeout(() => {
-    window.location.reload()
-  }, 1500)
 }
 drawImg()
 
