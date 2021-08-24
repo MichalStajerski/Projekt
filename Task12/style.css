@@ -117,11 +117,12 @@ body {
   line-height: 100px;
   overflow: hidden;
   transition: transform .2s;
+  margin: 0 auto;
 }
 .box:hover {
   transform: scale(1.1); 
 }
 
 .container {
-text-align: center;
+  position: relative;
 }

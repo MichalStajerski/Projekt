@@ -179,7 +179,7 @@ function sliceClicked (e) {
   // find a circle with the same colour
   circles.forEach(circle => {
     if (hasSameColor(colorhex, circle.color)) {
-      alert('clicked on circle: ' + circle.word)
+      //alert('clicked on circle: ' + circle.word)
       drawnOptionClicked = true
       if (drawnOptionClicked) {
         wheel.remove()
@@ -252,5 +252,8 @@ function checkAnswers () {
       }
     })
   }
+  setTimeout(() => {
+    window.location.reload()
+  }, 1500);
 }
 drawImg()
