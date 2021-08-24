@@ -3,6 +3,9 @@ const label = ['gżegżółka', 'jaskółka', 'żaba', 'scieżka', 'durszlak']
 const pieces = label.map(function (x) {
   return label.indexOf(x)
 })
+const ans = label.map(function(x){
+  return label.indexOf(x)+1
+})
 const hasSameColor = (color1, color2) => color1 === color2
 const arraysAreEqual = (a1,a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const button = document.getElementById('btnSpin')
@@ -13,6 +16,7 @@ let pickedAnswers = []
 let drawnOptionClicked = false
 shuffleArray(label)
 shuffleArray(color)
+shuffleArray(ans)
 const stopAngel = [] // stop angels starting from label index 1(0...label.length)
 const slices = label.length
 const sliceDeg = Math.ceil(360 / slices)
@@ -189,11 +193,11 @@ function sliceClicked (e) {
 
 function answerLayout () {
   const body = document.getElementById('body')
-  for(let i = 1; i < 5; i++){
+  for(let i = 0; i < ans.length; i++){//using ans always draws answers in random order
     const box = document.createElement('div')
     box.className = 'box'
-    box.innerHTML = 'answer'+i
-    box.id = 'answer'+i
+    box.innerHTML = 'answer'+ans[i]
+    box.id = 'answer'+ans[i]
     box.onclick = () => boxClicked(box)//add on clikc funtion to div
     body.appendChild(box)
   }
@@ -213,7 +217,6 @@ function boxClicked(box){
 }
 function checkAnswers(){
   const boxNum = document.querySelectorAll('.box').length;
-  console.log('len',len)
   if(arraysAreEqual(answers,pickedAnswers)){//all correct answers
     answers.forEach(answer => {
       document.getElementById(answer).style.borderColor = 'green'
