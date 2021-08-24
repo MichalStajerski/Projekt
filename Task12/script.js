@@ -4,10 +4,12 @@ const pieces = label.map(function (x) {
   return label.indexOf(x)
 })
 const hasSameColor = (color1, color2) => color1 === color2
+const arraysAreEqual = (a1,a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const button = document.getElementById('btnSpin')
 const wheel = document.getElementById('wheel')
-const answers = ['word1', 'word3']
+const answers = ['answer1', 'answer3']
 const circles = []
+let pickedAnswers = []
 let drawnOptionClicked = false
 shuffleArray(label)
 shuffleArray(color)
@@ -187,7 +189,7 @@ function sliceClicked (e) {
 
 function answerLayout () {
   const body = document.getElementById('body')
-  for(let i = 0; i < 3; i++){
+  for(let i = 1; i < 5; i++){
     const box = document.createElement('div')
     box.className = 'box'
     box.innerHTML = 'answer'+i
@@ -200,10 +202,18 @@ function answerLayout () {
 function boxClicked(box){
   if(!box.style.borderColor){
     box.style.borderColor = 'blue'
-    console.log('s')
+    pickedAnswers.push(box.id)
+    console.log(pickedAnswers)
   }else{
     box.style.borderColor = null
+    pickedAnswers.splice(pickedAnswers.indexOf(box.id),1)
+    console.log(pickedAnswers)
+  }
+  checkAnswers()
+}
+function checkAnswers(){
+  if(arraysAreEqual(answers,pickedAnswers)){
+    alert('Correct answers')
   }
 }
-
 drawImg()
