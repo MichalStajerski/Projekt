@@ -193,14 +193,17 @@ function sliceClicked (e) {
 
 function answerLayout () {
   const body = document.getElementById('body')
+  const container = document.createElement('div')
+  container.className = 'container'
   for (let i = 0; i < ans.length; i++) { // using ans always draws answers in random order
     const box = document.createElement('div')
     box.className = 'box'
     box.innerHTML = 'answer' + ans[i]
     box.id = 'answer' + ans[i]
     box.onclick = () => boxClicked(box)// add on clikc funtion to div
-    body.appendChild(box)
+    container.appendChild(box)
   }
+  body.appendChild(container)
 }
 
 function boxClicked (box) {
