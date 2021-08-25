@@ -10,12 +10,12 @@
   }
 
   .button-center {
-    text-align: center;
-    margin: 0;
     position: absolute;
+    margin: 0 auto;
     left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, 1350%);
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   }  
   .glow-on-hover {
     width: 220px;
