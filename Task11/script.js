@@ -1,3 +1,11 @@
+const canvas = document.createElement('canvas')
+canvas.width = 600
+canvas.height = 600
+canvas.id = 'canvas'
+canvas.className = 'canvas'
+canvas.style.border = '5px solid #000000'
+const ctx = canvas.getContext('2d')
+
 function CreateLayout(startButton,body){
   startButton.remove()
   const counter = document.createElement('div')
@@ -9,7 +17,7 @@ function CreateLayout(startButton,body){
   secondsLabel.id = 'seconds'
   secondsLabel.innerHTML = '00'
   counter.append(minutesLabel,secondsLabel)
-  body.appendChild(counter)
+  body.append(counter,canvas)
   let totalSeconds = 0
   setInterval(setTime, 1000)// we refresh it every sedond because that is the minimum value by which timer is supposed to change
 
