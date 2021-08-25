@@ -1,19 +1,15 @@
-// const minutesLabel = document.getElementById('minutes')
-// const secondsLabel = document.getElementById('seconds')
-
-
 function CreateLayout(startButton,body){
   startButton.remove()
   const counter = document.createElement('div')
   counter.className = 'counter'
-  body.appendChild(counter)
   const minutesLabel = document.createElement('label')
   minutesLabel.id = 'minutes'
   minutesLabel.innerHTML = '00'+':'
   const secondsLabel = document.createElement('label')
   secondsLabel.id = 'seconds'
   secondsLabel.innerHTML = '00'
-  body.append(minutesLabel,secondsLabel)
+  counter.append(minutesLabel,secondsLabel)
+  body.appendChild(counter)
   let totalSeconds = 0
   setInterval(setTime, 1000)// we refresh it every sedond because that is the minimum value by which timer is supposed to change
 
