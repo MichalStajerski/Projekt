@@ -78,4 +78,13 @@
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
 }
+
+.canvas{
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin:auto;
+}
   
