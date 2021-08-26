@@ -80,9 +80,9 @@ function CreateLayout (startButton, body) {
   }
   function pad (val) {
     const valString = val + ''
-    if (valString.length < 2) { // if we have one number value or two number value
+    if (valString.length < 2) { // if we have one number value  of minutes or seconds
       return '0' + valString
-    } else {
+    } else { // two number value
       return valString
     }
   }
@@ -97,7 +97,7 @@ function CreateLayout (startButton, body) {
     if (newCircle % objects.time == 0) {
       const xPos = getRandomIntInclusive(31, 569)// draws x position of canvas to drop the ball off
       objects.centers.push([xPos, 0])
-      objects.sizes.push(30)// decides thr size of balls
+      objects.sizes.push(30)// decides the size of balls
       let color = getRandomIntInclusive(0, 1)
       switch (color) {
         case 0:
@@ -113,9 +113,9 @@ function CreateLayout (startButton, body) {
     }
     newCircle++
     objects.moveDown()
-  }, 40) // we dredraw our canvas every 40 miliseconds
+  }, 40) // we draw our canvas every 40 miliseconds
 }
-// gets us a randomly drawn number between the two sepcifieed in the function
+// gets us a randomly drawn number between the two sepcified in the function
 function getRandomIntInclusive (min, max) {
   min = Math.ceil(min)
   max = Math.floor(max)
