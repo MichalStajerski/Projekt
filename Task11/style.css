@@ -1,11 +1,23 @@
     .counter{
-    width:100%;
+    width: 100%;
     text-align:right;
     font-family:arial;
     color:red;
     font-weight:bold;
     padding-top:10px;
     font-size:20px;
+    position:relative;
+  }
+
+  .scoreLabel{
+    display: inline-block;
+    width: 100%;
+    text-align:center;
+    font-family:arial;
+    color:blue;
+    font-weight:bold;
+    padding-top:10px;
+    font-size:25px;
     position:relative;
   }
   
