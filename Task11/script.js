@@ -135,13 +135,6 @@ function getMousePosition (canvas, event) {
   console.log('Coordinate x: ' + x, 'Coordinate y: ' + y)
 }
 
-// canvas.addEventListener("mousedown", function(e)
-// {
-//   // getMousePosition(canvas, e)
-//   //ctx.clearRect(0,0, canvas.width, canvas.height)
-//   console.log(objects.id)
-// });
-
 canvas.onclick = clickCirlce
 function clickCirlce (e) {
   console.log('passes')
