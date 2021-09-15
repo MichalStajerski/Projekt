@@ -5,6 +5,7 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
+  background-color: darkgray;
 }
 
 ol, ul {
@@ -18,22 +19,29 @@ ol, ul {
 }
 
 .status {
+  text-align: center;
   margin-bottom: 10px;
+  font-size: large;
+  font-weight: bold;
 }
 
 .square {
-  background: rgb(10, 95, 165);
+  background: rgb(8, 58, 30);
   border: 2px solid rgb(0, 0, 0);
   float: left;
-  font-size: 40px;
+  font-size: 90px;
   font-weight: bold;
   line-height: 34px;
-  height: 100px;
+  height: 150px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 100px;
+  width: 150px;
+  color:blanchedalmond;
+}
+.square:active{
+  transform: translateY(1px);
 }
 
 .square:focus {
@@ -55,6 +63,8 @@ ol, ul {
 }
 
 .game-board {
+  min-width: 460;
+  min-height: 450;
   position: absolute;
   top: 50%;
   left: 50%;
