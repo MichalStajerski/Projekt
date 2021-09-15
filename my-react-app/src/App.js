@@ -2,31 +2,53 @@ import './App.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class Square extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      value : null,
-    };
-  }
-  render() {
-    return (
-      <button 
-        className="square" 
-        onClick={() => this.setState({value : 'X'})}>
-        {this.state.value}
-      </button>
-    );
-  }
+// class Square extends React.Component {
+//   // constructor(props){
+//   //   super(props);
+//   //   this.props = {
+//   //     value : null,
+//   //   };
+//   // }
+//   render() {
+//     return (
+//       <button 
+//         className="square" 
+//         onClick={() => this.props.onClick()}>
+//         {this.props.value}
+//       </button>
+//     );
+//   }
+// }
+
+function Square (props){
+  return (
+    <button className="square" onClick= {props.onClick}> {props.value}</button>
+  )
 }
 
 class Board extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      squares : Array(9).fill(null), 
+      XIsNext: true
+    }
+  }
+  handleClick(i){
+    const squares = this.state.squares.slice()
+    squares[i] = this.state.XIsNext ? 'X' : 'O'
+    this.setState({
+      squares : squares,
+      XIsNext: !this.state.XIsNext
+    });
+  }
+
   renderSquare(i){
-    return <Square value={i}/>
+    return <Square value={this.state.squares[i]}
+    onClick = {() => this.handleClick(i)}/>
   }
   render() {
-    const status = 'Next player: X';
-
+    const status = "Next player: " + (this.state.XIsNext ? 'X' : 'O')
     return (
       <div>
         <div className="status">{status}</div>
@@ -50,6 +72,19 @@ class Board extends React.Component {
   }
 }
 
+function checkWinner(){
+  const wins = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6]
+  ]
+}
+
 class Game extends React.Component {
   render(){
     return (
@@ -69,15 +104,5 @@ ReactDOM.render(
   <Game />,
   document.getElementById('root')
 );
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <div className='content'>
-//         <h1>Start</h1>
-//       </div>
-//     </div>
-//   );
-// }
 
 export default Game;
