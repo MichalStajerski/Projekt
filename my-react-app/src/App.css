@@ -57,18 +57,18 @@ ol, ul {
 }
 
 .square {
-  background: #fff;
-  border: 1px solid #999;
+  background: rgb(10, 95, 165);
+  border: 2px solid rgb(0, 0, 0);
   float: left;
-  font-size: 24px;
+  font-size: 40px;
   font-weight: bold;
   line-height: 34px;
-  height: 34px;
+  height: 100px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 34px;
+  width: 100px;
 }
 
 .square:focus {
@@ -82,9 +82,17 @@ ol, ul {
 .game {
   display: flex;
   flex-direction: row;
+
 }
 
 .game-info {
   margin-left: 20px;
+}
+
+.game-board {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
