@@ -1,25 +1,6 @@
 import './App.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { renderIntoDocument } from 'react-dom/test-utils';
-
-// class Square extends React.Component {
-//   // constructor(props){
-//   //   super(props);
-//   //   this.props = {
-//   //     value : null,
-//   //   };
-//   // }
-//   render() {
-//     return (
-//       <button 
-//         className="square" 
-//         onClick={() => this.props.onClick()}>
-//         {this.props.value}
-//       </button>
-//     );
-//   }
-// }
 
 function Square (props){
   return (
@@ -82,7 +63,6 @@ class Board extends React.Component {
   }
 }
 
-const arraysAreual = (array1, array2) => array1.every(el => array2.includes(el)) 
 
 function checkWinner(squares){
   const wins = [
