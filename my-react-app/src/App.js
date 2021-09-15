@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { renderIntoDocument } from 'react-dom/test-utils';
 
 // class Square extends React.Component {
 //   // constructor(props){
@@ -36,11 +37,16 @@ class Board extends React.Component {
   }
   handleClick(i){
     const squares = this.state.squares.slice()
-    squares[i] = this.state.XIsNext ? 'X' : 'O'
-    this.setState({
-      squares : squares,
-      XIsNext: !this.state.XIsNext
-    });
+    if(checkWinner(squares || squares[i])){
+      return
+    } 
+    if(this.state.squares[i] === null ){
+      squares[i] = this.state.XIsNext ? 'X' : 'O'
+      this.setState({
+        squares : squares,
+        XIsNext: !this.state.XIsNext,
+      });
+    }
   }
 
   renderSquare(i){
@@ -48,7 +54,11 @@ class Board extends React.Component {
     onClick = {() => this.handleClick(i)}/>
   }
   render() {
-    const status = "Next player: " + (this.state.XIsNext ? 'X' : 'O')
+    const winner = checkWinner(this.state.squares)
+    let status 
+    winner ? status ='Won' + winner : status = 'Next move' + (this.state.XIsNext ? 'X' : 'O')
+   
+    //const status = 'Next move: ' + (this.state.XIsNext ? 'X' : 'O')
     return (
       <div>
         <div className="status">{status}</div>
@@ -72,7 +82,9 @@ class Board extends React.Component {
   }
 }
 
-function checkWinner(){
+const arraysAreual = (array1, array2) => array1.every(el => array2.includes(el)) 
+
+function checkWinner(squares){
   const wins = [
     [0,1,2],
     [3,4,5],
@@ -83,6 +95,13 @@ function checkWinner(){
     [0,4,8],
     [2,4,6]
   ]
+  for(let i =0;i<wins.length;i++){
+    const [a,b,c] = wins[i]
+    if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
+      return squares[a]
+    }
+  }
+  return null
 }
 
 class Game extends React.Component {
