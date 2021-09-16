@@ -42,12 +42,8 @@ class Board extends React.Component {
     let status 
     winner ? status ='Won' + winner : status = 'Next move' + (this.state.XIsNext ? 'X' : 'O')
     if(winner === null && allSquaresTaken(this.state.squares)){
-      console.log('passed')
       status = 'Draw'
     }
-    
-    console.log('winner',winner)
-    //const status = 'Next move: ' + (this.state.XIsNext ? 'X' : 'O')
     return (
       <div>
         <div className="status">{status}</div>
