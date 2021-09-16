@@ -1,6 +1,9 @@
 import './App.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { render } from '@testing-library/react';
+
+const allSquaresTaken = (array) => array.every(el => el !== null)
 
 function Square (props){
   return (
@@ -38,7 +41,12 @@ class Board extends React.Component {
     const winner = checkWinner(this.state.squares)
     let status 
     winner ? status ='Won' + winner : status = 'Next move' + (this.state.XIsNext ? 'X' : 'O')
-   
+    if(winner === null && allSquaresTaken(this.state.squares)){
+      console.log('passed')
+      status = 'Draw'
+    }
+    
+    console.log('winner',winner)
     //const status = 'Next move: ' + (this.state.XIsNext ? 'X' : 'O')
     return (
       <div>
@@ -82,6 +90,18 @@ function checkWinner(squares){
     }
   }
   return null
+}
+
+class Timer extends React.Component {
+  render(){
+    return (
+      <div className = "minutesLabel">
+        <div className= 'SecondsLabel'>
+          <Board/>
+        </div>
+      </div>
+    )
+  }
 }
 
 class Game extends React.Component {
