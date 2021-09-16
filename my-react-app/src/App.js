@@ -93,18 +93,6 @@ function checkWinner (squares) {
   return null
 }
 
-class Timer extends React.Component {
-  render () {
-    return (
-      <div className='minutesLabel'>
-        <div className='SecondsLabel'>
-          <Board />
-        </div>
-      </div>
-    )
-  }
-}
-
 class Game extends React.Component {
   render () {
     return (
