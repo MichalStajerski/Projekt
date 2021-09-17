@@ -1,8 +1,10 @@
+import logo from './logo.svg';
 import './App.css';
 import React, {useState} from 'react'
 import data from './data.json'
 import Header  from './header';
 import ToDoList from './ToDoList'
+
 
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
 
   return (
     <div className="App">
+      <img src={logo} className="App-logo" alt="logo" />
       <Header/>
       <ToDoList toDoList ={toDoList} handleToggle = {handleToggle}/>
     </div>
