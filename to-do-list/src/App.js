@@ -16,11 +16,18 @@ function App() {
     setToDoList(mapped);
   }
 
+  const handleFilter = () => {
+    let filtered = toDoList.filter(task => {
+      return !task.complete
+    })
+    setToDoList(filtered)
+  }
+
   return (
     <div className="App">
       <img src={logo} className="App-logo" alt="logo" />
       <Header/>
-      <ToDoList toDoList ={toDoList} handleToggle = {handleToggle}/>
+      <ToDoList toDoList ={toDoList} handleToggle = {handleToggle} handleFilter = {handleFilter}/>
     </div>
   );
 }
