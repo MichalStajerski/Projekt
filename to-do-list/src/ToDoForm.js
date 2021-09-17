@@ -12,9 +12,12 @@ const ToDoForm = ({ addTask }) => {
     setUserInput('')
   }
   return (
-    <form onSubmit={hnadleSubmit}>
+    <form onSubmit={handleSubmit}>
       <input value={userInput} type='text' onChange={handleChange} placeholder='Enter task' />
       <button>Submit new Task</button>
     </form>
   )
 }
+
+
+export default ToDoForm
