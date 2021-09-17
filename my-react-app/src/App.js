@@ -1,9 +1,8 @@
 import './App.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { render } from '@testing-library/react'
 
-const allSquaresTaken = (array) => array.every(el => el !== null)
+const allSquaresTaken = (array) => array.every(el => el !== null) //checks if all squares have a sign in it
 
 function Square (props) {
   return (
@@ -46,8 +45,8 @@ class Board extends React.Component {
   render () {
     const winner = checkWinner(this.state.squares)
     let status
-    winner ? status = 'Won ' + winner : status = 'Next move ' + (this.state.XIsNext ? 'X' : 'O')
-    if (winner === null && allSquaresTaken(this.state.squares)) {
+    winner ? status = winner + ' Won' : status = 'Next move ' + (this.state.XIsNext ? 'X' : 'O')
+    if (!winner && allSquaresTaken(this.state.squares)) { //if there is no winner and all squares are taken change status to draw
       status = 'Draw'
     }
     return (
@@ -74,7 +73,7 @@ class Board extends React.Component {
 }
 
 function checkWinner (squares) {
-  const wins = [
+  const wins = [ //combinations for win
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -87,6 +86,7 @@ function checkWinner (squares) {
   for (let i = 0; i < wins.length; i++) {
     const [a, b, c] = wins[i]
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      console.log('squares',wins[i])
       return squares[a]
     }
   }
@@ -106,9 +106,22 @@ class Game extends React.Component {
   }
 }
 
+let root = document.getElementById('root')
+let testObject = document.createElement('div')
+testObject.id = 'testObject'
+root.appendChild(testObject)
+let foundObject = document.querySelector('#testObject')
+console.log('foundObejct',foundObject)
+foundObject.className = 'xd'
 ReactDOM.render(
   <Game />,
   document.getElementById('root')
 )
 
 export default Game
+
+// TODO
+// can look to add option of sending a request tp redo last move
+// make a choice to play against another player or against a computer
+// can make a scoreboard to keep the track of the wins and loses between players
+// can highlight squares that got the win
