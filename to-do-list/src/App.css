@@ -30,7 +30,6 @@ background-color: dimgray;
   height: 120px;
   pointer-events: none;
   background-size: cover;
-  /* background-color: brown; */
   position: relative;
   overflow: hidden;
 }
