@@ -20,6 +20,9 @@ function App () {
       return !task.complete
     })
     setToDoList(filtered)
+    setTimeout(() => {
+      alert('You cleared completed tasks!')
+    }, 500);
   }
 
   const addTask = (userInput) => {
