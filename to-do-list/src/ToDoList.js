@@ -9,8 +9,8 @@ const ToDoList = ({ toDoList, handleToggle, handleFilter }) => {
           <ToDo todo={todo} handleToggle={handleToggle} handleFilter={handleFilter} />
         )
       })}
-      <label for='add new task' className='visuallyhidden'/>
-      <button aria-label='clear button' aria-required="true" name='clear all completed tasks' style={{ margin: '20px' }} onClick={handleFilter}>Clear completed tasks</button>
+      <label for='clear completed tasks' className='visuallyhidden'/>
+      <button id ='clearTask' aria-label='clear button' aria-required="true" name='clear all completed tasks' style={{ margin: '20px' }} onClick={handleFilter}>Clear completed tasks</button>
     </div>
   )
 }
