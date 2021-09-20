@@ -1,6 +1,9 @@
+html,
+body {
+background-color: dimgray;
+}
 .App {
-  text-align: center;
-  background-color: dimgrey;
+  text-align: center;  
 }
 
 .strike {
