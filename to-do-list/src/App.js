@@ -22,21 +22,21 @@ function App () {
     setToDoList(filtered)
     setTimeout(() => {
       alert('You cleared completed tasks!')
-    }, 500);
+    }, 500)
   }
 
   const addTask = (userInput) => {
     let copy = [...toDoList]
-    copy = [...copy, {id: toDoList.length +1, task: userInput, complete: false}]
+    copy = [...copy, { id: toDoList.length + 1, task: userInput, complete: false }]
     setToDoList(copy)
-}
+  }
 
   return (
     <div className='App'>
       <img src={logo} className='App-logo' alt='logo' />
       <Header />
       <ToDoList toDoList={toDoList} handleToggle={handleToggle} handleFilter={handleFilter} />
-      <ToDoForm addTask = {addTask}/>
+      <ToDoForm addTask={addTask} />
     </div>
   )
 }
