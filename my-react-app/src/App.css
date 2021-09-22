@@ -13,9 +13,10 @@ ol, ul {
 }
 
 .board-row:after {
-  clear: both;
-  content: "";
-  display: table;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: auto;
 }
 
 .status {
@@ -25,16 +26,6 @@ ol, ul {
   font-weight: bold;
 }
 
-.root {
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  
-  margin: auto;
-}
-
 .square {
   background: rgb(8, 58, 30);
   border: 2px solid rgb(0, 0, 0);
@@ -42,12 +33,12 @@ ol, ul {
   font-size: 90px;
   font-weight: bold;
   line-height: 34px;
-  height: 103px;
+  height: 100px;
+  width: 100px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 103px;
   color:blanchedalmond;
 }
 .square:active{
@@ -58,30 +49,17 @@ ol, ul {
   outline: none;
 }
 
-.kbd-navigation .square:focus {
-  background: #ddd;
-}
-
 .game {
   display: flex;
   flex-direction: row;
-
-}
-
-.game-info {
-  margin-left: 20px;
+  justify-content: center;
+  justify-items: center;
 }
 
 .game-board {
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  min-width: 309px;
-  min-height: 309px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
 }
 
