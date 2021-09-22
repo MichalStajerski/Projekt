@@ -25,20 +25,29 @@ ol, ul {
   font-weight: bold;
 }
 
+.root {
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  margin: auto;
+}
+
 .square {
-  display: flex;
   background: rgb(8, 58, 30);
   border: 2px solid rgb(0, 0, 0);
   float: left;
   font-size: 90px;
   font-weight: bold;
   line-height: 34px;
-  height: 150px;
+  height: 103px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 150px;
+  width: 103px;
   color:blanchedalmond;
 }
 .square:active{
@@ -64,9 +73,13 @@ ol, ul {
 }
 
 .game-board {
-  min-width: 460;
-  min-height: 450;
   position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  min-width: 309px;
+  min-height: 309px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
