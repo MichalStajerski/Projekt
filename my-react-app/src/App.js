@@ -120,7 +120,7 @@ ReactDOM.render(
 export default Game
 
 // TODO
-// can look to add option of sending a request tp redo last move
+// can look to add option of sending a request to redo last move
 // make a choice to play against another player or against a computer
 // can make a scoreboard to keep the track of the wins and loses between players
 // can highlight squares that got the win
