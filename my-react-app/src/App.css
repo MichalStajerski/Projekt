@@ -43,7 +43,10 @@ ol, ul {
 }
 
 .square {
-  background: rgb(8, 58, 30);
+  background: -moz-linear-gradient(-45deg,  rgba(77,161,138,1) 0%, rgba(63,149,123,1) 17%, rgba(45,115,92,1) 50%, rgba(34,102,80,1) 51%, rgba(31,121,87,1) 59%, rgba(19,151,92,1) 71%, rgba(34,102,76,1) 84%, rgba(23,73,61,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg,  rgba(77,161,138,1) 0%,rgba(63,149,123,1) 17%,rgba(45,115,92,1) 50%,rgba(34,102,80,1) 51%,rgba(31,121,87,1) 59%,rgba(19,151,92,1) 71%,rgba(34,102,76,1) 84%,rgba(23,73,61,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg,  rgba(77,161,138,1) 0%,rgba(63,149,123,1) 17%,rgba(45,115,92,1) 50%,rgba(34,102,80,1) 51%,rgba(31,121,87,1) 59%,rgba(19,151,92,1) 71%,rgba(34,102,76,1) 84%,rgba(23,73,61,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4da18a', endColorstr='#17493d',GradientType=1 ); 
   border: 2px solid rgb(0, 0, 0);
   float: left;
   font-size: 90px;
@@ -76,7 +79,7 @@ ol, ul {
   background: radial-gradient(circle, rgba(2,0,36,1) 5%, rgba(34,34,121,1) 43%, rgba(29,85,180,1) 52%, rgba(19,89,144,1) 62%, rgba(26,52,120,1) 100%); 
   background-position: left top;
   background-repeat: repeat;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
