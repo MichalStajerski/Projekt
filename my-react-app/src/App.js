@@ -3,11 +3,18 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const allSquaresTaken = (array) => array.every(el => el !== null) //checks if all squares have a sign in it
+let win = []
 
 function Square (props) {
-  return (
-    <button className='square' onClick={props.onClick}> {props.value}</button>
-  )
+  if(!win.includes(props.id)){
+    return (
+      <button className='square' onClick={props.onClick}> {props.value}</button>
+    )
+  }else{
+    return (
+      <button className='winningSquare' onClick={props.onClick}> {props.value}</button>
+    )
+  }
 }
 
 class Board extends React.Component {
@@ -38,6 +45,7 @@ class Board extends React.Component {
       <Square
         value={this.state.squares[i]}
         onClick={() => this.handleClick(i)}
+        id ={i}
       />
     )
   }
@@ -86,7 +94,8 @@ function checkWinner (squares) {
   for (let i = 0; i < wins.length; i++) {
     const [a, b, c] = wins[i]
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      console.log('squares',wins[i])
+      console.log('winning squares',wins[i])
+      win = wins[i]  
       return squares[a]
     }
   }
@@ -105,13 +114,6 @@ class Game extends React.Component {
   }
 }
 
-let root = document.getElementById('root')
-let testObject = document.createElement('div')
-testObject.id = 'testObject'
-root.appendChild(testObject)
-let foundObject = document.querySelector('#testObject')
-console.log('foundObejct',foundObject)
-foundObject.className = 'xd'
 ReactDOM.render(
   <Game />,
   document.getElementById('root')
@@ -123,4 +125,3 @@ export default Game
 // can look to add option of sending a request to redo last move
 // make a choice to play against another player or against a computer
 // can make a scoreboard to keep the track of the wins and loses between players
-// can highlight squares that got the win
