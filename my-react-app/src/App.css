@@ -79,3 +79,10 @@ ol, ul {
   justify-items: center;
 }
 
+.reloadButton {
+  background-color: rgb(134, 134, 184);
+  font-style: italic;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: large;
+}
+
