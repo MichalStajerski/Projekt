@@ -5,7 +5,7 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
-  background-color: darkgray;
+  background-color: rgb(66, 62, 62);
 }
 
 ol, ul {
@@ -66,6 +66,19 @@ ol, ul {
 }
 
 .game {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 7%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  height: 390px;
+  border-radius: 25px;
+  background: rgb(2,0,36);
+  background: radial-gradient(circle, rgba(2,0,36,1) 5%, rgba(34,34,121,1) 43%, rgba(26,52,120,1) 52%, rgba(20,108,177,1) 62%, rgba(0,212,255,1) 100%); 
+  background-position: left top;
+  background-repeat: repeat;
+  padding: 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;
