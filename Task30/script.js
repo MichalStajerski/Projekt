@@ -1,18 +1,33 @@
-let dragindex = 0
-const dropindex = 0
-let divIdsOrder = []
+let dragIndex = 0
+const divIdsOrder = []
 let clone = ''
-const answers = [
-  'Dzis jest bardzo pochmurny dzien',
-  'Prosze Panstwa Pan Pawel bedzie skakal',
-  'Jest tu jakis cwaniak',
-  'Najlepsze kasztany sa na placu Pigal w Paryzu',
+
+const sentences = [
+  'Dziś jest bardzo pochmurny dzień',
+  'Proszę Państwa Pan Paweł będzie skakał',
+  'Jest tu jakiś cwaniak?',
+  'Najlepsze kasztany są na placu Pigal w Paryżu',
   'Ryszard ty draniu oddaj rower'
 ]
 
-const drawnAnswer = getRandomIntInclusive(0, 4)
-const words = answers[drawnAnswer].split(' ')
-const order = []
+/**
+ * @function
+ * @description Randomly changes order of objects in the array.
+ * @param {Array} array - an array of objects to shuffle.
+ * @returns {Array}
+ */
+const shuffleArray = (array) => array.sort(() => Math.random() - 0.5) // shuffles our words in random order
+/**
+ * @function
+ * @description Returns a random integer in a given range.
+ * @param {int} min - bottom border of the range
+ * @param {int} max - top border of the range
+ * @returns {int}
+ */
+const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+const drawnAnswer = getRandomIntInclusive(0, sentences.length - 1)
+const words = sentences[drawnAnswer].split(' ')
+const wordsOrder = []
 console.log('words', words)
 
 function drag (e) {
@@ -23,16 +38,16 @@ function drop (e) {
   e.preventDefault()
   clone = e.target.cloneNode(true)
   const data = e.dataTransfer.getData('text')
+  console.log('data', data)
   const nodelist = document.getElementById('parent').childNodes
   for (let i = 0; i < nodelist.length; i++) {
     if (nodelist[i].id == data) {
-      dragindex = i
+      dragIndex = i
     }
   }
-  if (document.getElementById(data) !== e.target) {
-    document.getElementById('parent').replaceChild(document.getElementById(data), e.target)
-    document.getElementById('parent').insertBefore(clone, document.getElementById('parent').childNodes[dragindex])
-    findElementID()
+  if (document.querySelector('#' + data) !== e.target) {
+    document.querySelector('#parent').replaceChild(document.querySelector('#' + data), e.target)
+    document.querySelector('#parent').insertBefore(clone, document.querySelector('#parent').childNodes[dragIndex])
   }
 }
 
@@ -42,61 +57,64 @@ function allowDrop (e) {
 
 function drawOrderOfWords () {
   for (let i = 0; i < words.length; i++) {
-    order.push(i)
+    wordsOrder.push(i)
   }
-  shuffleArray(order)
+  shuffleArray(wordsOrder)
 }
 
 function insertWordIntoDiv (array) {
   for (let i = 0; i < array.length; i++) {
-    document.getElementById('word' + i).innerHTML = words[array[i]]
+    document.querySelector('#word' + i).innerHTML = words[array[i]]
   }
 }
 
-function shuffleArray (array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    const temp = array[i]
-    array[i] = array[j]
-    array[j] = temp
-  }
-}
-
-function createLayout (array) {
-  const container = document.getElementById('parent')
-  for (let i = 0; i < array.length; i++) {
+/**
+ * @function
+ * @param {Array} array
+ */
+function createLayout () {
+  const sentenceContainer = document.querySelector('#parent')
+  for (let i = 0; i < words.length; i++) {
     const word = document.createElement('div')
     word.id = 'word' + i
     word.className = 'droptarget'
     word.draggable = 'true'
+
+    // word.addEventListener('ondragstart', () => { drag(event) })
+    // word.addEventListener('ondragover', function(){
+    //   e.preventDefault()
+    // },false)
+    
+    
+    // word.ondragover = () => {allowDrop()}
+    word.setAttribute('ondragover', 'allowDrop(event)')
     word.setAttribute('ondragstart', 'drag(event)')
     word.setAttribute('ondrop', 'drop(event)')
-    word.setAttribute('ondragover', 'allowDrop(event)')
-    container.appendChild(word)
+    sentenceContainer.appendChild(word)
   }
 }
 
+/**
+ * @function
+ * @description
+ */
 function checkAnswer () {
+  findElementID()
   let joinedWords = ''
   for (let i = 0; i < divIdsOrder.length; i++) {
-    joinedWords += ' ' + document.getElementById(divIdsOrder[i]).innerHTML
+    joinedWords += ' ' + document.querySelector('#' + divIdsOrder[i]).innerHTML
   }
-  //deletes the first space 
-  joinedWords = joinedWords.trim()
-  if (joinedWords === answers[drawnAnswer]) {
-    setTimeout(() => {
-      alert('Correct')
-    }, 100)
-  } else {
-    setTimeout(() => {
-      alert('Wrong answer')
-    }, 100)
-  }
-  const finalSentence = []
+  // deletes the first space
+  joinedWords.trim() === sentences[drawnAnswer]
+    ? setTimeout(() => { alert('Correct') }, 100)
+    : setTimeout(() => { alert('WrongAnswer') }, 100)
+
+  finalSentence = []
   const comparison = []
   for (let i = 0; i < divIdsOrder.length; i++) {
-    finalSentence.push(document.getElementById(divIdsOrder[i]).innerHTML) 
-    document.getElementById(divIdsOrder[i]).draggable = false;
+    finalSentence.push(document.querySelector('#' + divIdsOrder[i]).innerHTML)
+    document.querySelector('#' + divIdsOrder[i]).draggable = false
+    console.log('finalSentence', finalSentence)
   }
   for (let i = 0; i < finalSentence.length; i++) {
     if (finalSentence[i] !== words[i]) {
@@ -105,31 +123,32 @@ function checkAnswer () {
   }
   if (comparison.length !== 0) {
     for (let i = 0; i < comparison.length; i++) {
-      document.getElementById(divIdsOrder[comparison[i]]).style.backgroundColor = 'red'
+      document.querySelector('#' + divIdsOrder[comparison[i]]).style.backgroundColor = 'red'
     }
   }
-  divIdsOrder = []
-  document.getElementById('btnCheck').disabled = true
+  document.querySelector('#btnCheck').disabled = true
 }
 
+/**
+ * @function
+ * @description
+ */
 function findElementID () {
   const wordOrder = document.getElementById('parent').children
-  divIdsOrder = []
   // Loop through all the child elements inside the parent div
   for (i = 0; i <= wordOrder.length - 1; i++) {
     divIdsOrder.push(wordOrder[i].id)
   }
-  console.log(divIdsOrder)
-}
-//returns us a randolmy chosen number between two that we specify
-function getRandomIntInclusive (min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+// function getRandomIntInclusive (min, max) {
+//   min = Math.ceil(min)
+//   max = Math.floor(max)
+//   return Math.floor(Math.random() * (max - min + 1)) + min
+// }
+
 window.onload = () => {
-  createLayout(words)
+  createLayout()
   drawOrderOfWords()
-  insertWordIntoDiv(order)
+  insertWordIntoDiv(wordsOrder)
 }
