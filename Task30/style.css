@@ -1,3 +1,7 @@
+body {
+  background: #154472;
+}
+
 #title {
   text-align: center;
 }
@@ -89,10 +93,6 @@
   50% { background-position: 400% 0; }
   100% { background-position: 0 0; }
 }*/
-
-body {
-  background: #154472;
-}
 
 .row {
   display: flex;

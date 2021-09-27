@@ -16,7 +16,8 @@ const sentences = [
  * @param {Array} array - an array of objects to shuffle.
  * @returns {Array}
  */
-const shuffleArray = (array) => array.sort(() => Math.random() - 0.5) // shuffles our words in random order
+const shuffleArray = (array) => array.sort(() => Math.random() - 0.5)
+
 /**
  * @function
  * @description Returns a random integer in a given range.
@@ -25,6 +26,11 @@ const shuffleArray = (array) => array.sort(() => Math.random() - 0.5) // shuffle
  * @returns {int}
  */
 const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+
+/**
+ * @function
+ * @description Draws one of the given sentences
+ */
 const drawnAnswer = getRandomIntInclusive(0, sentences.length - 1)
 const words = sentences[drawnAnswer].split(' ')
 const wordsOrder = []
@@ -37,45 +43,55 @@ function drawOrderOfWords () {
   shuffleArray(wordsOrder)
 }
 
+/**
+ * @function
+ * @description Writes words of the sentence into divs.
+ */
 function insertWordIntoDiv (array) {
   for (let i = 0; i < array.length; i++) {
     document.querySelector('#word' + i).innerHTML = words[array[i]]
   }
 }
 
+/**
+ * @function
+ * @description Manages the dragstart event.
+ */
 function drag (e) {
   e.dataTransfer.setData('text/plain', e.target.id)
 }
 
+/**
+ * @function
+ * @description Manages the drag event.
+ */
 function allowDrop (e) {
   e.preventDefault()
 }
 
+/**
+ * @function
+ * @description Manages the dragover event.
+ */
 function drop (e) {
   e.preventDefault()
   clone = e.target.cloneNode(true)
   const data = e.dataTransfer.getData('text')
-  // console.log('data', data)
   const nodelist = document.getElementById('parent').childNodes
   for (let i = 0; i < nodelist.length; i++) {
     if (nodelist[i].id === data) {
       dragIndex = i
     }
   }
-  console.log('data', data)
   if (document.querySelector(`#${data}`) !== e.target) {
     document.querySelector('#parent').replaceChild(document.querySelector('#' + data), e.target)
     document.querySelector('#parent').insertBefore(clone, document.querySelector('#parent').childNodes[dragIndex])
   }
 }
 
-function dragstart_handler (ev) {
-  console.log('dragStart')
-  ev.dataTransfer.setData('text', ev.target.id)
-}
-
 /**
  * @function
+ * @description Builds the page layout, creates the sentence to correct.
  * @param {Array} array
  */
 function createLayout () {
@@ -84,17 +100,9 @@ function createLayout () {
     const word = document.createElement('div')
     word.id = 'word' + i
     word.className = 'droptarget'
-
     word.draggable = 'true'
-
-    // word.addEventListener('ondragover', function(){
-    //   e.preventDefault()
-    // },false)
-
-    // word.ondragover = () => {allowDrop()}
     word.setAttribute('ondragover', 'allowDrop(event)')
     word.setAttribute('ondragstart', 'drag(event)')
-    // word.addEventListener('ondragstart', () => {dragstart_handler()})
     word.setAttribute('ondrop', 'drop(event)')
     sentenceContainer.appendChild(word)
   }
@@ -105,7 +113,7 @@ function createLayout () {
 
 /**
  * @function
- * @description Loops through all the child elements inside the parent div
+ * @description Updates the array holding words' ID's.
  */
 function getWordsOrder () {
   const wordOrder = document.querySelector('#parent').children
@@ -116,7 +124,7 @@ function getWordsOrder () {
 
 /**
  * @function
- * @description
+ * @description Checks answers and manages marking errors in the layout.
  */
 function checkAnswer () {
   getWordsOrder()
@@ -133,15 +141,21 @@ function checkAnswer () {
       document.querySelector('#btnCheck').disabled = true
     }
     setTimeout(() => { alert('Correct') }, 100)
-  } else {
+  } 
+    else {
     setTimeout(() => { alert('WrongAnswer') }, 100)
   }
 
   for (let i = 0; i < finalSentence.length; i++) {
     document.querySelector('#' + divIdsOrder[i]).style.backgroundColor = finalSentence[i] !== words[i] ? 'red' : 'silver'
   }
+  
+  /**
+ * @function
+ * @description Clears our arrays to enable redoing the order of them
+ */
   finalSentence.splice(0, finalSentence.length)
   divIdsOrder.splice(0, divIdsOrder.length)
 }
 
-window.onload = createLayout()
+window.onload = () => createLayout()
