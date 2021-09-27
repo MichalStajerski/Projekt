@@ -47,7 +47,6 @@ function drag (e) {
   e.dataTransfer.setData('text/plain', e.target.id)
 }
 
-
 function allowDrop (e) {
   e.preventDefault()
 }
@@ -63,18 +62,17 @@ function drop (e) {
       dragIndex = i
     }
   }
-  console.log('data',data)
+  console.log('data', data)
   if (document.querySelector(`#${data}`) !== e.target) {
     document.querySelector('#parent').replaceChild(document.querySelector('#' + data), e.target)
     document.querySelector('#parent').insertBefore(clone, document.querySelector('#parent').childNodes[dragIndex])
   }
 }
 
-
-function dragstart_handler(ev) {
-  console.log("dragStart");
-  ev.dataTransfer.setData("text", ev.target.id);
- }
+function dragstart_handler (ev) {
+  console.log('dragStart')
+  ev.dataTransfer.setData('text', ev.target.id)
+}
 
 /**
  * @function
@@ -88,12 +86,11 @@ function createLayout () {
     word.className = 'droptarget'
 
     word.draggable = 'true'
-    
-    
+
     // word.addEventListener('ondragover', function(){
     //   e.preventDefault()
     // },false)
-    
+
     // word.ondragover = () => {allowDrop()}
     word.setAttribute('ondragover', 'allowDrop(event)')
     word.setAttribute('ondragstart', 'drag(event)')
@@ -107,10 +104,10 @@ function createLayout () {
 }
 
 /**
- * @function 
+ * @function
  * @description Loops through all the child elements inside the parent div
  */
- function getWordsOrder () {
+function getWordsOrder () {
   const wordOrder = document.querySelector('#parent').children
   for (i = 0; i <= wordOrder.length - 1; i++) {
     divIdsOrder.push(wordOrder[i].id)
@@ -119,7 +116,7 @@ function createLayout () {
 
 /**
  * @function
- * @description 
+ * @description
  */
 function checkAnswer () {
   getWordsOrder()
@@ -128,9 +125,9 @@ function checkAnswer () {
     joinedWords += (!i ? '' : ' ') + document.querySelector('#' + divIdsOrder[i]).innerHTML
   }
   finalSentence = joinedWords.split(' ')
-  
-  if(joinedWords === sentences[drawnAnswer]) {
-    for(let word of document.querySelectorAll('div.droptarget')) {
+
+  if (joinedWords === sentences[drawnAnswer]) {
+    for (const word of document.querySelectorAll('div.droptarget')) {
       word.draggable = false
       word.style.userSelect = 'none'
     }
