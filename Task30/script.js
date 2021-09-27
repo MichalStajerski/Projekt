@@ -130,6 +130,7 @@ function checkAnswer () {
     for (const word of document.querySelectorAll('div.droptarget')) {
       word.draggable = false
       word.style.userSelect = 'none'
+      document.querySelector('#btnCheck').disabled = true
     }
     setTimeout(() => { alert('Correct') }, 100)
   } else {
