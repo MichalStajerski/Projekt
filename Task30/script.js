@@ -28,32 +28,7 @@ const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - mi
 const drawnAnswer = getRandomIntInclusive(0, sentences.length - 1)
 const words = sentences[drawnAnswer].split(' ')
 const wordsOrder = []
-console.log('words', words)
-
-function drag (e) {
-  e.dataTransfer.setData('text', e.target.id)
-}
-
-function drop (e) {
-  e.preventDefault()
-  clone = e.target.cloneNode(true)
-  const data = e.dataTransfer.getData('text')
-  console.log('data', data)
-  const nodelist = document.getElementById('parent').childNodes
-  for (let i = 0; i < nodelist.length; i++) {
-    if (nodelist[i].id == data) {
-      dragIndex = i
-    }
-  }
-  if (document.querySelector('#' + data) !== e.target) {
-    document.querySelector('#parent').replaceChild(document.querySelector('#' + data), e.target)
-    document.querySelector('#parent').insertBefore(clone, document.querySelector('#parent').childNodes[dragIndex])
-  }
-}
-
-function allowDrop (e) {
-  e.preventDefault()
-}
+// console.log('words', words)
 
 function drawOrderOfWords () {
   for (let i = 0; i < words.length; i++) {
@@ -68,6 +43,39 @@ function insertWordIntoDiv (array) {
   }
 }
 
+function drag (e) {
+  e.dataTransfer.setData('text/plain', e.target.id)
+}
+
+
+function allowDrop (e) {
+  e.preventDefault()
+}
+
+function drop (e) {
+  e.preventDefault()
+  clone = e.target.cloneNode(true)
+  const data = e.dataTransfer.getData('text')
+  // console.log('data', data)
+  const nodelist = document.getElementById('parent').childNodes
+  for (let i = 0; i < nodelist.length; i++) {
+    if (nodelist[i].id === data) {
+      dragIndex = i
+    }
+  }
+  console.log('data',data)
+  if (document.querySelector(`#${data}`) !== e.target) {
+    document.querySelector('#parent').replaceChild(document.querySelector('#' + data), e.target)
+    document.querySelector('#parent').insertBefore(clone, document.querySelector('#parent').childNodes[dragIndex])
+  }
+}
+
+
+function dragstart_handler(ev) {
+  console.log("dragStart");
+  ev.dataTransfer.setData("text", ev.target.id);
+ }
+
 /**
  * @function
  * @param {Array} array
@@ -78,77 +86,64 @@ function createLayout () {
     const word = document.createElement('div')
     word.id = 'word' + i
     word.className = 'droptarget'
-    word.draggable = 'true'
 
-    // word.addEventListener('ondragstart', () => { drag(event) })
+    word.draggable = 'true'
+    
+    
     // word.addEventListener('ondragover', function(){
     //   e.preventDefault()
     // },false)
     
-    
     // word.ondragover = () => {allowDrop()}
     word.setAttribute('ondragover', 'allowDrop(event)')
     word.setAttribute('ondragstart', 'drag(event)')
+    // word.addEventListener('ondragstart', () => {dragstart_handler()})
     word.setAttribute('ondrop', 'drop(event)')
     sentenceContainer.appendChild(word)
   }
+
+  drawOrderOfWords()
+  insertWordIntoDiv(wordsOrder)
 }
 
 /**
- * @function
- * @description
+ * @function 
+ * @description Loops through all the child elements inside the parent div
  */
-function checkAnswer () {
-  findElementID()
-  let joinedWords = ''
-  for (let i = 0; i < divIdsOrder.length; i++) {
-    joinedWords += ' ' + document.querySelector('#' + divIdsOrder[i]).innerHTML
-  }
-  // deletes the first space
-  joinedWords.trim() === sentences[drawnAnswer]
-    ? setTimeout(() => { alert('Correct') }, 100)
-    : setTimeout(() => { alert('WrongAnswer') }, 100)
-
-  finalSentence = []
-  const comparison = []
-  for (let i = 0; i < divIdsOrder.length; i++) {
-    finalSentence.push(document.querySelector('#' + divIdsOrder[i]).innerHTML)
-    document.querySelector('#' + divIdsOrder[i]).draggable = false
-    console.log('finalSentence', finalSentence)
-  }
-  for (let i = 0; i < finalSentence.length; i++) {
-    if (finalSentence[i] !== words[i]) {
-      comparison.push(i)
-    }
-  }
-  if (comparison.length !== 0) {
-    for (let i = 0; i < comparison.length; i++) {
-      document.querySelector('#' + divIdsOrder[comparison[i]]).style.backgroundColor = 'red'
-    }
-  }
-  document.querySelector('#btnCheck').disabled = true
-}
-
-/**
- * @function
- * @description
- */
-function findElementID () {
-  const wordOrder = document.getElementById('parent').children
-  // Loop through all the child elements inside the parent div
+ function getWordsOrder () {
+  const wordOrder = document.querySelector('#parent').children
   for (i = 0; i <= wordOrder.length - 1; i++) {
     divIdsOrder.push(wordOrder[i].id)
   }
 }
 
-// function getRandomIntInclusive (min, max) {
-//   min = Math.ceil(min)
-//   max = Math.floor(max)
-//   return Math.floor(Math.random() * (max - min + 1)) + min
-// }
+/**
+ * @function
+ * @description 
+ */
+function checkAnswer () {
+  getWordsOrder()
+  let joinedWords = ''
+  for (let i = 0; i < divIdsOrder.length; i++) {
+    joinedWords += (!i ? '' : ' ') + document.querySelector('#' + divIdsOrder[i]).innerHTML
+  }
+  finalSentence = joinedWords.split(' ')
+  
+  if(joinedWords === sentences[drawnAnswer]) {
+    for(let word of document.querySelectorAll('div.droptarget')) {
+      word.draggable = false
+      word.style.userSelect = 'none'
+    }
+    setTimeout(() => { alert('Correct') }, 100)
+  } else {
+    setTimeout(() => { alert('WrongAnswer') }, 100)
+  }
 
-window.onload = () => {
-  createLayout()
-  drawOrderOfWords()
-  insertWordIntoDiv(wordsOrder)
+  for (let i = 0; i < finalSentence.length; i++) {
+    document.querySelector('#' + divIdsOrder[i]).style.backgroundColor = finalSentence[i] !== words[i] ? 'red' : 'silver'
+  }
+  finalSentence.splice(0, finalSentence.length)
+  divIdsOrder.splice(0, divIdsOrder.length)
 }
+
+window.onload = createLayout()
