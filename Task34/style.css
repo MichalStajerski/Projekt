@@ -1,3 +1,6 @@
+body{
+  background-color:rgb(2, 44, 2);
+}
 .square {
     width: 70px;
     height: 70px;
@@ -45,16 +48,18 @@
   margin: 0 auto;
   padding: 0;
   justify-content: center;
+  border: coral;
 }
 
 #answerBoard{
-  width: 50%;
+  color: blanchedalmond;
+  width: 100%;
   display: flex;
   margin: 0 auto;
   text-align: center;
 }
 #answer{
-  min-width: 30px;
+  min-width: 15px;
   height: 20px;
   text-align: center;
   display: inline-block;
