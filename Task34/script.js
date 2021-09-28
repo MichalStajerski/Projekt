@@ -45,7 +45,9 @@ function createLayout () {
     answer.innerHTML = answersForRead[i]
     asnwerBoard.appendChild(answer)
   }
-
+  console.log('answers',answers)
+  console.log('answersforRead',answersForRead)
+  console.log('takensquares',takenSquares)
   fillSignsForLayout()
 }
 function fillSignsForLayout () {
@@ -99,14 +101,14 @@ function squareClicked (square) {
 
 function drawAnswers (numAnswers) {
   // first we need to decide number of coordinates to find
-  // that number is related to the difficulty lvl so i assume its a fixed number accrding to each lvl
-  // so i wont imlpement here any algorithm to deduce that number based on the surface of the board we are given
+  // that number is based on the diffuculty of the lvl
 
   while (numAnswers > 0) {
     const decider = getRandomIntInclusive(0, 2)
     let letter = alphabet[getRandomIntInclusive(0, numLeters - 1)]
     let number = getRandomIntInclusive(1, numNumbers)
     const length = getRandomIntInclusive(1, numAnswers)
+    console.log(length)
     switch (decider) {
       case 0: // one sqaure as an answer
         while (takenSquares.includes(letter + number) && number > numNumbers) {
