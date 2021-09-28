@@ -10,6 +10,7 @@ const sentences = [
   'Ryszard ty draniu oddaj rower'
 ]
 
+const ArrayAreEqual = (array1,array2) => array1.length === array2.length && array1.every( el => array2.includes(el))
 /**
  * @function
  * @description Randomly changes order of objects in the array.
@@ -70,7 +71,7 @@ function createLayout () {
   drawOrderOfWords()
   insertWordIntoDiv(wordsOrder)
 
-  dragula([document.querySelector('#parent')])
+  dragula([document.querySelector('#parent')]) 
 }
 
 /**
@@ -97,9 +98,11 @@ function checkAnswer () {
   const finalSentence = joinedWords.split(' ')
 
   if (joinedWords === sentences[drawnAnswer]) {
+    const parent = document.querySelector('#parent')
     for (const word of document.querySelectorAll('div.droptarget')) {
       word.draggable = false
       word.style.userSelect = 'none'
+      word.class = 'droptarget'
       document.querySelector('#btnCheck').disabled = true
     }
     setTimeout(() => { alert('Correct') }, 100)
@@ -117,6 +120,14 @@ function checkAnswer () {
  */
   finalSentence.splice(0, finalSentence.length)
   divIdsOrder.splice(0, divIdsOrder.length)
+  
+  dragula([document.querySelector('#parent')]),{
+    moves: function (el, container, handle) {
+      debugger
+      console.log(el, container);
+      return false;
+    }
+  }  
 }
 
 const checkButon = document.querySelector('#btnCheck')
