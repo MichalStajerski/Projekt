@@ -1,6 +1,6 @@
-let dragIndex = 0
+const dragIndex = 0
 const divIdsOrder = []
-let clone = ''
+const clone = ''
 
 const sentences = [
   'Dziś jest bardzo pochmurny dzień',
@@ -70,7 +70,7 @@ function createLayout () {
   drawOrderOfWords()
   insertWordIntoDiv(wordsOrder)
 
-  dragula([document.querySelector('#parent')]);
+  dragula([document.querySelector('#parent')])
 }
 
 /**
@@ -94,7 +94,7 @@ function checkAnswer () {
   for (let i = 0; i < divIdsOrder.length; i++) {
     joinedWords += (!i ? '' : ' ') + document.querySelector('#' + divIdsOrder[i]).innerHTML
   }
-  let finalSentence = joinedWords.split(' ')
+  const finalSentence = joinedWords.split(' ')
 
   if (joinedWords === sentences[drawnAnswer]) {
     for (const word of document.querySelectorAll('div.droptarget')) {
@@ -103,15 +103,14 @@ function checkAnswer () {
       document.querySelector('#btnCheck').disabled = true
     }
     setTimeout(() => { alert('Correct') }, 100)
-  } 
-    else {
+  } else {
     setTimeout(() => { alert('WrongAnswer') }, 100)
   }
 
   for (let i = 0; i < finalSentence.length; i++) {
     document.querySelector('#' + divIdsOrder[i]).style.backgroundColor = finalSentence[i] !== words[i] ? 'red' : 'silver'
   }
-  
+
   /**
  * @function
  * @description Clears our arrays to enable redoing the order of them
@@ -121,6 +120,6 @@ function checkAnswer () {
 }
 
 const checkButon = document.querySelector('#btnCheck')
-checkButon.addEventListener('click',checkAnswer)
+checkButon.addEventListener('click', checkAnswer)
 
 window.onload = () => createLayout()
