@@ -10,7 +10,6 @@ const sentences = [
   'Ryszard ty draniu oddaj rower'
 ]
 
-const ArrayAreEqual = (array1,array2) => array1.length === array2.length && array1.every( el => array2.includes(el))
 /**
  * @function
  * @description Randomly changes order of objects in the array.
@@ -35,7 +34,6 @@ const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - mi
 const drawnAnswer = getRandomIntInclusive(0, sentences.length - 1)
 const words = sentences[drawnAnswer].split(' ')
 const wordsOrder = []
-// console.log('words', words)
 
 function drawOrderOfWords () {
   for (let i = 0; i < words.length; i++) {
