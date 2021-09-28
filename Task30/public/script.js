@@ -105,6 +105,11 @@ function checkAnswer () {
       word.class = 'droptarget'
       document.querySelector('#btnCheck').disabled = true
     }
+    dragula([document.querySelector('#parent')]),{
+      moves:  () => {
+        return false;
+      }
+    } 
     setTimeout(() => { alert('Correct') }, 100)
   } else {
     setTimeout(() => { alert('WrongAnswer') }, 100)
@@ -119,13 +124,7 @@ function checkAnswer () {
  * @description Clears our arrays to enable redoing the order of them
  */
   finalSentence.splice(0, finalSentence.length)
-  divIdsOrder.splice(0, divIdsOrder.length)
-  
-  dragula([document.querySelector('#parent')]),{
-    moves:  () => {
-      return false;
-    }
-  }  
+  divIdsOrder.splice(0, divIdsOrder.length) 
 }
 
 const checkButon = document.querySelector('#btnCheck')
