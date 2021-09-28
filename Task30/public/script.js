@@ -122,9 +122,7 @@ function checkAnswer () {
   divIdsOrder.splice(0, divIdsOrder.length)
   
   dragula([document.querySelector('#parent')]),{
-    moves: function (el, container, handle) {
-      debugger
-      console.log(el, container);
+    moves:  () => {
       return false;
     }
   }  
