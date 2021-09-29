@@ -10,6 +10,8 @@ const sentences = [
   'Ryszard ty draniu oddaj rower'
 ]
 
+const parent = document.querySelector('#parent')
+
 /**
  * @function
  * @description Randomly changes order of objects in the array.
@@ -58,18 +60,17 @@ function insertWordIntoDiv (array) {
  * @param {Array} array
  */
 function createLayout () {
-  const sentenceContainer = document.querySelector('#parent')
   for (let i = 0; i < words.length; i++) {
     const word = document.createElement('div')
     word.id = 'word' + i
     word.className = 'droptarget'
-    sentenceContainer.appendChild(word)
+    parent.appendChild(word)
   }
 
   drawOrderOfWords()
   insertWordIntoDiv(wordsOrder)
 
-  dragula([document.querySelector('#parent')]) 
+  dragula([parent]) 
 }
 
 /**
@@ -77,7 +78,7 @@ function createLayout () {
  * @description Updates the array holding words' ID's.
  */
 function getWordsOrder () {
-  const wordOrder = document.querySelector('#parent').children
+  const wordOrder = parent.children
   for (let i = 0; i <= wordOrder.length - 1; i++) {
     divIdsOrder.push(wordOrder[i].id)
   }
@@ -96,14 +97,14 @@ function checkAnswer () {
   const finalSentence = joinedWords.split(' ')
 
   if (joinedWords === sentences[drawnAnswer]) {
-    const parent = document.querySelector('#parent')
+   
     for (const word of document.querySelectorAll('div.droptarget')) {
       word.draggable = false
       word.style.userSelect = 'none'
       word.class = 'droptarget'
       document.querySelector('#btnCheck').disabled = true
     }
-    dragula([document.querySelector('#parent')]),{
+    dragula([parent]),{
       moves:  () => {
         return false;
       }
