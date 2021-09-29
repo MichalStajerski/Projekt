@@ -3,7 +3,7 @@ const divIdsOrder = []
 const clone = ''
 
 const sentences = [
-  'Dziś jest bardzo pochmurny dzień',
+  'تكون أو لا تكون',
   'Proszę Państwa Pan Paweł będzie skakał',
   'Jest tu jakiś cwaniak?',
   'Najlepsze kasztany są na placu Pigal w Paryżu',
@@ -32,7 +32,7 @@ const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - mi
  * @description Draws one of the given sentences
  */
 const drawnAnswer = getRandomIntInclusive(0, sentences.length - 1)
-const words = sentences[drawnAnswer].split(' ')
+const words = sentences[drawnAnswer].trim().split(' ')
 const wordsOrder = []
 
 function drawOrderOfWords () {
