@@ -33,7 +33,7 @@ descByLengthOfElementInArray(words)
 let text = ''
 let canCross = true
 /**
- * @type int[]
+ * @type int[] 
  */
 const clickedTiles = []
 let pairOfWords = 0
@@ -124,10 +124,10 @@ function checkAnswer (clickedTiles) {
         text === wordsAfterCrossingShuffle[0] ? document.getElementById(crossArray[pairOfWords][1]).id = crossArray[pairOfWords][1].replace(crossArray[pairOfWords][2], '') : false
         text === wordsAfterCrossingShuffle[1] ? document.getElementById(crossArray[pairOfWords][0]).id = crossArray[pairOfWords][0].replace(crossArray[pairOfWords][2], '') : false
       }
-     
+      
       document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
       text = ''
-
+      console.log('asnwersArray',answers)
       answers.splice(i, 1)
       // when there are no more answers show alert
       if (!answers.length) {
@@ -321,7 +321,7 @@ function actionForCrossSearch () {
       if (j !== i) {
         for (let k = 0; k < v.length; k++) {
           if (haveSameLetter(words[i], words[j], v[k])) {
-            console.log('indexes of words', i, j)
+            //console.log('indexes of words', i, j)
             crossArray.push([words[i], words[j], v[k], words[i].indexOf(v[k]), words[j].indexOf(v[k]), i, j, words[i].length, words[j].length])
           }
         }
