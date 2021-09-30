@@ -16,6 +16,10 @@ const w = window.innerWidth
 const h = window.innerHeight
 console.log('width&height', w, h)
 
+const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+const arraysAreEqual = (array1, array2) => array1.length === array2.length && array1.every(el => array2.includes(el))
+const orderArrayAsc = (array) => array.sort((el1, el2) => el1 - el2)
+
 function createLayout () {
   const layout = document.getElementById('layout')
   for (let colIndex = 0; colIndex <= (numLeters + 1); colIndex++) {
@@ -45,9 +49,9 @@ function createLayout () {
     answer.innerHTML = answersForRead[i]
     asnwerBoard.appendChild(answer)
   }
-  console.log('answers',answers)
-  console.log('answersforRead',answersForRead)
-  console.log('takensquares',takenSquares)
+  console.log('answers', answers)
+  console.log('answersforRead', answersForRead)
+  console.log('takensquares', takenSquares)
   fillSignsForLayout()
 }
 function fillSignsForLayout () {
@@ -102,7 +106,6 @@ function squareClicked (square) {
 function drawAnswers (numAnswers) {
   // first we need to decide number of coordinates to find
   // that number is based on the diffuculty of the lvl
-
   while (numAnswers > 0) {
     const decider = getRandomIntInclusive(0, 2)
     let letter = alphabet[getRandomIntInclusive(0, numLeters - 1)]
@@ -158,18 +161,12 @@ function drawAnswers (numAnswers) {
   }
 }
 
-function getRandomIntInclusive (min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
-
 window.onload = () => {
   drawAnswers(numAnswers)
   createLayout()
   // based on the number of letters and words we deduct the size of squaers so they always fit - we choose the larger number
   var elements = document.getElementsByClassName('square')
-  // we determine the largest number between the two and continue with calculating the size value based on that naumber
+  // we determine the largest number between the two and continue with calculating the size value based on that number
   const largerElement = numNumbers > numLeters ? numNumbers : numLeters
   // based on the largerElement we set divident accrding to height or width of window, same goes for divider
   const divident = largerElement === numNumbers ? 837 : 1707
