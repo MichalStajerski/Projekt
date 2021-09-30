@@ -1,1 +1,0 @@
-Wodzenie wzrokiem za kulką- poruszająca się kulka-ile razy dotknie ściany(animowana kulka o przypadkowych ruchach i możliwości wybrania prędkości).
