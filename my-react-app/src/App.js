@@ -1,5 +1,5 @@
 import './App.css'
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const allSquaresTaken = (array) => array.every(el => el !== null) //checks if all squares have a sign in it
@@ -109,6 +109,7 @@ class Game extends React.Component {
         <div className='game-board'>
           <Board />
           <button className = 'reloadButton' onClick={() => window.location.reload()} >New Game</button>
+          {/* <button onClick={() => setCount(count + 1)}>Click me</button> */}
         </div>
       </div>
     )
