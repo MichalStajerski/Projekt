@@ -13,6 +13,8 @@ body {
   content: "";
   clear: both;
   display: table;
+  width: 100%;
+  height: auto;
 }
 .button {
     background-color: #04AA6D;
@@ -29,6 +31,9 @@ body {
  
 .button {border-radius: 12px;}
 
+.zoom{
+  object-fit: cover;
+}
 .zoom:hover {
     -ms-transform: scale(0.5); 
     -webkit-transform: scale(0.5); 
