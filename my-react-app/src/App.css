@@ -24,6 +24,7 @@ ol, ul {
   margin-bottom: 10px;
   font-size: large;
   font-weight: bold;
+  font-family:Verdana, Geneva, Tahoma, sans-serif
 }
 
 .winningSquare {
