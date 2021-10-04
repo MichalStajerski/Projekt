@@ -11,7 +11,7 @@ let draw = true
 let increment = 0
 
 const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
-const arraysAreEqual = (array1,array2) => array1.length === array2.length && array1.every(el => array2.includes(el))
+const arraysAreEqual = (array1, array2) => array1.length === array2.length && array1.every(el => array2.includes(el))
 
 // function to show increment in progress bar after correct answer
 function move () {
@@ -34,7 +34,7 @@ function checkAnswers (id) {
     const picture = document.getElementById(id).alt
     checkedalt.push(picture)
 
-    if (arraysAreEqual(checkedalt,altanswers)) {   
+    if (arraysAreEqual(checkedalt, altanswers)) {
       move()
       draw = true
 
@@ -44,9 +44,9 @@ function checkAnswers (id) {
       drawImgagesAndSound()
       if (correctAnswers === 10) {
         block = true
-        setTimeout(() =>{
+        setTimeout(() => {
           alert('Victory')
-        },100)
+        }, 100)
       }
     } else {
       document.getElementById('myCorrectAnswers').innerHTML = correctAnswers
