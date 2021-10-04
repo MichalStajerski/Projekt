@@ -1,4 +1,4 @@
-const timesClicked = correctAnswers = 0
+let correctAnswers = 0
 const answers = []
 let block = false
 const imgs = ['Images/0.jpg', 'Images/1.jpg', 'Images/2.jpg', 'Images/3.jpg']
@@ -20,7 +20,6 @@ function move () {
     const elem = document.getElementById('myBar')
     elem.style.width = increment + '%'
     const id = setInterval(frame, 10)
-    console.log(increment)
     function frame () {
       if (increment >= 100) {
         clearInterval(id)
@@ -37,19 +36,12 @@ function checkAnswers (id) {
     if (arraysAreEqual(checkedalt, altanswers)) {
       move()
       draw = true
-
       correctAnswers++
       // display how many correct asnwers we currently have
       document.getElementById('myCorrectAnswers').innerHTML = correctAnswers
       drawImgagesAndSound()
-      if (correctAnswers === 10) {
-        block = true
-        setTimeout(() => {
-          alert('Victory')
-        }, 100)
-      }
+      correctAnswers === 10 ? block = true && setTimeout(() => { alert('Victory'), 100 }) : null
     } else {
-      document.getElementById('myCorrectAnswers').innerHTML = correctAnswers
       // don't draw new set of images and audio, lets the user change his asnwer
       draw = false
     }
