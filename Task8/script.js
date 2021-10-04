@@ -70,7 +70,7 @@ function DrawImages () {
   const temp = getRandomArrayNumbers(4, 0, 3)
   const temp2 = getRandomArrayNumbers(4, 4, 7)
   merged = temp.concat(temp2)
-  merged = Shuffle(merged)
+  merged.sort(() => Math.random() - 0.5) 
   console.log('merged: ' + merged)
   for (let i = 0; i < merged.length; i++) {
     document.getElementById(i).alt = alt[merged[i]]
@@ -115,7 +115,7 @@ function CreateLayout () {
       div.setAttribute('class', 'column')
       div.setAttribute('id', 'divcol')
       const img = document.createElement('img')
-      setAttributes(img, { src: 'Images/back.jpg', class: 'zoom img', style: 'width:80%', alt: ' ', onclick: 'ChangeAndCheck(id)' })
+      setAttributes(img, { src: 'Images/back.jpg', class: 'zoom img', style: 'width:70%', alt: ' ', onclick: 'ChangeAndCheck(id)' })
       img.id = i
       div.appendChild(img)
       divrow.appendChild(div)
@@ -124,7 +124,7 @@ function CreateLayout () {
       div.setAttribute('class', 'column')
       div.setAttribute('id', 'divcol')
       const img = document.createElement('img')
-      setAttributes(img, { src: 'Images/back.jpg', class: 'zoom img', style: 'width:80%', alt: ' ', onclick: 'ChangeAndCheck(id)' })
+      setAttributes(img, { src: 'Images/back.jpg', class: 'zoom img', style: 'width:70%', alt: ' ', onclick: 'ChangeAndCheck(id)' })
       img.id = i
       div.appendChild(img)
       divrow2.appendChild(div)
