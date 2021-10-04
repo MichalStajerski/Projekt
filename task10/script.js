@@ -6,11 +6,9 @@ const alt = ['Bee', 'Bear', 'Dog', 'Parrot']
 const audioTracks = ['Audio/Bee-noise.mp3', 'Audio/Large Black Bear Single Roar - QuickSounds.com.mp3', 'Audio/Dog-barking-multiple-sound-effect.mp3', 'Audio/Small Parrot Interior Constant Calls - QuickSounds.com.mp3']
 let checkedalt = []
 // altanswers is an array of alts for our images
-let altanswers = [alt[answers[0]]]
+let altanswers = []
 let draw = true
-console.log(altanswers)
 let increment = 0
-const i = 0
 
 const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 const arraysAreEqual = (array1,array2) => array1.length === array2.length && array1.every(el => array2.includes(el))
@@ -33,12 +31,10 @@ function move () {
 
 function checkAnswers (id) {
   if (block === false) {
-    const a = document.getElementById(id).alt
-    checkedalt.push(a)
+    const picture = document.getElementById(id).alt
+    checkedalt.push(picture)
 
     if (arraysAreEqual(checkedalt,altanswers)) {   
-      console.log('block ' + block)
-      // block our submit asnwer button after 10 questions
       move()
       draw = true
 
