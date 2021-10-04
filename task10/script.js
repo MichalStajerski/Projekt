@@ -61,13 +61,13 @@ function drawImgagesAndSound () {
       document.getElementById(i).alt = alt[temp[i - 1]]
       // draws one random audio matching one of the images that were drawn above
     }
-    const ab = temp[random]
-    console.log(ab)
+    const answer = temp[random]
+    console.log(answer)
     document.getElementById('audio').src = audioTracks[ab]
-    altanswers = [alt[ab]]
+    altanswers = [alt[answer]]
   }
 }
-// returns array of random numbers between two numbers - our not repeating images
+// returns array of random numbers between two 0 and specified number - our not repeating images
 function getRandomArrayNumbers (qt) {
   const indexSet = new Set()
   while (indexSet.size != qt) {
