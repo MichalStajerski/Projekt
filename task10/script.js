@@ -12,6 +12,9 @@ console.log(altanswers)
 let increment = 0
 const i = 0
 
+
+const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+
 // function to show increment in progress bar after correct answer
 function move () {
   if (increment < 100) {
@@ -26,9 +29,6 @@ function move () {
       }
     }
   }
-}
-window.onload = function () {
-  drawImgagesAndSound()
 }
 
 function checkAnswers (id) {
@@ -66,18 +66,6 @@ function checkAnswers (id) {
   }
 }
 
-// function that allows us to remove item from array checked by passed value
-Array.prototype.remove = function () {
-  let what; const a = arguments; let L = a.length; let ax
-  while (L && this.length) {
-    what = a[--L]
-    while ((ax = this.indexOf(what)) !== -1) {
-      this.splice(ax, 1)
-    }
-  }
-  return this
-}
-
 function drawImgagesAndSound () {
   if (draw !== false) {
     // gets array with 3 random numbers
@@ -104,9 +92,7 @@ function getRandomArrayNumbers (qt) {
   }
   return Array.from(indexSet)
 }
-// draws randomly a number between two values including them also
-function getRandomIntInclusive (min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1)) + min
+
+window.onload = () => {
+  drawImgagesAndSound()
 }
