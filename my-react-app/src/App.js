@@ -109,7 +109,6 @@ class Game extends React.Component {
         <div className='game-board'>
           <Board />
           <button className = 'reloadButton' onClick={() => window.location.reload()} >New Game</button>
-          {/* <button onClick={() => setCount(count + 1)}>Click me</button> */}
         </div>
       </div>
     )
