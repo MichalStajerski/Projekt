@@ -12,7 +12,6 @@ console.log(altanswers)
 let increment = 0
 const i = 0
 
-
 const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 
 // function to show increment in progress bar after correct answer
