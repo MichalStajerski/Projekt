@@ -20,7 +20,7 @@ function move () {
   if (increment < 100) {
     increment += 10
     const elem = document.getElementById('myBar')
-    const width = elem.style.width = increment + '%'
+    elem.style.width = increment + '%'
     const id = setInterval(frame, 10)
     console.log(increment)
     function frame () {
@@ -35,25 +35,22 @@ function checkAnswers (id) {
   if (block === false) {
     const a = document.getElementById(id).alt
     checkedalt.push(a)
-    // sort array so the sequence of choosing correct answers won't affect the outcome, the only thing that matters is to choose correct answers
-    // sorting only needed when we have more than one correct answer in our question for example: load 3 images and only by checking two of them we get the correct answer
-    // in our case where there is only one correct answer it's not needed
 
     if (arraysAreEqual(checkedalt,altanswers)) {   
       console.log('block ' + block)
       // block our submit asnwer button after 10 questions
+      move()
+      draw = true
 
-      for (let i = 0; i < checkedalt.length; i++) {
-        const goodAnswers = checkedalt[i]
-        move()
-        draw = true
-      }
       correctAnswers++
       // display how many correct asnwers we currently have
       document.getElementById('myCorrectAnswers').innerHTML = correctAnswers
       drawImgagesAndSound()
       if (correctAnswers === 10) {
         block = true
+        setTimeout(() =>{
+          alert('Victory')
+        },100)
       }
     } else {
       document.getElementById('myCorrectAnswers').innerHTML = correctAnswers
