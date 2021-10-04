@@ -13,6 +13,7 @@ let increment = 0
 const i = 0
 
 const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+const arraysAreEqual = (array1,array2) => array1.length === array2.length && array1.every(el => array2.includes(el))
 
 // function to show increment in progress bar after correct answer
 function move () {
@@ -37,10 +38,8 @@ function checkAnswers (id) {
     // sort array so the sequence of choosing correct answers won't affect the outcome, the only thing that matters is to choose correct answers
     // sorting only needed when we have more than one correct answer in our question for example: load 3 images and only by checking two of them we get the correct answer
     // in our case where there is only one correct answer it's not needed
-    altanswers.sort()
-    checkedalt.sort()
 
-    if (JSON.stringify(altanswers) === JSON.stringify(checkedalt)) {
+    if (arraysAreEqual(checkedalt,altanswers)) {   
       console.log('block ' + block)
       // block our submit asnwer button after 10 questions
 
