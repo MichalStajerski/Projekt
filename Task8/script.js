@@ -7,6 +7,8 @@ let answerarray = []
 let merged = []
 let iterator = 0
 
+const getRandomIntInclusive = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min
+
 // function gets what image is on default for a card
 function GetOrigin () {
   for (let i = 0; i < Images.length; i++) {
@@ -55,7 +57,7 @@ function ChangeAndCheck (id) {
   }
 }
 
-window.onload = function () {
+window.onload = () => {
   CreateLayout()
   GetOrigin()
   DrawImages()
@@ -65,8 +67,8 @@ function DrawImages () {
   for (let j = 0; j < 8; j++) {
     document.getElementById(j).src = stan[j]
   }
-  const temp = GetRandomArrayNumbers(4, 0, 3)
-  const temp2 = GetRandomArrayNumbers(4, 4, 7)
+  const temp = getRandomArrayNumbers(4, 0, 3)
+  const temp2 = getRandomArrayNumbers(4, 4, 7)
   merged = temp.concat(temp2)
   merged = Shuffle(merged)
   console.log('merged: ' + merged)
@@ -74,24 +76,14 @@ function DrawImages () {
     document.getElementById(i).alt = alt[merged[i]]
   }
 }
-// fucntion for our button
-function Reload () {
-  window.location.reload(true)
-}
+
 // returns array of random numbers between two numbers - our not repeating images
-function GetRandomArrayNumbers (qt, lowerlimit, upperlimit) {
+function getRandomArrayNumbers (qt, lowerlimit, upperlimit) {
   const indexSet = new Set()
   while (indexSet.size !== qt) {
-    indexSet.add(GetRandomIntInclusive(lowerlimit, upperlimit))
+    indexSet.add(getRandomIntInclusive(lowerlimit, upperlimit))
   }
   return Array.from(indexSet)
-}
-
-// draws randomly a number between two values including them also
-function GetRandomIntInclusive (min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 // randomly shuffles array elements
