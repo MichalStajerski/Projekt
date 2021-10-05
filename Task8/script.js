@@ -1,28 +1,28 @@
 // alt array is has duplicates cause merged array has 8 elements and it makes it easier for later use
 const alt = ['Bee', 'Bear', 'Dog', 'Parrot', 'Bee', 'Bear', 'Dog', 'Parrot']
 const Images = ['Images/0.jpg', 'Images/1.jpg', 'Images/2.jpg', 'Images/3.jpg', 'Images/4.jpg', 'Images/5.jpg', 'Images/6.jpg', 'Images/7.jpg']
-// stan array holds the original paths to images so we can return card to back upon wrong match
-const stan = []
+// originalState array holds the original paths to images so we can return card to back upon wrong match
+const originalState = []
 let answerarray = []
 let merged = []
 let iterator = 0
 
-const getRandomIntInclusive = (min,max) => Math.floor(Math.random() * (max - min + 1)) + min
+const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 
 // function gets what image is on default for a card
 function GetOrigin () {
   for (let i = 0; i < Images.length; i++) {
     const original = document.getElementById(i).src
-    // array stan is used for double click on card for unchecking
-    stan.push(original)
-    console.log('stan ' + stan)
+    // array originalState is used for double click on card for unchecking
+    originalState.push(original)
+    console.log('originalState ' + originalState)
   }
-  return stan
+  return originalState
 }
 
 function ChangeAndCheck (id) {
   iterator++
-  if (document.getElementById(id).src === stan[id]) {
+  if (document.getElementById(id).src === originalState[id]) {
     // change image upon click
     document.getElementById(id).src = Images[merged[id]]
     // save our asnwer
@@ -33,17 +33,13 @@ function ChangeAndCheck (id) {
       setTimeout(function () {
         // check answers by alt
         if (document.getElementById(answerarray[0]).alt !== document.getElementById(answerarray[1]).alt) {
-          for (let i = 0; i < answerarray.length; i++) {
-            // return them to back card upon wrong pairing after set interval
-            document.getElementById(answerarray[i]).src = stan[id]
-          }
+          document.getElementById(...answerarray).src = originalState[id]
           // clear our asnwer array after set of two
           answerarray = []
         } else {
           // block cards if matched corrextly so we can't reuse them
           // asnwer array indexes can be hardcoded because we always choose two cards to match
-          document.getElementById(answerarray[0]).onclick = ''
-          document.getElementById(answerarray[1]).onclick = ''
+          document.getElementById(...answerarray).onclick = disabled
           // clear our asnwer array after set of two
           answerarray = []
         }
@@ -51,9 +47,9 @@ function ChangeAndCheck (id) {
     }
   } else {
     // uncheck upon second click on the same picture
-    document.getElementById(id).src = stan[id]
+    document.getElementById(id).src = originalState[id]
     // remove asnwer from array upon uchecking
-    answerarray.pop(stan[id])
+    answerarray.pop(originalState[id])
   }
 }
 
@@ -65,12 +61,12 @@ window.onload = () => {
 
 function DrawImages () {
   for (let j = 0; j < 8; j++) {
-    document.getElementById(j).src = stan[j]
+    document.getElementById(j).src = originalState[j]
   }
   const temp = getRandomArrayNumbers(4, 0, 3)
   const temp2 = getRandomArrayNumbers(4, 4, 7)
   merged = temp.concat(temp2)
-  merged.sort(() => Math.random() - 0.5) 
+  merged.sort(() => Math.random() - 0.5)
   console.log('merged: ' + merged)
   for (let i = 0; i < merged.length; i++) {
     document.getElementById(i).alt = alt[merged[i]]
@@ -86,20 +82,6 @@ function getRandomArrayNumbers (qt, lowerlimit, upperlimit) {
   return Array.from(indexSet)
 }
 
-// randomly shuffles array elements
-function Shuffle (array) {
-  let currentIndex = array.length; let randomIndex
-  // while there remain elements to shuffle
-  while (currentIndex !== 0) {
-    // pick a remaining element
-    randomIndex = Math.floor(Math.random() * currentIndex)
-    currentIndex--;
-    // and swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]]
-  }
-  return array
-}
 // dynamically creates our elements instead of hardcoded html code like it was before
 function CreateLayout () {
   const divrow = document.createElement('div')
