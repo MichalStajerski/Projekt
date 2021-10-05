@@ -85,12 +85,15 @@ function getRandomArrayNumbers (qt, lowerlimit, upperlimit) {
 // dynamically creates our elements instead of hardcoded html code like it was before
 function CreateLayout () {
   const divrow = document.createElement('div')
-  divrow.setAttribute('class', 'row')
-  divrow.setAttribute('id', 'diva')
+  divrow.className = 'row'
+  divrow.id = 'diva'
+
+  
   const divrow2 = document.createElement('div')
-  divrow2.setAttribute('class', 'row')
-  document.getElementById('layout').appendChild(divrow)
-  document.getElementById('layout').appendChild(divrow2)
+  divrow2.className = 'row'
+  document.getElementById('layout').appendChildren(divrow,divrow2)
+  // document.getElementById('layout').appendChild(divrow)
+  // document.getElementById('layout').appendChild(divrow2)
   for (let i = 0; i < Images.length; i++) {
     if (i < 4) {
       const div = document.createElement('div')
