@@ -69,7 +69,7 @@ function DrawImages () {
   merged.sort(() => Math.random() - 0.5)
   console.log('merged: ' + merged)
   for (let i = 0; i < merged.length; i++) {
-    document.getElementById(i).alt = alt[merged[i]]
+    document.getElementById(...merged).alt = alt[merged[i]]
   }
 }
 
@@ -94,8 +94,8 @@ function CreateLayout () {
   for (let i = 0; i < Images.length; i++) {
     if (i < 4) {
       const div = document.createElement('div')
-      div.setAttribute('class', 'column')
-      div.setAttribute('id', 'divcol')
+      div.className = 'column'
+      div.id - 'divcol'
       const img = document.createElement('img')
       setAttributes(img, { src: 'Images/back.jpg', class: 'zoom img', style: 'width:70%', alt: ' ', onclick: 'ChangeAndCheck(id)' })
       img.id = i
@@ -103,8 +103,8 @@ function CreateLayout () {
       divrow.appendChild(div)
     } else {
       const div = document.createElement('div')
-      div.setAttribute('class', 'column')
-      div.setAttribute('id', 'divcol')
+      div.className = 'column'
+      div.id - 'divcol'
       const img = document.createElement('img')
       setAttributes(img, { src: 'Images/back.jpg', class: 'zoom img', style: 'width:70%', alt: ' ', onclick: 'ChangeAndCheck(id)' })
       img.id = i
