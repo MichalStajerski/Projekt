@@ -61,15 +61,17 @@ window.onload = () => {
 
 function DrawImages () {
   for (let j = 0; j < 8; j++) {
-    document.getElementById(j).src = originalState[j]
+    document.getElementById(j).src = {...originalState}
   }
   
   merged = getRandomArrayNumbers(8, 0, 7)
   merged.sort(() => Math.random() - 0.5)
   console.log('merged: ' + merged)
-  for (let i = 0; i < merged.length; i++) {
-    document.getElementById(...merged).alt = alt[merged[i]]
-  }
+  document.getElementById(...merged).alt = alt[{...merged}]
+  // line above works in the same way as code below thanks to spread operator
+  // for (let i = 0; i < merged.length; i++) {
+  //   document.getElementById(i).alt = alt[merged[i]]
+  // }
 }
 
 // returns array of random numbers between two numbers - our not repeating images
