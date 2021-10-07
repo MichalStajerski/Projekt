@@ -63,7 +63,7 @@ function drawImgagesAndSound () {
     }
     const answer = temp[random]
     console.log(answer)
-    document.getElementById('audio').src = audioTracks[ab]
+    document.getElementById('audio').src = audioTracks[answer]
     altanswers = [alt[answer]]
   }
 }
