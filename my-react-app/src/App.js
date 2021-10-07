@@ -138,6 +138,14 @@ function Example(){
   );
 }
 
+function Reduce(initialState){
+  const [state,setState] = useState(initialState)
+
+  useEffect(() => {
+
+  })
+}
+
 export default Game
 
 // TODO
