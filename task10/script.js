@@ -38,7 +38,7 @@ function checkAnswers (id) {
       draw = true
       correctAnswers++
       // display how many correct asnwers we currently have
-      document.getElementById('myCorrectAnswers').innerHTML = correctAnswers
+      document.querySelector('#myCorrectAnswers').innerHTML = correctAnswers
       drawImgagesAndSound()
       correctAnswers === 10 ? block = true && setTimeout(() => { alert('Victory'), 100 }) : null
     } else {
@@ -63,7 +63,7 @@ function drawImgagesAndSound () {
     }
     const answer = temp[random]
     console.log(answer)
-    document.getElementById('audio').src = audioTracks[answer]
+    document.querySelector('#audio').src = audioTracks[answer]
     altanswers = [alt[answer]]
   }
 }
