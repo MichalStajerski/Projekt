@@ -63,9 +63,8 @@ function DrawImages () {
   for (let j = 0; j < 8; j++) {
     document.getElementById(j).src = originalState[j]
   }
-  const temp = getRandomArrayNumbers(4, 0, 3)
-  const temp2 = getRandomArrayNumbers(4, 4, 7)
-  merged = temp.concat(temp2)
+  const temp = getRandomArrayNumbers(8, 0, 7)
+  merged = temp
   merged.sort(() => Math.random() - 0.5)
   console.log('merged: ' + merged)
   for (let i = 0; i < merged.length; i++) {
