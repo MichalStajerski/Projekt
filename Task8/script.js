@@ -88,12 +88,9 @@ function CreateLayout () {
   divrow.className = 'row'
   divrow.id = 'diva'
 
-  
   const divrow2 = document.createElement('div')
   divrow2.className = 'row'
   document.getElementById('layout').appendChildren(divrow,divrow2)
-  // document.getElementById('layout').appendChild(divrow)
-  // document.getElementById('layout').appendChild(divrow2)
   for (let i = 0; i < Images.length; i++) {
     if (i < 4) {
       const div = document.createElement('div')
