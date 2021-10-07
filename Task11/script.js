@@ -150,6 +150,18 @@ function clickCirlce (e) {
   getMousePosition(canvas, e)// gets the coordinates of the mouse in canvas upon click
 }
 
+
+class field {
+  constructor(row,column){
+    this.row = row
+    this.column = column
+  }
+
+}
+
+const a = new field('a',4)
+console.log(a)
+
 window.onload = () => {
   const body = document.getElementById('body')
   const startButton = document.createElement('button')
