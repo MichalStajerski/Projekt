@@ -15,11 +15,10 @@ function GetOrigin () {
     const original = document.getElementById(i).src
     // array originalState is used for double click on card for unchecking
     originalState.push(original)
-    console.log('originalState ' + originalState)
+    // console.log('originalState ' + originalState)
   }
   return originalState
 }
-
 function ChangeAndCheck (id) {
   iterator++
   if (document.getElementById(id).src === originalState[id]) {
@@ -33,13 +32,17 @@ function ChangeAndCheck (id) {
       setTimeout(function () {
         // check answers by alt
         if (document.getElementById(answerarray[0]).alt !== document.getElementById(answerarray[1]).alt) {
-          document.getElementById(...answerarray).src = originalState[id]
+          // document.getElementById(...answerarray).src = originalState[id]
+          for (let i = 0; i < answerarray.length; i++) {
+            // return them to back card upon wrong pairing after set interval
+            document.getElementById(answerarray[i]).src = originalState[id]
+          }
           // clear our asnwer array after set of two
           answerarray = []
         } else {
           // block cards if matched corrextly so we can't reuse them
           // asnwer array indexes can be hardcoded because we always choose two cards to match
-          document.getElementById(...answerarray).onclick = disabled
+          document.getElementById(...answerarray).onclick = null
           // clear our asnwer array after set of two
           answerarray = []
         }
@@ -53,29 +56,24 @@ function ChangeAndCheck (id) {
   }
 }
 
-window.onload = () => {
+window.onload = function () {
   CreateLayout()
   GetOrigin()
   DrawImages()
 }
-
 function DrawImages () {
   for (let j = 0; j < 8; j++) {
-    document.getElementById(j).src = {...originalState}
+    document.getElementById(j).src = originalState[j]
   }
-  
-  merged = getRandomArrayNumbers(8, 0, 7)
-  merged.sort(() => Math.random() - 0.5)
-  console.log('merged: ' + merged)
-  document.getElementById(...merged).alt = alt[{...merged}]
-  // line above works in the same way as code below thanks to spread operator
-  // for (let i = 0; i < merged.length; i++) {
-  //   document.getElementById(i).alt = alt[merged[i]]
-  // }
-}
 
+  merged = GetRandomArrayNumbers(8,0,7)
+  console.log('merged: ' + merged)
+  for (let i = 0; i < merged.length; i++) {
+    document.getElementById(i).alt = alt[merged[i]]
+  }
+}
 // returns array of random numbers between two numbers - our not repeating images
-function getRandomArrayNumbers (qt, lowerlimit, upperlimit) {
+function GetRandomArrayNumbers (qt, lowerlimit, upperlimit) {
   const indexSet = new Set()
   while (indexSet.size !== qt) {
     indexSet.add(getRandomIntInclusive(lowerlimit, upperlimit))
@@ -88,26 +86,26 @@ function CreateLayout () {
   const divrow = document.createElement('div')
   divrow.className = 'row'
   divrow.id = 'diva'
-
   const divrow2 = document.createElement('div')
   divrow2.className = 'row'
-  document.getElementById('layout').appendChildren(divrow,divrow2)
+  document.getElementById('layout').appendChild(divrow)
+  document.getElementById('layout').appendChild(divrow2)
   for (let i = 0; i < Images.length; i++) {
     if (i < 4) {
       const div = document.createElement('div')
       div.className = 'column'
-      div.id - 'divcol'
+      div.id = 'divcol'
       const img = document.createElement('img')
-      setAttributes(img, { src: 'Images/back.jpg', class: 'zoom img', style: 'width:70%', alt: ' ', onclick: 'ChangeAndCheck(id)' })
+      setAttributes(img, { src: 'Images/back.jpg', class: 'zoom img', style: 'width:80%', alt: ' ', onclick: 'ChangeAndCheck(id)' })
       img.id = i
       div.appendChild(img)
       divrow.appendChild(div)
     } else {
       const div = document.createElement('div')
       div.className = 'column'
-      div.id - 'divcol'
+      div.id = 'divcol'
       const img = document.createElement('img')
-      setAttributes(img, { src: 'Images/back.jpg', class: 'zoom img', style: 'width:70%', alt: ' ', onclick: 'ChangeAndCheck(id)' })
+      setAttributes(img, { src: 'Images/back.jpg', class: 'zoom img', style: 'width:80%', alt: ' ', onclick: 'ChangeAndCheck(id)' })
       img.id = i
       div.appendChild(img)
       divrow2.appendChild(div)
