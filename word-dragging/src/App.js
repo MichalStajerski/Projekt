@@ -1,6 +1,5 @@
 
 import './App.css';
-import ReactDom from 'react-dom';
 import React, { useState, useEffect } from 'react'
 import Dragula from 'react-dragula';
 
@@ -81,8 +80,7 @@ class Game extends React.Component {
           <button id ='btnCheck' className = 'glow-on-hover button-center'>Submit</button>
           <button className = 'glow-on-hover button-center'>Reload</button>
         </div>
-      </div>
-      
+      </div> 
     )
   }
 }
