@@ -3,8 +3,6 @@ import './App.css';
 import React, { useState, useEffect } from 'react'
 import Dragula from 'react-dragula';
 
-// import 'dist/dragula'
-
 const sentences = [
   'تكون أو لا تكون',
   'Proszę Państwa Pan Paweł będzie skakał',
@@ -29,18 +27,7 @@ function drawOrderOfWords () {
   shuffleArray(wordsOrder)
 }
 
-function insertWordIntoDiv (array) {
-  for (let i = 0; i < array.length; i++) {
-    document.querySelector('#word' + i).innerHTML = words[array[i]]
-  }
-}
-
 class Board extends React.Component{
-
-  handleClick(){
-
-  }
-
   render(){
     drawOrderOfWords()
     var numberOfWords = []
@@ -56,7 +43,7 @@ class Board extends React.Component{
       <div className = 'row'>
         <div className = 'column'>
           <h1 id = 'title'>Word Dragging</h1>
-          <div className = 'wordContainer' ref={this.dragulaDecorator}>
+          <div className = 'wordsContainer' ref={this.dragulaDecorator}>
             {numberOfWords}
           </div>
         </div>      
@@ -68,9 +55,9 @@ class Board extends React.Component{
       let options = { };
       Dragula([componentBackingInstance], options);
     }
-  };  
+  }
 }
-const wordContainer = document.getElementsByClassName('wordContainer')
+
 class Game extends React.Component {  
   render(){
     return(
@@ -78,7 +65,7 @@ class Game extends React.Component {
         <Board/>
         <div class = 'row'>
           <button id ='btnCheck' className = 'glow-on-hover button-center'>Submit</button>
-          <button className = 'glow-on-hover button-center'>Reload</button>
+          <button className = 'glow-on-hover button-center' onClick= {() => window.location.reload()}>Reload</button>
         </div>
       </div> 
     )
