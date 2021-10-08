@@ -1,6 +1,6 @@
 
 import './App.css';
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Dragula from 'react-dragula';
 
 const sentences = [
@@ -13,6 +13,7 @@ const sentences = [
 
 const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 const shuffleArray = (array) => array.sort(() => Math.random() - 0.5)
+const answersAreEqual = (answer,array) => array.includes(answer)
 
 const drawnAnswer = getRandomIntInclusive(0, sentences.length - 1)
 const words = sentences[drawnAnswer].trim().split(' ')
@@ -25,6 +26,21 @@ function drawOrderOfWords () {
     wordsOrder.push(i)
   }
   shuffleArray(wordsOrder)
+}
+
+function checkAnswer(){
+  const answer = document.getElementsByClassName('droptarget')
+  const answerToArray = Array.from(answer)
+  const wordsSet = answerToArray.map((word) => word.innerHTML).toString().replace(/,/g, ' ')
+  answersAreEqual(wordsSet,sentences) ? 
+    setTimeout(()=>{
+      alert('Vicotry')
+    },200)
+    : 
+    setTimeout(()=>{
+      alert('wrong sentence')
+    },200)
+  console.log('comaprison',answersAreEqual(wordsSet,sentences))
 }
 
 class Board extends React.Component{
@@ -64,7 +80,7 @@ class Game extends React.Component {
       <div>
         <Board/>
         <div class = 'row'>
-          <button id ='btnCheck' className = 'glow-on-hover button-center'>Submit</button>
+          <button id ='btnCheck' className = 'glow-on-hover button-center' onClick = {checkAnswer}>Submit</button>
           <button className = 'glow-on-hover button-center' onClick= {() => window.location.reload()}>Reload</button>
         </div>
       </div> 
