@@ -2,6 +2,9 @@
 import './App.css';
 import ReactDom from 'react-dom';
 import React, { useState, useEffect } from 'react'
+import Dragula from 'react-dragula';
+
+// import 'dist/dragula'
 
 const sentences = [
   'تكون أو لا تكون',
@@ -54,18 +57,22 @@ class Board extends React.Component{
       <div className = 'row'>
         <div className = 'column'>
           <h1 id = 'title'>Word Dragging</h1>
-          <div className = 'wordContainer'>
+          <div className = 'wordContainer' ref={this.dragulaDecorator}>
             {numberOfWords}
           </div>
         </div>      
       </div>
     )
-  }  
+  }
+  dragulaDecorator = (componentBackingInstance) => {
+    if (componentBackingInstance) {
+      let options = { };
+      Dragula([componentBackingInstance], options);
+    }
+  };  
 }
 const wordContainer = document.getElementsByClassName('wordContainer')
-class Game extends React.Component {
-  // dragula([wordContainer])
-  
+class Game extends React.Component {  
   render(){
     return(
       <div>
