@@ -1,6 +1,6 @@
 
 import './App.css';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Dragula from 'react-dragula';
 
 const sentences = [
@@ -28,19 +28,20 @@ function drawOrderOfWords () {
   shuffleArray(wordsOrder)
 }
 
-function checkAnswer(){
+function CheckAnswer(){
   const answer = document.getElementsByClassName('droptarget')
+  console.log('asnwer',answer)
   const answerToArray = Array.from(answer)
   const wordsSet = answerToArray.map((word) => word.innerHTML).toString().replace(/,/g, ' ')
-  answersAreEqual(wordsSet,sentences) ? 
+  if(answersAreEqual(wordsSet,sentences)){
     setTimeout(()=>{
       alert('Vicotry')
     },200)
-    : 
+  }else{
     setTimeout(()=>{
       alert('wrong sentence')
     },200)
-  console.log('comaprison',answersAreEqual(wordsSet,sentences))
+  }
 }
 
 class Board extends React.Component{
@@ -80,7 +81,7 @@ class Game extends React.Component {
       <div>
         <Board/>
         <div class = 'row'>
-          <button id ='btnCheck' className = 'glow-on-hover button-center' onClick = {checkAnswer}>Submit</button>
+          <button id ='btnCheck' className = 'glow-on-hover button-center' onClick = {CheckAnswer} >Submit</button>
           <button className = 'glow-on-hover button-center' onClick= {() => window.location.reload()}>Reload</button>
         </div>
       </div> 
