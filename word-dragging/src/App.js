@@ -41,7 +41,6 @@ class Board extends React.Component{
 
   render(){
     drawOrderOfWords()
-
     var numberOfWords = []
     for (let i = 0; i < words.length; i++) {
       numberOfWords.push(
@@ -71,7 +70,12 @@ class Game extends React.Component {
     return(
       <div>
         <Board/>
+        <div class = 'row'>
+          <button id ='btnCheck' className = 'glow-on-hover button-center'>Submit</button>
+          <button className = 'glow-on-hover button-center'>Reload</button>
+        </div>
       </div>
+      
     )
   }
 }
