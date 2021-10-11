@@ -24,7 +24,6 @@ function CheckAnswer(setDisable){
   const answerToArray = Array.from(answer)
   const wordsSet = Array.from(answerToArray.map((word) => word.innerHTML))
   const finalSentence = answerToArray.map((word) => word.innerHTML).toString().replace(/,/g,' ')
-  console.log(words)
   for (let i = 0; i < words.length; i++) {
     document.querySelector('#word'+i).style.backgroundColor = wordsSet[i] !== words[i] ? 'red' : 'silver'
   }
@@ -39,14 +38,10 @@ function CheckAnswer(setDisable){
        }
      }
    });
+   setTimeout(()=>{alert('Victory')},200)
    setDisable(true)
-    setTimeout(()=>{
-      alert('Victory')
-    },200)
   }else{
-    setTimeout(()=>{
-      alert('wrong sentence')
-    },200)
+    setTimeout(()=>{alert('wrong sentence')},200)
   }
 }
 
