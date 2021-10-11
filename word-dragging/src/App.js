@@ -19,7 +19,7 @@ const drawnAnswer = getRandomIntInclusive(0, sentences.length - 1)
 const words = sentences[drawnAnswer].trim().split(' ')
 const wordsOrder = shuffleArray([...Array(words.length).keys()]) // fills array with number from 0 to words.length - 1, then shuffles it
 
-function CheckAnswer(){
+function CheckAnswer(setDisable){
   const answer = document.getElementsByClassName('droptarget')
   const answerToArray = Array.from(answer)
   const wordsSet = Array.from(answerToArray.map((word) => word.innerHTML))
@@ -39,9 +39,9 @@ function CheckAnswer(){
        }
      }
    });
-
+   setDisable(true)
     setTimeout(()=>{
-      alert('Vicotry')
+      alert('Victory')
     },200)
   }else{
     setTimeout(()=>{
@@ -81,19 +81,17 @@ class Board extends React.Component{
   }
 }
 
-class Game extends React.Component {
-  cons
-  render(){
+function Game() {
+  const [disable,setDisable] = useState(false)
     return(
       <div>
         <Board/>
         <div class = 'row'>
-          <button id ='btnCheck' className = 'glow-on-hover button-center'  onClick = {CheckAnswer} >Submit</button>
+          <button id ='btnCheck' className = 'glow-on-hover button-center' disabled ={disable}  onClick = {() => CheckAnswer(setDisable)} >Submit</button>
           <button className = 'glow-on-hover button-center' onClick= {() => window.location.reload()}>Reload</button>
         </div>
       </div> 
     )
-  }
 }
 
 export default Game ;
