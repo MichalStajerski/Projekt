@@ -19,8 +19,6 @@ const drawnAnswer = getRandomIntInclusive(0, sentences.length - 1)
 const words = sentences[drawnAnswer].trim().split(' ')
 const wordsOrder = []
 
-console.log('words',words)
-
 function drawOrderOfWords () {
   for (let i = 0; i < words.length; i++) {
     wordsOrder.push(i)
@@ -32,8 +30,15 @@ function CheckAnswer(){
   const answer = document.getElementsByClassName('droptarget')
   console.log('asnwer',answer)
   const answerToArray = Array.from(answer)
-  const wordsSet = answerToArray.map((word) => word.innerHTML).toString().replace(/,/g, ' ')
-  if(answersAreEqual(wordsSet,sentences)){
+  const wordsSet = Array.from(answerToArray.map((word) => word.innerHTML))
+  const finalSentence = answerToArray.map((word) => word.innerHTML).toString().replace(/,/g,' ')
+  console.log('answerString',finalSentence)
+  console.log('arrayFromWordSet',wordsSet)
+  console.log(words)
+  for (let i = 0; i < words.length; i++) {
+    document.querySelector('#word'+i).style.backgroundColor = wordsSet[i] !== words[i] ? 'red' : 'silver'
+  }
+  if(answersAreEqual(finalSentence,sentences)){
     setTimeout(()=>{
       alert('Vicotry')
     },200)
@@ -50,7 +55,7 @@ class Board extends React.Component{
     var numberOfWords = []
     for (let i = 0; i < words.length; i++) {
       numberOfWords.push(
-        <div className = 'droptarget' id = {`word`+i}>
+        <div className = 'droptarget' id = {`word`+wordsOrder[i]}>
           {words[wordsOrder[i]]}
         </div>
       )
