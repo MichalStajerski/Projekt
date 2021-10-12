@@ -7,6 +7,7 @@ const colors = {
   success: 'green'
 }
 const words = ['dog', 'cat', 'ape', 'dice']
+const setOfWords = words.map((x) => x)
 const wordsAfterCrossingShuffle = []
 const takenSquares = []
 const answers = []
@@ -28,10 +29,11 @@ const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 const descByLengthOfElementInArray = (a1) => a1.sort((el1, el2) => el2.length - el1.length)
 const haveSameLetter = (w1, w2, el) => w1.includes(el) && w2.includes(el)
 const arrayhHasDuplicate = (a1) => new Set(a1).size !== a1.length
+const arrayIncludesOther = (array1,array2) => array1.every(el => array2.includes(el))
 descByLengthOfElementInArray(words)
 
 let text = ''
-let canCross = true
+let canCross = false
 /**
  * @type int[] 
  */
@@ -74,6 +76,7 @@ function drawBoard () {
   for (let i = 0; i < wordsAfterCrossingShuffle.length; i++) {
     const searchedAnswer = document.createElement('div')
     searchedAnswer.id = wordsAfterCrossingShuffle[i]
+    searchedAnswer.className = 'searchedWord'
     searchedAnswer.innerHTML = wordsAfterCrossingShuffle[i]
     board.appendChild(searchedAnswer)
   }
@@ -120,12 +123,17 @@ function checkAnswer (clickedTiles) {
       // if we check a word that is being crossed with another we remove the letter that is being shared between them from id
       console.log('canCross before ',canCross)
       console.log('xddd',arrayhHasDuplicate([].concat.apply([], answers)))
-      if(canCross ===true){
-        text === wordsAfterCrossingShuffle[0] ? document.getElementById(crossArray[pairOfWords][1]).id = crossArray[pairOfWords][1].replace(crossArray[pairOfWords][2], '') : false
-        text === wordsAfterCrossingShuffle[1] ? document.getElementById(crossArray[pairOfWords][0]).id = crossArray[pairOfWords][0].replace(crossArray[pairOfWords][2], '') : false
+
+      for(let i = 0; i < setOfWords.length; i++){
+        if(setOfWords[i].includes(text) && setOfWords[i].length === (text.length+1)){
+          text = setOfWords[i]
+        }
       }
+      console.log('textAfterChange', text)
+
+      let list = document.getElementById(text)
+      list.setAttribute('style', 'color: green;text-decoration: line-through;')
       
-      document.getElementById(text).setAttribute('style', 'color: green;text-decoration: line-through;')
       text = ''
       console.log('asnwersArray',answers)
       answers.splice(i, 1)
@@ -166,7 +174,7 @@ Array.prototype.remove = function () {
 function drawSquaresForWords () {
   // returns table with values
   actionForCrossSearch()
-  if (canCross === true && crossArray[0] !== undefined) {
+  if (crossArray[0] !== undefined) {
     console.log(crossArray)
     const startSquare = randomArrayElement(arrayForDraw)
     pairOfWords = getRandomIntInclusive(0, crossArray.length - 1)
