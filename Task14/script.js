@@ -30,6 +30,7 @@ const descByLengthOfElementInArray = (a1) => a1.sort((el1, el2) => el2.length - 
 const haveSameLetter = (w1, w2, el) => w1.includes(el) && w2.includes(el)
 const arrayhHasDuplicate = (a1) => new Set(a1).size !== a1.length
 const arrayIncludesOther = (array1,array2) => array1.every(el => array2.includes(el))
+const includesALl = (array1,array2) => (array1.length+1) === array2.length && array1.every((el) => array2.includes(el))
 descByLengthOfElementInArray(words)
 
 let text = ''
@@ -123,12 +124,13 @@ function checkAnswer (clickedTiles) {
       // if we check a word that is being crossed with another we remove the letter that is being shared between them from id
       console.log('canCross before ',canCross)
       console.log('xddd',arrayhHasDuplicate([].concat.apply([], answers)))
+      const splitLetters = text.split('')
+      console.log(splitLetters)
 
-      for(let i = 0; i < setOfWords.length; i++){
-        if(setOfWords[i].includes(text) && setOfWords[i].length === (text.length+1)){
-          text = setOfWords[i]
-        }
+      for(let i = 0; i < setOfWords.length;i++){
+        includesALl(splitLetters,setOfWords[i]) ? text = setOfWords[i] : text
       }
+
       console.log('textAfterChange', text)
 
       let list = document.getElementById(text)
