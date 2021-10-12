@@ -29,14 +29,14 @@ const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 const descByLengthOfElementInArray = (a1) => a1.sort((el1, el2) => el2.length - el1.length)
 const haveSameLetter = (w1, w2, el) => w1.includes(el) && w2.includes(el)
 const arrayhHasDuplicate = (a1) => new Set(a1).size !== a1.length
-const arrayIncludesOther = (array1,array2) => array1.every(el => array2.includes(el))
-const includesALl = (array1,array2) => (array1.length+1) === array2.length && array1.every((el) => array2.includes(el))
+const arrayIncludesOther = (array1, array2) => array1.every(el => array2.includes(el))
+const includesAll = (array1, array2) => (array1.length + 1) === array2.length && array1.every((el) => array2.includes(el))
 descByLengthOfElementInArray(words)
 
 let text = ''
-let canCross = false
+const canCross = false
 /**
- * @type int[] 
+ * @type int[]
  */
 const clickedTiles = []
 let pairOfWords = 0
@@ -122,22 +122,22 @@ function checkAnswer (clickedTiles) {
         text += document.getElementById(clickedTiles[j]).innerHTML
       }
       // if we check a word that is being crossed with another we remove the letter that is being shared between them from id
-      console.log('canCross before ',canCross)
-      console.log('xddd',arrayhHasDuplicate([].concat.apply([], answers)))
+      console.log('canCross before ', canCross)
+      console.log('xddd', arrayhHasDuplicate([].concat.apply([], answers)))
       const splitLetters = text.split('')
       console.log(splitLetters)
 
-      for(let i = 0; i < setOfWords.length;i++){
-        includesALl(splitLetters,setOfWords[i]) ? text = setOfWords[i] : text
+      for (let i = 0; i < setOfWords.length; i++) {
+        includesAll(splitLetters, setOfWords[i]) ? text = setOfWords[i] : text
       }
 
       console.log('textAfterChange', text)
 
-      let list = document.getElementById(text)
+      const list = document.getElementById(text)
       list.setAttribute('style', 'color: green;text-decoration: line-through;')
-      
+
       text = ''
-      console.log('asnwersArray',answers)
+      console.log('asnwersArray', answers)
       answers.splice(i, 1)
       // when there are no more answers show alert
       if (!answers.length) {
@@ -331,7 +331,7 @@ function actionForCrossSearch () {
       if (j !== i) {
         for (let k = 0; k < v.length; k++) {
           if (haveSameLetter(words[i], words[j], v[k])) {
-            //console.log('indexes of words', i, j)
+            // console.log('indexes of words', i, j)
             crossArray.push([words[i], words[j], v[k], words[i].indexOf(v[k]), words[j].indexOf(v[k]), i, j, words[i].length, words[j].length])
           }
         }
