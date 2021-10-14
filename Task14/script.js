@@ -13,10 +13,7 @@ const takenSquares = []
 const answers = []
 const crossArray = []
 // instead of random so we will not draw from squares that are already taken
-const arrayForDraw = []
-for (let i = 0; i < numCols * numRows - 1; i++) {
-  arrayForDraw.push(i)
-}
+const arrayForDraw = [...Array(numCols * numRows).keys()]
 
 let v = Array(alphabet).map(function (x) {
   return (x.split(''))
@@ -63,9 +60,7 @@ function tileClicked (tile, id) {
     const index = clickedTiles.indexOf(id)
     clickedTiles.splice(index, 1)
   }
-  clickedTiles.sort(function (a, b) {
-    return a - b
-  })
+  clickedTiles.sort((a, b) => a - b)
   checkAnswer(clickedTiles)
 }
 
@@ -75,11 +70,11 @@ function drawBoard () {
   const titleForBoard = document.createElement('div')
   titleForBoard.innerHTML = 'Search for words:'
   board.appendChild(titleForBoard)
-  for (let i = 0; i < wordsAfterCrossingShuffle.length; i++) {
+  for (const word of wordsAfterCrossingShuffle) {
     const searchedAnswer = document.createElement('div')
-    searchedAnswer.id = wordsAfterCrossingShuffle[i]
+    searchedAnswer.id = word
     searchedAnswer.className = 'searchedWord'
-    searchedAnswer.innerHTML = wordsAfterCrossingShuffle[i]
+    searchedAnswer.innerHTML = word
     board.appendChild(searchedAnswer)
   }
 }
@@ -95,7 +90,7 @@ function createLayout () {
     for (let colIndex = 0; colIndex < numCols; colIndex++) {
       const tile = document.createElement('div')
       tile.className = 'box'
-      tile.id = (rowIndex * numCols + colIndex)
+      tile.id = parseInt((rowIndex * numCols + colIndex))
       tile.onclick = () => tileClicked(tile, rowIndex * numCols + colIndex)
       row.appendChild(tile)
     }
@@ -122,20 +117,15 @@ function checkAnswer (clickedTiles) {
         // i place the text together so i can get the id for board to cross out
         text += document.getElementById(clickedTiles[j]).innerHTML
       }
-      // if we check a word that is being crossed with another we remove the letter that is being shared between them from id
-      console.log('xddd', arrayhHasDuplicate([].concat.apply([], answers)))
       const splitLetters = text.split('')
-      console.log(splitLetters)
 
-      for (let i = 0; i < setOfWords.length; i++) {
-        includesAll(splitLetters, setOfWords[i]) ? text = setOfWords[i] : text
+      for (const word of setOfWords) {
+        includesAll(splitLetters, word) ? text = word : text
       }
-
       console.log('textAfterChange', text)
 
-      const list = document.getElementById(text)
-      list.setAttribute('style', 'color: green;text-decoration: line-through;')
-
+      const wordInBoard = document.getElementById(text)
+      wordInBoard.setAttribute('style', 'color: green;text-decoration: line-through;')
       text = ''
       console.log('asnwersArray', answers)
       answers.splice(i, 1)
@@ -180,45 +170,29 @@ function drawSquaresForWords () {
     horizontalDrawCross(startSquare, crossArray[pairOfWords][7], 0, pairOfWords)
   }
   console.log('words', words)
-  const numWords = words.length
-  for (let i = 0; i < numWords; i++) {
-    const wordLength = words[i].length
-    wordsAfterCrossingShuffle.push(words[i])
+  for (const word of words) {
+    const wordLength = word.length
+    wordsAfterCrossingShuffle.push(word)
     // using array instead of getRandom so we won't draw squares that are already taken
     const startSquare = randomArrayElement(arrayForDraw)
     const direction = getRandomIntInclusive(0, 1)
-    // vertical allignment of word
-    if (!direction) {
-      verticalDraw(startSquare, wordLength, i)
-    } else { // horizontal allignment of word
-      horizontalDraw(startSquare, wordLength, i)
-    }
+    // decides allignment of word
+    !direction ? verticalDraw(startSquare, wordLength, words.indexOf(word)) : horizontalDraw(startSquare, wordLength, words.indexOf(word))
   }
 }
 
 function drawLettersForsquares () {
-  const splitWords = wordsAfterCrossingShuffle.map(function (x) {
-    return x.split('')
-  })
-
+  const splitWords = wordsAfterCrossingShuffle.map(word => word.split(''))
   const squaresForWords = [].concat.apply([], answers)
   const lettersForWords = [].concat.apply([], splitWords)
-  console.log('lettersForWords', lettersForWords)
-  console.log('squaresForWords', squaresForWords)
-  console.log('splitWords', splitWords)
-  // for drawn answers write letters from array lettersForWords
+
   for (let i = 0; i < squaresForWords.length; i++) {
-    const tileId = squaresForWords[i].toString()
-    const tile = document.getElementById(tileId)
-    tile.innerHTML = lettersForWords[i]
+    const tileId = squaresForWords[i]
+    document.getElementById(tileId).innerHTML = lettersForWords[i]
   }
   // else draw random letters for others squares
   for (let i = 0; i < numRows * numCols; i++) {
-    if (!squaresForWords.includes(i)) {
-      tileId = i.toString()
-      const tile = document.getElementById(tileId)
-      // tile.innerHTML = (randomCharacter(alphabet))
-    }
+    // !squaresForWords.includes(i) ? document.getElementById(i).innerHTML = randomCharacter(alphabet) : document.getElementById(i).innerHTML
   }
 }
 
@@ -254,9 +228,7 @@ function horizontalDraw (startSquare, wordLength, i) {
   answers.push(temp)
   temp = []
 
-  answers[i].sort(function (a, b) {
-    return a - b
-  })
+  answers[i].sort((a,b) => a - b)
 }
 
 function verticalDraw (startSquare, wordLength, i) {
@@ -279,9 +251,7 @@ function verticalDraw (startSquare, wordLength, i) {
   answers.push(temp)
   temp = []
 
-  answers[i].sort(function (a, b) {
-    return a - b
-  })
+  answers[i].sort((a, b) => a - b)
 }
 // excess of code, another function probably isn't needed, need to simplify this/just use horiontal
 function horizontalDrawCross (startSquare, wordLength, i, pairOfWords) {
@@ -304,9 +274,7 @@ function horizontalDrawCross (startSquare, wordLength, i, pairOfWords) {
   answers[i] = temp
   temp = []
 
-  answers[i].sort(function (a, b) {
-    return a - b
-  })
+  answers[i].sort((a, b) => a - b)
   // answers[i][crossArray[pairOfWords][3]] - crossArray[pairOfWords][4] positions us on a right square for crossing
   verticalDraw(answers[i][crossArray[pairOfWords][3]] - crossArray[pairOfWords][4], crossArray[pairOfWords][8], 1)
 }
@@ -319,7 +287,6 @@ function actionForCrossSearch () {
       if (j !== i) {
         for (let k = 0; k < v.length; k++) {
           if (haveSameLetter(words[i], words[j], v[k])) {
-            // console.log('indexes of words', i, j)
             crossArray.push([words[i], words[j], v[k], words[i].indexOf(v[k]), words[j].indexOf(v[k]), i, j, words[i].length, words[j].length])
           }
         }
