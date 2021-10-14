@@ -24,6 +24,7 @@ let v = Array(alphabet).map(function (x) {
 // reduces to array of elements instead of array of arrays
 v = [].concat.apply([], v)
 
+const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
 const descByLengthOfElementInArray = (a1) => a1.sort((el1, el2) => el2.length - el1.length)
@@ -31,10 +32,10 @@ const haveSameLetter = (w1, w2, el) => w1.includes(el) && w2.includes(el)
 const arrayhHasDuplicate = (a1) => new Set(a1).size !== a1.length
 const arrayIncludesOther = (array1, array2) => array1.every(el => array2.includes(el))
 const includesAll = (array1, array2) => (array1.length + 1) === array2.length && array1.every((el) => array2.includes(el))
+const randomCharacter = (string) => string[getRandomIntInclusive(0,string.length-1)]
 descByLengthOfElementInArray(words)
 
 let text = ''
-const canCross = false
 /**
  * @type int[]
  */
@@ -122,7 +123,6 @@ function checkAnswer (clickedTiles) {
         text += document.getElementById(clickedTiles[j]).innerHTML
       }
       // if we check a word that is being crossed with another we remove the letter that is being shared between them from id
-      console.log('canCross before ', canCross)
       console.log('xddd', arrayhHasDuplicate([].concat.apply([], answers)))
       const splitLetters = text.split('')
       console.log(splitLetters)
@@ -156,12 +156,6 @@ function checkAnswer (clickedTiles) {
   }
 }
 
-// random char to fill squares outside of answers
-function randomCharacter () {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz'
-  const randomCharacter = alphabet[randomArrayElement(alphabet)]
-  return randomCharacter
-}
 // remove from array by value
 Array.prototype.remove = function () {
   let what; const a = arguments; let L = a.length; let ax
@@ -207,32 +201,27 @@ function drawLettersForsquares () {
     return x.split('')
   })
 
-  const merged = [].concat.apply([], answers)
-  const merged2 = [].concat.apply([], splitWords)
-  console.log('merged2', merged2)
-  console.log('merged', merged)
-  console.log('arrayhasDuplicate', arrayhHasDuplicate([].concat.apply([], answers)))
-  // for drawn answers write letters from array merged2
-  for (let i = 0; i < merged.length; i++) {
-    const tileId = merged[i].toString()
+  const squaresForWords = [].concat.apply([], answers)
+  const lettersForWords = [].concat.apply([], splitWords)
+  console.log('lettersForWords', lettersForWords)
+  console.log('squaresForWords', squaresForWords)
+  console.log('splitWords', splitWords)
+  // for drawn answers write letters from array lettersForWords
+  for (let i = 0; i < squaresForWords.length; i++) {
+    const tileId = squaresForWords[i].toString()
     const tile = document.getElementById(tileId)
-    tile.innerHTML = merged2[i]
+    tile.innerHTML = lettersForWords[i]
   }
   // else draw random letters for others squares
   for (let i = 0; i < numRows * numCols; i++) {
-    if (!merged.includes(i)) {
+    if (!squaresForWords.includes(i)) {
       tileId = i.toString()
       const tile = document.getElementById(tileId)
-      tile.innerHTML = (randomCharacter())
+      // tile.innerHTML = (randomCharacter(alphabet))
     }
   }
 }
 
-function getRandomIntInclusive (min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
 // for now i left the conditions like this to check if its working, needs changing horizontal words will never reach last column even
 // if its not going to cross to the next row
 function conditionsVertical (startSquare, wordLength, modulo) {
@@ -299,7 +288,6 @@ function horizontalDrawCross (startSquare, wordLength, i, pairOfWords) {
   for (let i = 1; i < wordLength; i++) {
     while (conditionsHorizontal(startSquare, wordLength, numCols)) {
       startSquare = randomArrayElement(arrayForDraw)
-      canCross === false
     }
   }
   for (let j = 0; j < wordLength; j++) {
