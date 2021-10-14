@@ -100,11 +100,10 @@ function createLayout () {
 }
 
 function checkAnswer (clickedTiles) {
-  console.log(clickedTiles)
-  for (let i = 0; i < answers.length; i++) {
-    if (arraysAreEqual(clickedTiles, answers[i])) {
-      for (let j = 0; j < clickedTiles.length; j++) {
-        const marked = document.getElementById(clickedTiles[j])
+  for (const answer of answers) {
+    if (arraysAreEqual(clickedTiles, answer)) {
+      for (const tile of clickedTiles) {
+        const marked = document.getElementById(tile)
         marked.style.backgroundColor = colors.success
         // blocks onclick after correct word was found
         marked.onclick = null
@@ -112,10 +111,10 @@ function checkAnswer (clickedTiles) {
         marked.className = 'boxNoHover'
         // deletes tiles from answer array
         for (let k = 0; k < answers.length; k++) {
-          answers[k].remove(clickedTiles[j])
+          answers[k].remove(tile)
         }
         // i place the text together so i can get the id for board to cross out
-        text += document.getElementById(clickedTiles[j]).innerHTML
+        text += marked.innerHTML
       }
       const splitLetters = text.split('')
 
@@ -128,7 +127,7 @@ function checkAnswer (clickedTiles) {
       wordInBoard.setAttribute('style', 'color: green;text-decoration: line-through;')
       text = ''
       console.log('asnwersArray', answers)
-      answers.splice(i, 1)
+      answers.splice(answers.indexOf(answer), 1)
       // when there are no more answers show alert
       if (!answers.length) {
         setTimeout(() => {
@@ -228,7 +227,7 @@ function horizontalDraw (startSquare, wordLength, i) {
   answers.push(temp)
   temp = []
 
-  answers[i].sort((a,b) => a - b)
+  answers[i].sort((a, b) => a - b)
 }
 
 function verticalDraw (startSquare, wordLength, i) {
