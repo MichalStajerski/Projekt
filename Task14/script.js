@@ -32,7 +32,7 @@ const haveSameLetter = (w1, w2, el) => w1.includes(el) && w2.includes(el)
 const arrayhHasDuplicate = (a1) => new Set(a1).size !== a1.length
 const arrayIncludesOther = (array1, array2) => array1.every(el => array2.includes(el))
 const includesAll = (array1, array2) => (array1.length + 1) === array2.length && array1.every((el) => array2.includes(el))
-const randomCharacter = (string) => string[getRandomIntInclusive(0,string.length-1)]
+const randomCharacter = (string) => string[getRandomIntInclusive(0, string.length - 1)]
 descByLengthOfElementInArray(words)
 
 let text = ''
