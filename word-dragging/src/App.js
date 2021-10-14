@@ -30,7 +30,7 @@ function CheckAnswer(setDisable){
 
   if(sentences[drawnAnswer] === finalSentence){
     dragula([].slice.apply(document.querySelectorAll('.wordsContainer')),{
-     accepts: (el, target, source, sibling) => {
+     accepts: (target, source) => {
        if (!target || !source || (target != source)) {
          return false;
        } else {
