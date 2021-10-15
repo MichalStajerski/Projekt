@@ -22,8 +22,8 @@ const wordsOrder = shuffleArray([...Array(words.length).keys()]) // fills array 
 function CheckAnswer(setDisable){
   const answer = document.getElementsByClassName('droptarget')
   const answerToArray = Array.from(answer)
-  const wordsSet = Array.from(answerToArray.map((word) => word.innerHTML))
-  const finalSentence = answerToArray.map((word) => word.innerHTML).toString().replace(/,/g,' ')
+  const wordsSet = Array.from(answerToArray.map((word) => word.innerText))
+  const finalSentence = answerToArray.map((word) => word.innerText).toString().replace(/,/g,' ')
   for (let i = 0; i < words.length; i++) {
     document.querySelector('#word'+i).style.backgroundColor = wordsSet[i] !== words[i] ? 'red' : 'silver'
   }
@@ -73,6 +73,25 @@ class Board extends React.Component{
       let options = { };
       Dragula([componentBackingInstance], options);
     }
+  }
+}
+
+function Reduce(initialState){
+  const [state,setState] = useState(initialState)
+
+
+
+}
+
+class Timers extends React.Component {
+  render(){
+    return(
+      <div className = 'minutesLabel'>
+        <div className = 'secondsLabel'>
+
+        </div>
+      </div>
+    )
   }
 }
 
