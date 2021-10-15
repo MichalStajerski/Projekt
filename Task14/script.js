@@ -96,8 +96,8 @@ function checkAnswer (clickedTiles) {
         // changing class so there is no more box hover transition on good answers
         marked.className = 'boxNoHover'
         // deletes tiles from answer array
-        for (let k = 0; k < answers.length; k++) {
-          answers[k].remove(tile)
+        for (const answer of answers) {
+          answer.remove(tile)
         }
         // i place the text together so i can get the id for board to cross out
         text += marked.innerText
