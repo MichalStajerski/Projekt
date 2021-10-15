@@ -15,12 +15,6 @@ const crossArray = []
 // instead of random so we will not draw from squares that are already taken
 const arrayForDraw = [...Array(numCols * numRows).keys()]
 
-let v = Array(alphabet).map(function (x) {
-  return (x.split(''))
-})
-// reduces to array of elements instead of array of arrays
-v = [].concat.apply([], v)
-
 const getRandomIntInclusive = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 const arraysAreEqual = (a1, a2) => a1.length === a2.length && a1.every(el => a2.includes(el))
 const randomArrayElement = (array) => Math.floor(Math.random() * array.length)
@@ -48,18 +42,11 @@ window.onload = () => {
 }
 
 function tileClicked (tile, id) {
+  const index = clickedTiles.indexOf(id)
   // marks in blue color after click
-  if (tile.style.backgroundColor !== colors.selected) {
-    tile.style.backgroundColor = colors.selected
-    // adds answer
-    clickedTiles.push(id)
-  } else {
-    // unclicks to usual color
-    tile.style.backgroundColor = colors.normal
-    // removes answerd by value
-    const index = clickedTiles.indexOf(id)
-    clickedTiles.splice(index, 1)
-  }
+  tile.style.backgroundColor !== colors.selected ? tile.style.backgroundColor = colors.selected : tile.style.backgroundColor = colors.normal
+  tile.style.backgroundColor !== colors.selected ? clickedTiles.splice(index,1) : clickedTiles.push(id)
+
   clickedTiles.sort((a, b) => a - b)
   checkAnswer(clickedTiles)
 }
@@ -68,13 +55,13 @@ function drawBoard () {
   const board = document.getElementById('board')
   board.className = 'board'
   const titleForBoard = document.createElement('div')
-  titleForBoard.innerHTML = 'Search for words:'
+  titleForBoard.innerText = 'Search for words:'
   board.appendChild(titleForBoard)
   for (const word of wordsAfterCrossingShuffle) {
     const searchedAnswer = document.createElement('div')
     searchedAnswer.id = word
     searchedAnswer.className = 'searchedWord'
-    searchedAnswer.innerHTML = word
+    searchedAnswer.innerText = word
     board.appendChild(searchedAnswer)
   }
 }
@@ -83,7 +70,7 @@ function drawBoard () {
 function createLayout () {
   drawBoard()
   const container = document.getElementById('container')
-  container.innerHTML = ''// don't want any extra boxes when you call this function again
+  container.innerText = ''// don't want any extra boxes when you call this function again
   for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
     const row = document.createElement('div')
     row.className = 'row'
@@ -105,16 +92,15 @@ function checkAnswer (clickedTiles) {
       for (const tile of clickedTiles) {
         const marked = document.getElementById(tile)
         marked.style.backgroundColor = colors.success
-        // blocks onclick after correct word was found
         marked.onclick = null
-        // changing class so there is no more box hover tranition on good answers
+        // changing class so there is no more box hover transition on good answers
         marked.className = 'boxNoHover'
         // deletes tiles from answer array
         for (let k = 0; k < answers.length; k++) {
           answers[k].remove(tile)
         }
         // i place the text together so i can get the id for board to cross out
-        text += marked.innerHTML
+        text += marked.innerText
       }
       const splitLetters = text.split('')
 
@@ -187,11 +173,11 @@ function drawLettersForsquares () {
 
   for (let i = 0; i < squaresForWords.length; i++) {
     const tileId = squaresForWords[i]
-    document.getElementById(tileId).innerHTML = lettersForWords[i]
+    document.getElementById(tileId).innerText = lettersForWords[i]
   }
   // else draw random letters for others squares
   for (let i = 0; i < numRows * numCols; i++) {
-    // !squaresForWords.includes(i) ? document.getElementById(i).innerHTML = randomCharacter(alphabet) : document.getElementById(i).innerHTML
+    // !squaresForWords.includes(i) ? document.getElementById(i).innerText = randomCharacter(alphabet) : document.getElementById(i).innerText
   }
 }
 
@@ -284,9 +270,9 @@ function actionForCrossSearch () {
   for (let i = 0; i < words.length; i++) {
     for (let j = 0; j < words.length; j++) {
       if (j !== i) {
-        for (let k = 0; k < v.length; k++) {
-          if (haveSameLetter(words[i], words[j], v[k])) {
-            crossArray.push([words[i], words[j], v[k], words[i].indexOf(v[k]), words[j].indexOf(v[k]), i, j, words[i].length, words[j].length])
+        for (let k = 0; k < alphabet.length; k++) {
+          if (haveSameLetter(words[i], words[j], alphabet[k])) {
+            crossArray.push([words[i], words[j], alphabet[k], words[i].indexOf(alphabet[k]), words[j].indexOf(alphabet[k]), i, j, words[i].length, words[j].length])
           }
         }
       }
