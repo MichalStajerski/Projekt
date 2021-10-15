@@ -45,7 +45,7 @@ function tileClicked (tile, id) {
   const index = clickedTiles.indexOf(id)
   // marks in blue color after click
   tile.style.backgroundColor !== colors.selected ? tile.style.backgroundColor = colors.selected : tile.style.backgroundColor = colors.normal
-  tile.style.backgroundColor !== colors.selected ? clickedTiles.splice(index,1) : clickedTiles.push(id)
+  tile.style.backgroundColor !== colors.selected ? clickedTiles.splice(index, 1) : clickedTiles.push(id)
 
   clickedTiles.sort((a, b) => a - b)
   checkAnswer(clickedTiles)
