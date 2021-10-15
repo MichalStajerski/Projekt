@@ -97,7 +97,6 @@ function checkAnswer () {
   const finalSentence = joinedWords.split(' ')
 
   if (joinedWords === sentences[drawnAnswer]) {
-   
     for (const word of document.querySelectorAll('div.droptarget')) {
       word.draggable = false
       word.style.userSelect = 'none'
