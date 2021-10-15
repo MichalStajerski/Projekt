@@ -76,25 +76,6 @@ class Board extends React.Component{
   }
 }
 
-function Reduce(initialState){
-  const [state,setState] = useState(initialState)
-
-
-
-}
-
-class Timers extends React.Component {
-  render(){
-    return(
-      <div className = 'minutesLabel'>
-        <div className = 'secondsLabel'>
-
-        </div>
-      </div>
-    )
-  }
-}
-
 function Game() {
   const [disable,setDisable] = useState(false)
     return(
