@@ -50,7 +50,7 @@ function drawOrderOfWords () {
  */
 function insertWordIntoDiv (array) {
   for (let i = 0; i < array.length; i++) {
-    document.querySelector('#word' + i).innerHTML = words[array[i]]
+    document.querySelector(`#word${i}`).innerHTML = words[array[i]]
   }
 }
 
@@ -92,7 +92,7 @@ function checkAnswer () {
   getWordsOrder()
   let joinedWords = ''
   for (let i = 0; i < divIdsOrder.length; i++) {
-    joinedWords += (!i ? '' : ' ') + document.querySelector('#' + divIdsOrder[i]).innerHTML
+    joinedWords += (!i ? '' : ' ') + document.querySelector(`#${divIdsOrder[i]}`).innerHTML
   }
   const finalSentence = joinedWords.split(' ')
 
