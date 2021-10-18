@@ -25,7 +25,7 @@ function CheckAnswer(setDisable){
   const wordsSet = Array.from(answerToArray.map((word) => word.innerText))
   const finalSentence = answerToArray.map((word) => word.innerText).toString().replace(/,/g,' ')
   for (let i = 0; i < words.length; i++) {
-    document.querySelector('#word'+i).style.backgroundColor = wordsSet[i] !== words[i] ? 'red' : 'silver'
+    document.querySelector(`#word${i}`).style.backgroundColor = wordsSet[i] !== words[i] ? 'red' : 'silver'
   }
 
   if(sentences[drawnAnswer] === finalSentence){
@@ -50,7 +50,7 @@ class Board extends React.Component{
     var numberOfWords = []
     for (let i = 0; i < words.length; i++) {
       numberOfWords.push(
-        <div className = 'droptarget' id = {`word`+wordsOrder[i]}>
+        <div className = 'droptarget' id = {`word${wordsOrder[i]}`}>
           {words[wordsOrder[i]]}
         </div>
       )
