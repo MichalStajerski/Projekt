@@ -16,11 +16,15 @@ function App() {
         <nav>
           <ul>
           <li>
+            <button>
             <Link to="/">Home</Link>
+            </button>
           </li>
+          <button>
             <li>
               <Link to="/about">About</Link>
             </li>
+          </button>
           </ul>
         </nav>
 
