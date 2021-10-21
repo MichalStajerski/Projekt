@@ -36,8 +36,6 @@ function App () {
             {/* loop over the dataApi */}
             {dataApi.map((data, index) => (
               <div key={index}>
-                {/* <h3>{`${Object.entries(data)}`}</h3> */}
-                {/* <h3>{`${Object.keys(data)}`}</h3> */}
                 <h4>{`${JSON.stringify(Object.entries(data))}`}</h4><br />
               </div>
             ))}
