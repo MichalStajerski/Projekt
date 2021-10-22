@@ -1,52 +1,38 @@
 import logo from './logo.svg'
 import './App.css'
 import React, { useEffect, useState } from 'react'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+
+const fetchApiData = () => {
+  const currentUrl = new URL(window.location)
+  const port = +currentUrl.searchParams.get('rest_port') || 8001
+  const url = 'https://jsonplaceholder.typicode.com/users'
+  return fetch(url)
+    .then(response => response.json())
+    .then(response => ({ ...response, port, url }))
+}
 
 function App () {
-  const [dataApi, setdataApi] = useState(null)
-
   function About () {
+    const [apiData, setapiData] = useState(null)
     useEffect(() => {
-      getData()
-
-      // we will use async/await to fetch this data
-      async function getData () {
-        const currentUrl = new URL(window.location)
-        const port = +currentUrl.searchParams.get('rest_port') || 8001
-        const response = await fetch(`https://jsonplaceholder.typicode.com/users`)
-        const data = await response.json()
-
-        // store the data into our dataApi variable
-        setdataApi(data)
-      }
+      fetchApiData()
+        .then(setapiData)
+        .catch(err => setapiData(err => setapiData({ error: err.toString() })))
+        // const response = await fetch(`https://jsonplaceholder.typicode.com/users`)
     }, [])
 
     return (
       <div>
         <h1>Data from API</h1>
-        {/* display dataApi from the API */}
-        {dataApi && (
-          <div className='dataApi'>
-            {/* loop over the dataApi */}
-            {dataApi.map((data, index) => (
-              <div key={index}>
-                <h4>{`${JSON.stringify(Object.entries(data))}`}</h4><br />
-              </div>
-            ))}
-          </div>
-        )}
+        {/* display apiData from the API */}
+        {apiData && (<pre>{JSON.stringify(apiData, null, ' ')}</pre>)}
       </div>
     )
   }
 
   function Home () {
-    return <h2>Sweet home Alabama</h2>
+    return <h2>Home</h2>
   }
   return (
     <Router>
