@@ -27,7 +27,7 @@ function ProductRow ({ product }) {
 
 function SearchBar () {
   const [state, setState] = useState(false)
-  const [seatch, setSearch] = useState('')
+  const [search, setSearch] = useState('')
 
   return (
     <section>
