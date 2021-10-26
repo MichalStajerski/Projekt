@@ -2,7 +2,7 @@
 
 ## Gallery
 Displays people whose data is sored in file data.js
-Also Gallery uses component Profile for images
+Also Gallery uses component `Profile` for images
 
 ## Form
 Form uses useState hook to change data in the input field onChange
