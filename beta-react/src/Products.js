@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 function ProductsCategory ({ category }) {
   return (
     <tr>
@@ -12,10 +14,25 @@ function ProductRow ({ product }) {
   const name = product.inStock ? product.name
     : <span style={color = 'red'}>{product.name}</span>
   return (
-    <th>
-      <th>
+    <tr>
+      <td>
         {name}
-      </th>
-    </th>
+      </td>
+      <td>
+        {product.price}
+      </td>
+    </tr>
+  )
+}
+
+function SearchBar () {
+  const [state, setState] = useState(false)
+  const [seatch, setSearch] = useState('')
+
+  return (
+    <section>
+      <input onChange = {e => setSearch(e.target.value)}>Search</input>
+      <input type = 'checkbox' onChange = {setState(!state)}></input>
+    </section>
   )
 }
