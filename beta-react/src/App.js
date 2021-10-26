@@ -30,7 +30,7 @@ export default function App () {
           </button>
           <br />
           <button>
-            <Link to='/about'>About</Link>
+            <Link to='/form'>Form</Link>
           </button>
           <br />
           <button>
@@ -38,7 +38,7 @@ export default function App () {
           </button>
         </nav>
         <Switch>
-          <Route path='/about'>
+          <Route path='/form'>
             <Form />
           </Route>
           <Route path='/list'>
