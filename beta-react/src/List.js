@@ -2,27 +2,27 @@ import React, { useEffect, useState } from 'react'
 let nextId = 0
 
 export default function List () {
-    const [name, setName] = useState('')
-    const [artists, setArtists] = useState([])
+    const [task, setTask] = useState('')
+    const [list, setList] = useState([])
 
     return (
       <>
-        <h1>Inspiring sculptors:</h1>
+        <h1>List:</h1>
         <input
-          value={name}
-          onChange={e => setName(e.target.value)}
+          value={task}
+          onChange={e => setTask(e.target.value)}
         />
         <button onClick={() => {
-          setArtists([
-            ...artists,
-            { id: nextId++, name: name }
+          setList([
+            ...list,
+            { id: nextId++, task: task }
           ])
         }}
         >Add
         </button>
         <ul>
-          {artists.map(artist => (
-            <li key={artist.id}>{artist.name}</li>
+          {list.map(list => (
+            <li key={list.id}>{list.task}</li>
           ))}
         </ul>
       </>
