@@ -1,4 +1,3 @@
-import logo from './logo.svg'
 import './App.css'
 import Profile from './Profile'
 import { people } from './data'
@@ -20,6 +19,47 @@ export default function App () {
     )
   }
 
+  function Form () {
+    const [person, setPerson] = useState({
+      firstName: 'Zosia',
+      lastName: 'Samosia',
+      age: 23
+    })
+    function handleFirstNameChange (e) {
+      setPerson({
+        ...person,
+        firstName: e.target.value
+      })
+    }
+    function handleLastNameChange (e) {
+        setPerson({
+          ...person,
+          lastName: e.target.value
+        })
+      }
+      function handleAgeChange (e) {
+        setPerson({
+          ...person,
+          age: e.target.value
+        })
+      }
+    return(
+        <section>
+          <label>First Name</label>
+          <input value = {person.firstName} onChange = {handleFirstNameChange}></input><br/>
+          <label>Last Name</label>
+          <input value = {person.lastName} onChange = {handleLastNameChange}></input><br/>
+          <label>Age</label>
+          <input value = {person.age} onChange = {handleAgeChange}></input><br/>
+          <p>
+            {person.firstName}{' '}
+            {person.lastName}{' '}
+            ({person.age})
+          </p>
+        </section>
+    )
+  }
+
   return (
     <Router>
       <div>
@@ -33,7 +73,9 @@ export default function App () {
           </button>
         </nav>
         <Switch>
-          <Route path='/about' />
+          <Route path='/about'>
+            <Form />
+          </Route>
           <Route path='/'>
             <Gallery />
           </Route>
