@@ -32,6 +32,7 @@ export default function App () {
           <button>
             <Link to='/about'>About</Link>
           </button>
+          <br />
           <button>
             <Link to='/list'>List</Link>
           </button>
