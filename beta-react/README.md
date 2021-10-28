@@ -13,4 +13,4 @@ Allows to add new things to it using useState
 One of the two hooks in this file holds array
 
 ## Products
-Learning how to build UI with components
+Learning how to build UI with components and hooks
