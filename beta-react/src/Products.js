@@ -4,13 +4,14 @@ function FillableProductTable () {
   const [search, setSearch] = useState('')
 
   return (
-    <state>
-      <SearchBar 
-      state = {state}
-      search = {search}/>
+    <section>
+      <SearchBar
+        state={state}
+        search={search}
+      />
       <ProductsCategory />
       <ProductRow />
-    </state>
+    </section>
   )
 }
 function ProductsCategory ({ category }) {
@@ -38,16 +39,24 @@ function ProductRow ({ product }) {
   )
 }
 
-function SearchBar ({state, search}) {
+function SearchBar ({ state, search }) {
   return (
     <section>
-      <input onChange={e => setSearch(e.target.value)}>Search</input>
-      <input type='checkbox' onChange={setState(!state)} />
+      <input
+        type='text'
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        placeholder='Search'
+      />
+      <input
+        type='checkbox'
+        value={state}
+        onChange={setState(!state)}
+      />
     </section>
   )
 }
 
-function ProductTable ({products,state,search}) {
+function ProductTable ({ products, state, search }) {
   const rows = []
-  
 }
