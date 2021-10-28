@@ -3,6 +3,7 @@ import Profile from './Profile'
 import { people } from './data'
 import List from './List'
 import Form from './Form'
+import FillableProductTable from './Products'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
