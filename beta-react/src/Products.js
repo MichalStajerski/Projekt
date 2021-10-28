@@ -1,5 +1,5 @@
 import { useState } from 'react'
-export default function FillableProductTable () {
+function FillableProductTable ({ products }) {
   const [state, setState] = useState(false)
   const [search, setSearch] = useState('')
 
@@ -69,3 +69,7 @@ const PRODUCTS = [
   { category: 'Vegetables', price: '$4', stocked: false, name: 'Pumpkin' },
   { category: 'Vegetables', price: '$1', stocked: true, name: 'Peas' }
 ]
+
+export default function Products () {
+  return <FillableProductTable products={PRODUCTS} />
+}
