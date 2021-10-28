@@ -1,5 +1,5 @@
 import { useState } from 'react'
-function FillableProductTable () {
+export default function FillableProductTable () {
   const [state, setState] = useState(false)
   const [search, setSearch] = useState('')
 
@@ -26,7 +26,7 @@ function ProductsCategory ({ category }) {
 
 function ProductRow ({ product }) {
   const name = product.inStock ? product.name
-    : <span style={color = 'red'}>{product.name}</span>
+    : <span style={{ color: 'red' }}>{product.name}</span>
   return (
     <tr>
       <td>
@@ -45,13 +45,13 @@ function SearchBar ({ state, search }) {
       <input
         type='text'
         value={search}
-        onChange={e => setSearch(e.target.value)}
+        // onChange={e => setSearch(e.target.value)}
         placeholder='Search'
       />
       <input
         type='checkbox'
         value={state}
-        onChange={setState(!state)}
+        // onChange={setState(!state)}
       />
     </section>
   )
@@ -60,3 +60,12 @@ function SearchBar ({ state, search }) {
 function ProductTable ({ products, state, search }) {
   const rows = []
 }
+
+const PRODUCTS = [
+  { category: 'Fruits', price: '$1', stocked: true, name: 'Apple' },
+  { category: 'Fruits', price: '$1', stocked: true, name: 'Dragonfruit' },
+  { category: 'Fruits', price: '$2', stocked: false, name: 'Passionfruit' },
+  { category: 'Vegetables', price: '$2', stocked: true, name: 'Spinach' },
+  { category: 'Vegetables', price: '$4', stocked: false, name: 'Pumpkin' },
+  { category: 'Vegetables', price: '$1', stocked: true, name: 'Peas' }
+]
