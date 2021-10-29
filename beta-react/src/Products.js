@@ -124,3 +124,4 @@ const PRODUCTS = [
 export default function Products () {
   return <FilterableProductTable products={PRODUCTS} />
 }
+
