@@ -20,6 +20,10 @@ export default function List () {
       }}
       >Add
       </button>
+      <br/>
+      <button onClick = {() => setList([])}>
+        Clear list
+      </button>
       <ul>
         {list.map(list => (
           <li key={list.id}>{list.task}</li>
