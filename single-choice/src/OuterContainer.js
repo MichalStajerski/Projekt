@@ -1,7 +1,9 @@
+import './App.css'
+
 export default function OuterContainer () {
   return (
-    <div>
-      
+    <div className = 'OuterContainer'>
+        dwdw
     </div>
   )
 }

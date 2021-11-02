@@ -4,6 +4,7 @@ import { orders } from './orders'
 import Order from './Order'
 import SoundIcon from './SoundIcon'
 import { useState } from 'react'
+import OuterContainer from './OuterContainer'
 
 function App () {
   const [answers, setAnswersList] = useState([])
@@ -20,6 +21,7 @@ function App () {
           : null
       ))}
       {/* <SoundIcon/> */}
+      <OuterContainer/>
     </section>
   )
 }
