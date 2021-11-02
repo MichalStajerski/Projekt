@@ -22,9 +22,9 @@ function App () {
           : null
       ))}
       {questions.map(question => (
-      <OuterContainer
-        question = {question.content}
-      />
+        <OuterContainer
+          question={question.content}
+        />
       ))}
       {/* <SoundIcon/> */}
     </section>
