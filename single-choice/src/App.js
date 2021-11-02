@@ -1,10 +1,11 @@
-import logo from './logo.svg'
 import './App.css'
 import { orders } from './orders'
 import Order from './Order'
 import SoundIcon from './SoundIcon'
 import { useState } from 'react'
 import OuterContainer from './OuterContainer'
+import Checkboxes from './Checkboxes'
+import { questions } from './questions'
 
 function App () {
   const [answers, setAnswersList] = useState([])
@@ -20,8 +21,12 @@ function App () {
             />
           : null
       ))}
+      {questions.map(question => (
+      <OuterContainer
+        question = {question.content}
+      />
+      ))}
       {/* <SoundIcon/> */}
-      <OuterContainer/>
     </section>
   )
 }
