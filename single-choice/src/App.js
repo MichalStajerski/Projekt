@@ -26,13 +26,13 @@ function App () {
           <Container
             question={question.content}
             // answer={answer}
-            // answerList={answerList}
+            answerList={answerList}
             // onFilterAnswerChange={setAnswer}
             onFilterAnswerListChange={setAnswersList}
           />
         ))}
       </div>
-      {console.log('answerList', answerList)}
+      {console.log('answerList',answerList)}
     </section>
   )
 }
