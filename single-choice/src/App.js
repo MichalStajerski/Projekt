@@ -32,7 +32,7 @@ function App () {
           />
         ))}
       </div>
-      {console.log(answerList)}
+      {console.log('answerList', answerList)}
     </section>
   )
 }
