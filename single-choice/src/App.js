@@ -8,10 +8,9 @@ import Checkboxes from './Checkboxes'
 import { questions } from './questions'
 
 function App () {
-  const [answers, setAnswersList] = useState([])
-  const [answer, setAnswer] = useState()
+  const [answerList, setAnswersList] = useState([])
   return (
-    <section >
+    <section>
       <h1>Polecenie:</h1>
       {orders.map(singleOrder => (
         singleOrder.id === 0
@@ -22,14 +21,18 @@ function App () {
           : null
       ))}
       {/* <SoundIcon/> */}
-      <div className = 'outerContainer'>
-      {questions.map(question => (
-        <Container
-          question={question.content}
-          answerList = {answers}
-        />
-      ))}
+      <div className='outerContainer'>
+        {questions.map(question => (
+          <Container
+            question={question.content}
+            // answer={answer}
+            // answerList={answerList}
+            // onFilterAnswerChange={setAnswer}
+            onFilterAnswerListChange={setAnswersList}
+          />
+        ))}
       </div>
+      {console.log(answerList)}
     </section>
   )
 }
