@@ -23,7 +23,7 @@ class Example extends React.Component {
       // but selected can be anly one at a time
       checkboxes: state.checkboxes.map((_, i) => i === changedIndex ? checked : false),
     }));
-    setAnswer( {value : checked})
+    // setAnswer( {value : checked})
   }
   render() {
     const { checkboxes } = this.state;
@@ -48,9 +48,7 @@ const [answer, setAnswer] = useState([])
 
  return(
    <section>
-     <Example
-     setAnswer = {setAnswer}/>
-     {console.log(answer)}
+     <Example/>
    </section>
  )
 }
